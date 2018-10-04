@@ -20,4 +20,9 @@ public interface ReviewStringQuery {
 			+ " AND review_num IN (SELECT review_num FROM tag WHERE tag=?) AND location=?";
 	String GET_TAG_LIST = "select word from tag where review_num=?";
 	String GET_IMAGE_LIST = "select img from tourspot where city=?";
+	String GET_SPOT_IMAGELIST ="select spot_image from spot_image where spot_name=?";
+	String CHECK_REVIEW = "select * from review where review_num = ?";
+	
+	String GET_REVIEW_IMAGES = "SELECT review_image FROM review_image WHERE review_num = ?";
+	String GET_REVIEW_COMMENTS = "SELECT id,comment FROM comment WHERE review_num = ?";
 }

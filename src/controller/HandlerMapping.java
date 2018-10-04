@@ -9,9 +9,14 @@ public class HandlerMapping {
 	
 	public Controller createController(String command) {
 		Controller controller = null;
+		
 		switch(command) {
 		case "getAttraction.do":	//command
 			return new GetAttractionController();
+		
+		case "checkReview.do":	//command
+		return new CheckReviewController();
+		
 		}
 		
 		return null;

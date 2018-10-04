@@ -96,17 +96,17 @@ public class TourDao {
 	}
 	
 	public ArrayList<AttractionVO> getAttraction (String city) throws SQLException{
-		ArrayList<AttractionVO> list = new ArrayList<>();
+		ArrayList<AttractionVO> list = new ArrayList<AttractionVO>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs= null;
-		ArrayList<String> imgList = new ArrayList<String>();
+		
 		try {
 			conn=getConnect();
 			ps=conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
 			ps.setString(1, city);
 			rs=ps.executeQuery();
-			ReviewVO vo = null;
+			AttractionVO vo = null;
 			while(rs.next()) {
 				list.add(new AttractionVO(rs.getString("spot_name"),
 										  rs.getString("address"),
@@ -115,19 +115,34 @@ public class TourDao {
 										  rs.getString("info")
 										));
 			}
-			ps= conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION_IMG);
-			ps.setString(1,city);
-			rs= ps.executeQuery();
-			while(rs.next()){
-				imgList.add(rs.getString("spot_name")
-						);
-			}
-			vo.setImages(imgList);
+			for(int i=0; i< list.size(); i++) {
+				ArrayList<String> spot_images=getSpotImages(list.get(i).getSpotName(), conn);
+				list.get(i).setImages(spot_images);
+			}	
 		} finally {
 			closeAll(rs, ps, conn);
 		}
 		
 		return list;
+	}
+	
+	public ArrayList<String> getSpotImages(String spot_name,Connection conn) throws SQLException{
+		ArrayList<String> silist = new ArrayList<String>();
+		PreparedStatement ps =null;
+		ResultSet rs= null;
+		try {
+			ps = conn.prepareStatement(ReviewStringQuery.GET_SPOT_IMAGELIST);
+			ps.setString(1,spot_name);
+			rs=ps.executeQuery();
+					while(rs.next()) {
+						silist.add(rs.getString("spot_image"));
+					}	
+		} finally {
+			closeAll(rs, ps, conn);
+		}
+		
+		
+		return silist;
 	}
 	
 	
@@ -215,6 +230,65 @@ public class TourDao {
 		return list;
 	}// getBestReview 희정쓰
 	
+	public ReviewVO checkReview(int reviewNum) throws SQLException { 
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ReviewVO rvo = null;
+
+		try {
+			conn = getConnect();
+			ps = conn.prepareStatement(ReviewStringQuery.CHECK_REVIEW);
+			ps.setInt(1, reviewNum);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				rvo = new ReviewVO(rs.getInt("review_num"), rs.getString("title"), rs.getString("id"),
+						rs.getString("location"), rs.getString("city"), rs.getString("content"),
+						rs.getString("date_writing"), rs.getInt("likes"));
+			}
+			rvo.setImages(getImages(rvo.getReviewNum(), conn));			//image list
+			rvo.setComments(getComments(rvo.getReviewNum(), conn));		//comment list
+			
+
+		} finally {
+			closeAll(rs, ps, conn);
+		}
+		return rvo;
+	} // checkReview 
+	
+	public ArrayList<String> getImages(int reviewNum,Connection conn) throws SQLException{			
+
+		ArrayList<String> ilist = new ArrayList<String>();
+		PreparedStatement ps = conn.prepareStatement(ReviewStringQuery.GET_REVIEW_IMAGES);
+		ps.setInt(1, reviewNum);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			ilist.add(rs.getString("review_image"));
+		}
+		if (rs != null)
+			rs.close();
+		if (ps != null)
+			ps.close();
+		return ilist;
+	}
+
+	public ArrayList<CommentVO> getComments(int review_num, Connection conn) throws SQLException {
+		ArrayList<CommentVO> clist = new ArrayList<CommentVO>();
+		PreparedStatement ps = conn.prepareStatement(ReviewStringQuery.GET_REVIEW_COMMENTS);
+		ps.setInt(1, review_num);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			clist.add(new CommentVO(rs.getString("id"), rs.getString("comment")));
+		}
+		if (rs != null)
+			rs.close();
+		if (ps != null)
+			ps.close();
+		return clist;
+	}
+	
+	
 	static {
 		try {
 			Class.forName(OracleInfo.DRIVER_NAME);
@@ -247,8 +321,8 @@ public class TourDao {
 	public static void main(String[] args)  {		//단위테스트
 	
 			try {
-			System.out.println(TourDao.getInstance().searchByTag("보성"));
-			/*	ReviewDao.getInstance().scrap("lcj", 3);*/
+			System.out.println(TourDao.getInstance().getAttraction("전남"));
+		
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

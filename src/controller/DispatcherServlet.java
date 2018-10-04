@@ -24,8 +24,11 @@ public class DispatcherServlet extends HttpServlet {
 		Controller controller = HandlerMapping.getInstance().createController(command);
 		String path = "error.jsp";
 		ModelAndView mv = null;
+		
 		try {
+			System.out.println("DispatcherServlet handleRequest..call...");
 			mv = controller.handleRequest(request, response);
+			System.out.println("DispatcherServlet handleRequest...mv :: "+mv);
 			path = mv.getPath();
 		} catch (Exception e) {
 			e.printStackTrace();
