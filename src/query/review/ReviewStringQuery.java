@@ -10,7 +10,7 @@ public interface ReviewStringQuery {
 	String BEST_REVIEW_LOCATION_TAG = "select review_num, title, likes from (select * from review order by likes desc) where rownum<4"
 			+ " AND review_num IN ((SELECT review_num FROM tag WHERE word=?)) AND location=?";
 	String SCRAP = "insert into scrap values(?,?)";
-	String GET_ATTRACTION = "select spot_name,address,location,city,info,img from tourspot where city=?";
+	String GET_ATTRACTION = "select spot_name,address,location,city,info from tourspot where city=?";
 	String GET_ATTRACTION_IMG= "select spot_image from spot_image where spot_name=?";
 	String GET_FESTIVAL_INFO = "select festival_Name,festival_Location,location,city,start_Date,end_Date,agency from festival where city='��õ��' \n" + 
 			" AND start_Date <=(SELECT SYSDATE + 7 FROM DUAL)";
@@ -33,7 +33,7 @@ public interface ReviewStringQuery {
 	
 	String GET_REVIEW_TAGS = "select word from tag where review_num=?";
 	String GET_REVIEW_IMAGES = "SELECT review_image FROM review_image WHERE review_num = ?";
-	String GET_REVIEW_COMMENTS = "SELECT id,comment FROM comment WHERE review_num = ?";
+	String GET_REVIEW_COMMENTS = "SELECT id,content FROM comments WHERE review_num = ?";
 	String GET_SCRAP_LIST="select * from review where review_num in"
 			+ " (select review_num from"
 			+ " (select review_num, ceil(rownum/" + CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from"
@@ -43,6 +43,8 @@ public interface ReviewStringQuery {
 			+ " (select review_num, title, date_writing, id from review where id=? order by review_num desc)) where page=?";
 	String GET_RECENT_REVIEWS_BY_TAG = "SELECT review_num, title, location, city,id FROM (SELECT * FROM review ORDER BY review_num desc)" + 
 			" WHERE review_num IN((SELECT review_num FROM tag WHERE word = ?)) AND rownum<";
+	String CURRENT_NO = null;
+	String INSERT_REVIEW = null;
 }
 
 

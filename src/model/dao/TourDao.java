@@ -240,35 +240,36 @@ public class TourDao {
 	}// getFestivalInfo 泥좎쭊�벐
 
 
-	public ArrayList<AttractionVO> getAttraction(String city) throws SQLException {				//v2 tourspot list
-		ArrayList<AttractionVO> list = new ArrayList<>();
+	public ArrayList<AttractionVO> getAttraction (String city) throws SQLException{
+		ArrayList<AttractionVO> list = new ArrayList<AttractionVO>();
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+		ArrayList<ReviewVO> rlist = new ArrayList<ReviewVO>();
 		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
+			conn=getConnect();
+			ps=conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
 			ps.setString(1, city);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("info")));
+			rs=ps.executeQuery();
+			AttractionVO vo = null;
+			while(rs.next()) {
+				list.add(new AttractionVO(rs.getString("spot_name"),
+										  rs.getString("address"),
+										  rs.getString("location"),
+										  rs.getString("city"),
+										  rs.getString("info")
+										));
 			}
-			for (AttractionVO vo : list) {
-				ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
-				ps.setString(1, vo.getSpotName());
-				rs = ps.executeQuery();
-				if (rs.next())
-					vo.setMainImage(rs.getString("spot_image"));
-			}
-
+			for(int i=0; i< list.size(); i++) {
+				ArrayList<String> spot_images=getSpotImages(list.get(i).getSpotName(), conn);
+				list.get(i).setImages(spot_images);
+			}	
 		} finally {
 			closeAll(rs, ps, conn);
 		}
-
+		
 		return list;
-	}// getAttraction 泥좎쭊�벐			�씠誘몄�!!!!
+	}
 
 
 	public void scrap(String id, int review_num) throws Exception {					//scrap
@@ -509,20 +510,6 @@ public class TourDao {
 		}
 	}
 	
-	public ArrayList<String> getTags(int reviewNum,Connection conn) throws SQLException{			//get reivew tags
-		ArrayList<String> tlist = new ArrayList<String>();
-		PreparedStatement ps = conn.prepareStatement(ReviewStringQuery.GET_REVIEW_TAGS);
-		ps.setInt(1, reviewNum);
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			tlist.add(rs.getString("word"));
-		}
-		if (rs != null)
-			rs.close();
-		if (ps != null)
-			ps.close();
-		return tlist;
-	}
 	
 	public ArrayList<String> getImages(int reviewNum,Connection conn) throws SQLException{			//get review images
 
@@ -561,7 +548,7 @@ public class TourDao {
 		ps.setInt(1, review_num);
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
-			clist.add(new CommentVO(rs.getString("id"), rs.getString("comment")));
+			clist.add(new CommentVO(rs.getString("id"), rs.getString("content")));
 		}
 		if (rs != null)
 			rs.close();
@@ -569,7 +556,27 @@ public class TourDao {
 			ps.close();
 		return clist;
 	}
-
+	
+	public ArrayList<String> getSpotImages(String spot_name,Connection conn) throws SQLException{
+		ArrayList<String> silist = new ArrayList<String>();
+		PreparedStatement ps =null;
+		ResultSet rs= null;
+		try {
+			ps = conn.prepareStatement(ReviewStringQuery.GET_SPOT_IMAGELIST);
+			ps.setString(1,spot_name);
+			rs=ps.executeQuery();
+					while(rs.next()) {
+						silist.add(rs.getString("spot_image"));
+					}	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeSome(ps, rs);
+		}
+		
+		
+		return silist;
+	}
 	public Connection getConnect() throws SQLException {
 		Connection conn = DriverManager.getConnection(OracleInfo.URL, OracleInfo.USER, OracleInfo.PASS);
 
@@ -582,6 +589,11 @@ public class TourDao {
 		if (conn != null)
 			conn.close();
 	}// closeAll
+	
+	private void closeSome(PreparedStatement ps, ResultSet rs) throws SQLException{
+		if (rs != null)	rs.close();
+		if (ps != null)	ps.close();
+	}
 
 	private void closeAll(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
 		if (rs != null)

@@ -9,6 +9,12 @@
 <title>CSS Website Layout</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+ <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+ <link rel="stylesheet" href="css/style.css">
+   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+      <link rel="stylesheet" href="css/rc.css">
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -17,10 +23,7 @@
 }
 
 body {
-  margin: 0;
-  /* background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); */
- /* background-image: linear-gradient(to top, #99ccff 0%, #fff 100%); */
- background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
+background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
 }
 .title{
 text-align : right;
@@ -118,12 +121,14 @@ text-align : right;
 
 }
 .img{
-width:450px;
+width:350px;
 
-height:400px;
+height:300px;
 
 
 }
+/* likes,scrap button */
+
 
 /* Style the footer */
 .footer {
@@ -131,7 +136,10 @@ height:400px;
     padding: 10px;
     text-align: center;
 }
+
 </style>
+
+
 </head>
 <body>
 
@@ -150,20 +158,28 @@ height:400px;
   <div class="main">
  ${rvo.content}
  <br>
-   	<c:forEach  items="${rvo.images}" var="vo" >
-   		<img src="${vo}" class="img">
-   	</c:forEach>
- <br>
     곱창전골은 전골류의 한국 요리로, 소나 돼지의 내장과 여러가지 채소를 육수와 함께 끓여낸 음식이다. <br>
     곱창이란 소나 돼지의 작은 창자를 의미한다. 곱창전골은 곱창이 주재료이지만, 다른 부위의 내장도 많이 사용되어 내장<br>
      특유의 쫄깃한 식감으로 곱창전골의 맛을 더욱 풍부하게 한다.
-    
-    
+ <div class="carousel">
+	<figure>
+	<c:forEach  items="${rvo.images}" var="vo" >
+   		<img src="${vo}" class="img">
+   	</c:forEach>
+	</figure>
+	<nav>
+		<button class="nav prev">Prev</button>
+		<button class="nav next">Next</button>
+	</nav>
+</div>  
+<ul class="choice-list">
+  <li class="checkbox check"></li>
+  <li class="checkbox heart is-checked"></li>
+  <li class="checkbox star"></li>
+ </ul>  
   </div>
   </div>
 
- 	<input type="button" name="scrap" value="스크랩">
- 	<input type="button" name="like" value="좋아요">
  <hr>
  <div class="row">
  <h3>댓글</h3><hr>
@@ -172,13 +188,18 @@ height:400px;
 </c:forEach>
 
  </div>
+ 
+ 
 <div class="footer">
   <p>관련글(카테고리)</p>
-  <p>관련글(카테고리)</p>
-  <p>관련글(카테고리)</p>
 
-  
 </div>
   </div>
+  
+  
+  
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script  src="js/index.js"></script>
+    <script  src="js/rc.js"></script>
 </body>
 </html>

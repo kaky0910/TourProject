@@ -17,10 +17,10 @@ function content_submit(){
 </head>
 <body>
 <form action="getAttraction.do" method="post" name="connect_form">
-<input type=hidden name="spotName" value="hp education">고고
-<input type=hidden name="city" value ="전남">
-<input type=hidden name="address" value ="보성">
-<input type=hidden name="location" value ="22">
+<input type=hidden name="spotName" value="hp education">고고 
+<input type=hidden name="city" value ="고양">
+<!-- <input type=hidden name="address" value ="보성">
+<input type=hidden name="location" value ="22"> -->
 <input type=button value="전송" onclick="content_submit()">
 </form>
 </body>
