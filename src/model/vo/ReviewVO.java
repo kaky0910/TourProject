@@ -53,8 +53,27 @@ public class ReviewVO {
 		this.id = id;
 		this.date = date;
 	}
-	
-	
+
+	public ReviewVO(int reviewNum, String title, String date) {
+		super();
+		this.reviewNum = reviewNum;
+		this.title = title;
+		this.date = date;
+	}
+	// 占쌩곤옙....
+	public ReviewVO(int reviewNum, String title, String id, String location, String city, String content, String date,
+			int like) {
+		super();
+		this.reviewNum = reviewNum;
+		this.title = title;
+		this.id = id;
+		this.location = location;
+		this.city = city;
+		this.content = content;
+		this.date = date;
+		this.like = like;
+	}
+
 	
 
 	public String getMainImage() {
@@ -132,19 +151,6 @@ public class ReviewVO {
 		this.images = images;
 	}
 
-
-	public ReviewVO(int reviewNum, String title, String id, String location, String city, String content, String date,
-			int like) {
-		super();
-		this.reviewNum = reviewNum;
-		this.title = title;
-		this.id = id;
-		this.location = location;
-		this.city = city;
-		this.content = content;
-		this.date = date;
-		this.like = like;
-	}
 
 
 
