@@ -72,7 +72,7 @@ public interface ReviewStringQuery {
 	String GET_RECENT_REVIEWS_BY_TAG = "SELECT * FROM" 				//index.jsp
 			+ "(SELECT review_num, title, location, city,id, ceil(rownum/10) page"
 			+ " FROM (SELECT * FROM review ORDER BY review_num desc)" + 
-			" WHERE review_num IN((SELECT review_num FROM tag WHERE word = ?))) WHERE page=?";
+			" WHERE review_num IN((SELECT review_num FROM tag WHERE word = ?))) WHERE rownum<=10";
 	String INSERT_REVIEWIMAGE = "INSERT INTO review_image(review_num, review_image) VALUES(?, ?)";
 	String INSERT_TAG = "INSERT INTO tag(review_num, word) VALUES(?, ?)";
 	String GET_REVIEW_BY_SEARCH = "select * from review where review_num in" + " (select review_num from"
