@@ -66,16 +66,6 @@ public class TourDao {
 		}
 	}
 	
-	public ArrayList<String> getTagsByContent(String content){
-	      ArrayList<String> tlist = new ArrayList<String>();
-	      String[] arr = content.split(" ");
-	      for(int i=0;i<arr.length;i++) {
-	         if(arr[i].startsWith("#")) {
-	            tlist.add(arr[i].substring(1));
-	         }
-	      }
-	      return tlist;
-	}
 	
 	public ArrayList<String> getCities(String location) throws SQLException{
 
@@ -539,11 +529,6 @@ public class TourDao {
 
 	public Connection getConnect() throws SQLException {
 		Connection conn = DriverManager.getConnection(OracleInfo.URL, OracleInfo.USER, OracleInfo.PASS);
-<<<<<<< HEAD
-
-=======
-		System.out.println("�뵒鍮� �뿰寃� �꽦怨�!");
->>>>>>> branch 'master' of https://github.com/yeonsung/TourProject.git
 		return conn;
 	}// getConnect
 

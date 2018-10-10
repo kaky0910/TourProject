@@ -34,15 +34,10 @@ public class HandlerMapping {
 			return new RegisterUpdateController();
 		case "logout.do":
 			return new LogoutController();
-<<<<<<< HEAD
 		case "findidpass.do":
 			return new FindIdPassController();
-=======
-		case "mainPage.do":
-			return new MainPageController();
-    case "getAttraction.do":	//command
+		case "getAttraction.do":	//command
 			return new GetAttractionController();
->>>>>>> branch 'master' of https://github.com/yeonsung/TourProject.git
 		}
 		
 		return null;

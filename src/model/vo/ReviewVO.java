@@ -54,20 +54,7 @@ public class ReviewVO {
 		this.date = date;
 	}
 	
-	// 占쌩곤옙....
-	public ReviewVO(int reviewNum, String title, String id, String location, String city, String content, String date,
-			int like) {
-		super();
-		this.reviewNum = reviewNum;
-		this.title = title;
-		this.id = id;
-		this.location = location;
-		this.city = city;
-		this.content = content;
-		this.date = date;
-		this.like = like;
-	}
-
+	
 	
 
 	public String getMainImage() {
@@ -175,6 +162,7 @@ public class ReviewVO {
 		this.tags = tags;
 		this.comments = comments;
 		this.images = images;
+	}
 	@Override
 	public String toString() {
 		return "ReviewVO [reviewNum=" + reviewNum + ", title=" + title + ", id=" + id + ", location=" + location
