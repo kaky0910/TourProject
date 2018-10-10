@@ -16,8 +16,8 @@ public interface ReviewStringQuery {
 	String SCRAP = "insert into scrap values(?,?)";
 	String GET_ATTRACTION = "select spot_name,address,location,city,info,img from tourspot where city=?";
 	String GET_ATTRACTION_IMG= "select spot_image from spot_image where spot_name=?";
-	String GET_FESTIVAL_INFO = "select festival_Name,festival_Location,location,city,start_Date,end_Date,agency from festival where city='��õ��' \n" + 
-			" AND start_Date <=(SELECT SYSDATE + 7 FROM DUAL)";
+	String GET_FESTIVAL_INFO = "select festival_Name,festival_Location,location,city,start_Date,end_Date,agency from festival where location=?" + 
+			" AND ((start_Date BETWEEN SYSDATE AND SYSDATE+7) OR (SYSDATE BETWEEN start_Date AND end_Date))";
 	String GET_IMAGE_LIST = "select img from tourspot where city=?";
 	String CHECK_REVIEW = "select * from review where review_num = ?";
 	String SEARCH_BY_TAG = "SELECT review_num,location,city,title,content,date_writing,likes,id "

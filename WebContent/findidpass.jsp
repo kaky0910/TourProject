@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>ID,비밀번호 찾기</title>
+<!-- Website Font style -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -14,31 +17,66 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <style>
-.container {
-	height: 700px;
-	width: 400px;
+body {
+	background: #f8f8f8;
+	padding: 30px 0;
+}
+
+#findidpassFrm {
+	padding-left: 25px;
+	padding-right: 25px;
 }
 </style>
 <body>
-	<div class="container">
-		<h3>아이디, 비밀번호 찾기</h3>
-		<p>이름, 주민등록번호(앞6자리), 전화번호를 입력해주세요.</p>
-		<form action="findidpass.do" name="findidpassFrm" method="post">
-			<div class="form-group">
-				<label for="username">이름:</label> <input type="text"
-					class="form-control" id="username" name="username"
-					placeholder="이름을 입력하세요." required="required"> <label
-					for="username">주민등록번호:</label> <input type="text"
-					class="form-control" id="ssn" name="ssn"
-					placeholder="주민등록번호 앞6자리를 입력하세요." required="required"> <label
-					for="username">전화번호:</label> <input type="text"
-					class="form-control" id="tel" name="tel" placeholder="전화번호를 입력하세요."
-					required="required">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="text-center">아이디 및 비밀번호 찾기</h2>
 			</div>
-			<span class="pull-right"><input type="submit"
-				class="btn btn-primary" value="찾기"></span>
-		</form>
+			<div class="modal-body">
+				<p>이름, 주민등록번호(앞6자리), 전화번호를 입력해주세요.</p>
+				<form class="form-horizontal" action="findidpass.do"
+					name="findidpassFrm" id="findidpassFrm" method="post">
+					<div class="form-group">
+						<label for="username" class="cols-sm-2 control-label">이름</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-users"></i></span>
+								<input type="text" class="form-control" id="username"
+									name="username" placeholder="이름을 입력하세요." required="required">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="ssn" class="cols-sm-2 control-label">주민등록번호(앞자리
+							6자리)</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fas fa-id-card"></i></span>
+								<input type="text" class="form-control" id="ssn" name="ssn"
+									placeholder="주민등록번호 앞6자리를 입력하세요." required="required">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tel" class="cols-sm-2 control-label">전화번호</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fas fa-phone"></i></span>
+								<input type="text" class="form-control" id="tel" name="tel"
+									placeholder="전화번호를 입력하세요." required="required">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="submit"
+							class="btn btn-primary btn-lg btn-block login-button" value="찾기">
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
+
 	${check }
 	<c:choose>
 		<c:when test="${check == 'ok'}">
@@ -54,7 +92,6 @@
 			</script>
 		</c:when>
 		<c:otherwise>
-			alert("왜 안될까??");
 		</c:otherwise>
 	</c:choose>
 </body>

@@ -97,7 +97,7 @@
  <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="text-center">방귀곡성 회원가입</h2>
+                <h2 class="text-center">방방곡곡 회원가입</h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" action="register.do" method="post" name="registerForm" id="registerFrm">
