@@ -53,6 +53,7 @@ public class ReviewVO {
 		this.id = id;
 		this.date = date;
 	}
+
 	public ReviewVO(int reviewNum, String title, String date) {
 		super();
 		this.reviewNum = reviewNum;

@@ -847,7 +847,6 @@ public class TourDao {
 	
 	public Connection getConnect() throws SQLException {
 		Connection conn = DriverManager.getConnection(OracleInfo.URL, OracleInfo.USER, OracleInfo.PASS);
-
 		return conn;
 	}// getConnect
 

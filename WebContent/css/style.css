@@ -1,23 +1,20 @@
 /* @import url('normalize.css'); */
-
 @font-face {
-  font-style: normal;
-  font-weight: 700;
-  
-}
-@font-face {
-  font-style: normal;
-  font-weight: 400;
-  
-}
-@font-face {
-  font-style: normal;
-  font-weight: 800;
-
+	font-style: normal;
+	font-weight: 700;
 }
 
-html,
-body {
+@font-face {
+	font-style: normal;
+	font-weight: 400;
+}
+
+@font-face {
+	font-style: normal;
+	font-weight: 800;
+}
+
+html, body {
 	margin: 0;
 	padding: 0;
 }
@@ -28,7 +25,6 @@ body {
 	width: 700px;
 	min-height: 700px;
 } */
-
 .footer {
 	margin: 0 auto 50px;
 	width: 700px;
@@ -75,13 +71,13 @@ h1 {
 }
 
 #map {
-	margin-left:50px;
+	margin-left: 50px;
 	/* border: 1px solid #ddd; */
 }
 
-.background {				/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
-  fill: #f7fcfd;
-  pointer-events: all;
+.background { /*¹è°æ*/
+	fill: #cae5f9;
+	pointer-events: all;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -93,23 +89,23 @@ button.ui-button-icon-only {
 	width: 24px;
 }
 
-.ui-button-icon-only .ui-button-text,
-.ui-button-icons-only .ui-button-text {
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text
+	{
 	padding: 0;
 }
 
-#states path {			/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 	 */
-  fill: #ccece6;
-  stroke: #fff;
-  stroke-width: 1.5px;
+#states path { /*Áöµµ »ö*/
+	fill: #f0ebe0;
+	stroke: #ffffff;
+	stroke-width: 1.5px;
 }
 
 #states path:hover {
-  stroke: white;
+	fill: #facbc3;
 }
 
 #states .active {
-  fill: orange;
+	fill: orange;
 }
 
 #states path {
