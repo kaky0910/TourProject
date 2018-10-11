@@ -31,8 +31,7 @@ public class GoLocationPageController implements Controller {
 //		request.setAttribute("relist", relist);
 		System.out.println(flist.size());
 		return new ModelAndView("v1.jsp");
+	
+		
 	}
-		}
-		return null;
-	}*/
 }

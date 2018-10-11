@@ -977,9 +977,9 @@ public class TourDao {
 
 	public static void main(String[] args) throws SQLException { // 단위테스트
 		
-		ReviewVO vo = TourDao.getInstance().checkReview(36);
+	/*	ReviewVO vo = TourDao.getInstance().checkReview(36);
 		System.out.println(vo.getImages());
-		TourDao.getInstance().deleteImage(vo.getImages().get(0));
+		TourDao.getInstance().deleteImage(vo.getImages().get(0));*/
 		/*
 		 * ArrayList<ReviewVO> vo = new ArrayList<ReviewVO>(); vo =
 		 * TourDao.getInstance().getScrapList("yun"); for(ReviewVO r : vo) {
