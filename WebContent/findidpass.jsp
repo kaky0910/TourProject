@@ -77,12 +77,10 @@ body {
 		</div>
 	</div>
 
-	${check }
 	<c:choose>
 		<c:when test="${check == 'ok'}">
 			<script type="text/javascript">
-				alert("아이디: " + "${rvo.id}" + " // " + "비밀번호: "
-						+ "${rvo.password}");
+				alert("아이디: " + "${rvo.id}" + " // " + "비밀번호: " + "${rvo.password}");
 				window.document.location.href = "login.jsp";
 			</script>
 		</c:when>

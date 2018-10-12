@@ -931,7 +931,7 @@ public class TourDao {
 			pstmt.setString(2,password);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				vo = new MemberVO(rs.getString("id"),rs.getString("member_name"));
+				vo = new MemberVO(rs.getString("member_name"), rs.getInt("ssn"),rs.getString("id"),rs.getString("password"),rs.getString("tel"),rs.getString("mail"));
 			}
 
 		} finally {
