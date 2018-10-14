@@ -7,13 +7,16 @@
 <head>
 <meta charset="utf-8">
 <title>CSS Website Layout</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
  <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
  <link rel="stylesheet" href="css/checkReviewStyle.css">
  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
  <link rel="stylesheet" href="css/rc.css">
- 
+ <link rel="stylesheet" href="css/style.css">
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   
    <!-- Demo CSS -->
 	<link rel="stylesheet" href="css/checkreview.css" type="text/css" media="screen" />
@@ -22,7 +25,7 @@
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
 
-
+<!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.min.js"></script>-->
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
@@ -35,7 +38,8 @@
 }
 
 body {
-background-image: linear-gradient(to top, #d299c2 0%, #fef9d7 100%);
+ background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
+   background: linear-gradient(to bottom, #FFB88C, #DE6262); 
 }
 .title{
 text-align : center;
@@ -128,7 +132,8 @@ section:after {
 .main {
     width: 100%;
     float: left;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
+    padding: 20px;
 }
 .maincontent{
 
@@ -145,21 +150,41 @@ section:after {
 .reviewinfo{
 text-align:right;
 }
-.img{
-width:350px;
 
-height:300px; /*이상하면 지워 		 */
-
-
+/* /* commnet submit button */
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
 }
-/* likes,scrap button */
+.subbutton {
+    background-color: white;
+    color: black;
+    border: 2px solid #e7e7e7;
+}
 
-
+.subbutton:hover {background-color: #e7e7e7;}
+ */
 /* Style the footer */
 .footer {
     
     padding: 10px;
     text-align: center;
+}
+#content{
+    width: 85%;
+    height: 100px;
+    margin: 10px;
+    margin-left: 30px;
 }
 
 </style>
@@ -173,7 +198,7 @@ height:300px; /*이상하면 지워 		 */
 		});//click
 	});//ready
 </script>
-
+<script type="text/javascript" src="js/nav.js"></script>
 </head>
 <body>
 <c:choose>
@@ -251,13 +276,56 @@ $(function() {
 				});
 			}
 		});
-
-$(window).load(function() {
-  $('.flexslider').flexslider({
-    animation: "slide",
-    controlNav: "thumbnails"
-  });
-});
+		
+		$('.addComment').click(function() {
+			if($('#content').val()==''){
+				
+				alert("댓글내용을 입력해주세요");	
+				
+				}else{
+				$.ajax({
+					type : "get",
+					url : "addComment.do",
+					data : {
+						"reviewNum" : "${rvo.reviewNum}",
+						"id" : "${rvo.id}",
+						"content" : $('#content').val()+""
+						
+					},
+					success : function(data) {
+						alert("코멘트 등록완료");
+					}
+				
+				});//ajax
+				}
+			});
+		
+		$('.deleteComment').click(function() {
+		
+				$.ajax({
+					type : "get",
+					url : "deleteComment.do",
+					data : {
+						"reviewNum" : "${rvo.reviewNum}",
+						"id" : "${rvo.id}",
+						"content" : $('#content').val()+""
+						
+					},
+					success : function(data) {
+						alert("코멘트 삭제완료");
+					}
+				
+				});//ajax
+		})
+				
+			
+		
+	$(window).load(function() {
+	  $('.flexslider').flexslider({
+	    animation: "slide",
+	    controlNav: "thumbnails"
+	  });
+	});
 })
 </script>
 </c:when>
@@ -299,27 +367,80 @@ $(window).load(function() {
 </script>
 </c:otherwise>		
 </c:choose>
-<div class="header">
-  <h1>Header</h1>
-</div>
-<div class="maincontent">
-<div class="topnav2">
-
-<h3 class="title">${rvo.title} <br>글번호 :: ${rvo.reviewNum}</h3>
-</div>
-<hr>
-<div class="reviewinfo">
- 작성자::${rvo.id}  작성일시::${rvo.date} <span id="like">좋아요::${rvo.like}</span>
-<hr>
-</div>
-  <div class="main">
- ${rvo.content}
- <br>
-  <!--   곱창전골은 전골류의 한국 요리로, 소나 돼지의 내장과 여러가지 채소를 육수와 함께 끓여낸 음식이다. <br>
+	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
+      	<div id="header">
+      		<div class="container">
+         		<div class="navbar-header" style="margin-top: 15px">
+            		<button type="button" class="navbar-toggle" id="menuSpan" data-toggle="collapse" data-target="#myNavbar">
+	                    <span class="icon-bar"></span>
+	               		<span class="icon-bar" style="margin-top: 2px"></span>
+	               		<span class="icon-bar"></span>
+            		</button>
+            		<a href="index.jsp"><img src="img/main_logo2.png" width="150"></a>
+         		</div> <!-- navbar-header -->
+         		
+	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
+	            	<form class="navbar-form navbar-left" action="getdata.do">
+	               		<div class="input-group">
+	                  		<input type="text" class="form-control" placeholder="Search" name="search" id="myInput">
+	                  		<div class="input-group-btn">
+	                     		<button class="btn btn-default" type="submit">
+	                        		<i class="glyphicon glyphicon-search"></i>
+	                     		</button>
+	                  		</div>
+	               		</div>
+	            	</form>
+	            	
+	            	<ul class="nav navbar-nav navbar-right">
+	               		<li class="dropdown">
+		                  	<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="userMenu">
+		                     	<span class="glyphicon glyphicon-user white">
+		                     		<span class="caret" style="margin-left: 10px"></span>
+		                     	</span>
+		                  	</a>
+		                  	<c:choose>
+		                  	 	<c:when test="${vo != null}">
+			                  	 	<ul class="dropdown-menu">
+			                     	<li><a href="logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;로그아웃</a></li>
+			                     	<li><a href="myreviews.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
+			                     	<li><a href="scrap.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
+			                     	<li><a href="write.jsp"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;글쓰기</a></li>
+			                     	<li><a href="registerupdate.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;정보 수정</a></li>
+			                  		</ul>
+		                  		</c:when>
+		      
+		                  		<c:otherwise>
+		                  			<ul class="dropdown-menu">
+			                     	<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;로그인</a></li>
+			                     	<li><a href="register.jsp"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;회원가입</a></li>
+			                  		</ul>
+		                  		</c:otherwise>
+		                  	</c:choose>
+	               		</li>
+					</ul>
+				</div> <!-- myNavbar -->
+      		</div> <!-- container -->
+		</div> <!-- header -->
+    	<div id="line"></div>
+	</nav>
+	
+	<div style="height: 150px"></div>
+	
+	<div class="maincontent">
+		<div class="topnav2">
+			<h1>${rvo.title}</h1>
+			<h3 class="title">글번호 :: ${rvo.reviewNum}</h3>
+		</div>
+		<hr>
+		작성자::<a href="memberreview.do?id=${rvo.id}">${rvo.id}</a> &nbsp;&nbsp; 작성일시::${rvo.date} &nbsp;&nbsp; 좋아요::${rvo.like}
+		<hr>
+		<div class="row">
+			<div class="main">
+				${rvo.content} <br>
+				<!--   곱창전골은 전골류의 한국 요리로, 소나 돼지의 내장과 여러가지 채소를 육수와 함께 끓여낸 음식이다. <br>
     곱창이란 소나 돼지의 작은 창자를 의미한다. 곱창전골은 곱창이 주재료이지만, 다른 부위의 내장도 많이 사용되어 내장<br>
      특유의 쫄깃한 식감으로 곱창전골의 맛을 더욱 풍부하게 한다. -->
-   
-     <section class="slider">
+      <section class="slider">
        <div id="slider" class="flexslider">
          <ul class="slides">	  	
           	<c:forEach items="${rvo.images}" var="vo">
@@ -340,11 +461,12 @@ $(window).load(function() {
 		</ul>
 	  </div>
      </section>
-
+     </div>
+</div>
  
 
 <ul class="choice-list">
-  <li class="checkbox check"></li>
+  <li class="checkbox check" style="margin-top: 0"></li>
   <c:choose>
   	<c:when test="${likeFlag==true}">
   		  <li class="checkbox heart is-checked"></li>
@@ -365,33 +487,62 @@ $(window).load(function() {
  </ul>  
   
   </div>
-  
-
+  <c:set value="${rvo.comments}" var="cvo"></c:set>
  <hr>
- <div class="row">
- <h3>댓글</h3><hr>
- <c:forEach items="${rvo.comments}" var="cvo">
-작성자:: ${cvo.id}    |   ${cvo.comment}<hr><br>
-</c:forEach>
- </div>
+ <div class="row" style="margin-left: 0px; margin-right: 0px;">
+ <h3>&emsp;댓글</h3><hr>
+  <c:choose> 
+ <c:when test="${null ne sessionScope.vo}">
+ &emsp;댓글 작성 <br><input type="text" name="content" id="content" required="required"> <a class="addComment"><button type="button" class="btn btn-light" 
+ style="margin-top: 70px;">등록</button></a><br><hr>
+ 
+ </c:when>
+ 
+ <c:otherwise> 
+ &emsp;댓글 작성 <br><input type="text" id="content" disabled="disabled" value="로그인이 필요합니다."> <a class="addComment"><button type="button" class="btn btn-light" 
+ disabled="disabled" style="margin-top: 70px;">등록</button></a><br><hr>
+ </c:otherwise> 
+ </c:choose>
+
+  	<c:forEach items="${rvo.comments}" var="cvo">
+		&emsp;작성자:: ${cvo.id}    |  댓글내용:: ${cvo.comment}
+		<c:if test="${sessionScope.vo.id==cvo.id && sessionScope.vo.id !=null}">
+				<a class="deleteComment"><button type="button" class="btn btn-light" style="margin-top: 70px;">삭제</button></a><hr><br>
+		</c:if>
+	</c:forEach>
+ <%-- 
+<c:choose>
+ 	<c:when test="${sessionScope.vo.id == requestScope.cvo.id&& sessionScope.vo.id !=null}">
+ 		<c:forEach items="${rvo.comments}" var="cvo">
+		<a href="#"><img src="./img/delete_btn.jpg"></a><hr><br>
+		</c:forEach>
+	</c:when>
+	
+	<c:otherwise>
+	 	<c:forEach items="${rvo.comments}" var="cvo">
+		&emsp;작성자:: ${cvo.id}    |  댓글내용:: ${cvo.comment}<hr><br>
+		</c:forEach>
+	</c:otherwise>
+</c:choose>  --%>
+</div>
 <div class="footer">
   <p>관련글(카테고리)</p>
  </div>
-
+</div>
  <!-- jQuery -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
   <script type="text/javascript">
     $(function(){
       SyntaxHighlighter.all();
-    });
-    $(window).load(function(){
+    })
+    	$(window).load(function(){
     	$('#carousel').flexslider({
             animation: "slide",
             controlNav: false,
             animationLoop: false,
             slideshow: false,
-            itemWidth: 250,
+            itemWidth: 200,
             itemMargin: 5,
             asNavFor: '#slider'
           });
@@ -407,7 +558,43 @@ $(window).load(function() {
             $('body').removeClass('loading');
           }
         });
-    });
+    	
+      //================================ menu ================================
+      $('#myNavbar>ul li').click(function() {
+         var scrollPosition = $($(this).attr('data-target')).offset().top;
+         $('body, html').animate({
+            scrollTop : scrollPosition
+         }, 500); //animate
+      }); //click
+
+      $('#menuSpan .icon-bar').css('background', 'green');
+
+      $('#myNavbar li a').css({
+         'color' : 'black',
+         'font-weight' : 'bold'
+      }); //css
+
+      $('#myNavbar li a').hover(function() {
+         $(this).css({
+            'color' : 'green',
+            'background' : 'rgba(242, 242, 242, 0.5)'
+         }); //css
+
+      }, function() {
+         $(this).css({
+            'color' : 'black',
+            'background' : 'inherit'
+         }); //css
+      }); //hover
+
+      $('.dropdown-menu').css({
+         'margin-top' : '9px',
+         'min-width' : '12px',
+         'border-radius' : '2px'
+      }); //css
+  
+    
+   })//ready
   </script>
 
  

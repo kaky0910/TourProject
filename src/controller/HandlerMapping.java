@@ -33,6 +33,7 @@ public class HandlerMapping {
 		case "write.do":	//command
 			return new WriteController();
 		case "idcheck.do":
+			System.out.println("¸¸µé¾îÁü");
 			return new IdcheckController();
 		case "registerupdate.do":
 			return new RegisterUpdateController();
@@ -50,13 +51,26 @@ public class HandlerMapping {
 			return new GetRecentReviewsController();
 		case "checkReview.do":	//command
 			return new CheckReviewController();
+		case "updatereview.do":
+			return new UpdateReviewController();
+		case "getreview.do":
+			return new GetReviewController();
+		case "memberreview.do":
+			return new MemberReviewController();
+		case "deleteiamge.do":
+			return new DeleteIamgeController();
 		case "like.do":
 			return new likeCheckedController();
 		case "scrapCheck.do":
 			return new scrapCheckedController();
 		case "getBestReviewCityBytag.do":
 			return new GetBestReviewCityBytagController();
-		}
+		case "addComment.do":
+			return new AddCommentController();
+		case "deleteComment.do":
+			return new DeleteCommentController();
+	}
+		
 		return null;
 	}
 }
