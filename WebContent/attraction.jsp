@@ -145,13 +145,13 @@ overlay {
 	transform: translate(-50%, -50%);
 	text-align: center;
 }
-
+/* 
 .image {
 	display: block;
 	width: 100%;
 	height: auto;
 }
-
+ */
 /* force scrollbar */
 html {
 	overflow-y: scroll;
@@ -403,7 +403,7 @@ body {
 							<c:if test="${avo.mainImage ne null}">
 								<div class="grid-item container">
 									<a href="#"> <img class="image" id="imgtag"
-										src="${avo.mainImage}">
+										src="${avo.mainImage}" width="300px" height="260px">
 										<div class="overlay">
 											<div class="text" id="tourSpot">${avo.spotName}</div>
 										</div>

@@ -14,10 +14,10 @@
 </head>
 
 <body>
-	<table align="center">
+	<table align="center" > 
 		<c:forEach var="vo" items="${relist.list}">
 			<tr>
-				<td><img src=${vo.mainImage}><br></td>
+				<td align="center"><img width="90%";  src=${vo.mainImage}><br></td>
 			</tr>
 			<tr>
 				<td style="font-size: 20px;"><a href="getAttraction.do?city=${vo.city}">${vo.city}</a></td>
