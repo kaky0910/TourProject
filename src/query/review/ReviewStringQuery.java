@@ -40,23 +40,24 @@ public interface ReviewStringQuery {
 	String DELETE_ALL_SCRAP = "delete from scrap where review_num=?";
 	String DELETE_TAG = "delete from tag where review_num=?";
 	String DELETE_REVIEW_IMG = "delete from review_image where review_num=? and review_image=?";
+	String DELETE_REVIEW_IMG1 = "delete from review_image where review_num=?";
 	// 스크랩
-		String INSERT_SCRAP = "insert into scrap(id,review_num) values(?,?)";
-		String DELETE_SCRAP = "delete from scrap where id=? AND review_num=?";
-		String SCRAP_SELECT = "select * from scrap where id=? AND review_num=?";
-		String CHECK_SCRAP = "select * from scrap where id=? AND review_num=?";
-		String GET_SCRAP_LIST = "select * from review where review_num in" + " (select review_num from"
-				+ " (select review_num, ceil(rownum/" + CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from"
-				+ " (select review_num from scrap where id=? order by review_num desc)) where page=?)"; // �뒪�겕�옪 由ъ뒪�듃 由ы꽩
+	String INSERT_SCRAP = "insert into scrap(id,review_num) values(?,?)";
+	String DELETE_SCRAP = "delete from scrap where id=? AND review_num=?";
+	String SCRAP_SELECT = "select * from scrap where id=? AND review_num=?";
+	String CHECK_SCRAP = "select * from scrap where id=? AND review_num=?";
+	String GET_SCRAP_LIST = "select * from review where review_num in" + " (select review_num from"
+			+ " (select review_num, ceil(rownum/" + CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from"
+			+ " (select review_num from scrap where id=? order by review_num desc)) where page=?)"; // �뒪�겕�옪 由ъ뒪�듃 由ы꽩
 		
 	//좋아요
-		String LIKE_ADD = "update review set likes=likes+1 where review_num=?"; 
-		String LIKE_REMOVE = "update review set likes=likes-1 where review_num=?";
-		String INSERT_CHECK = "insert into likes(id,review_num) values(?,?)";
-		String DELETE_CHECK = "delete from likes where id=? AND review_num=?";
-		String CHECK_SELECT = "select * from likes where id=? AND review_num=?";	
+	String LIKE_ADD = "update review set likes=likes+1 where review_num=?"; 
+	String LIKE_REMOVE = "update review set likes=likes-1 where review_num=?";
+	String INSERT_CHECK = "insert into likes(id,review_num) values(?,?)";
+	String DELETE_CHECK = "delete from likes where id=? AND review_num=?";
+	String CHECK_SELECT = "select * from likes where id=? AND review_num=?";	
 		
-	String UPDATE_REVIEW = "update review set location=?, city=?, title=?, content=? where review_num=?";
+	String UPDATE_REVIEW = "update review set location=?, city=?, title=?, content=?, date_writing=sysdate where review_num=?";
 	String TOTAL_SCRAP_COUNT = "select count(-1) from scrap where id=?";
 	String TOTAL_MY_REVIEW_COUNT = "select count(-1) from review where id=?";
 	String TOTAL_RELATED_REVIEW_COUNT = "select count(-1) from review where review_num in"
@@ -112,7 +113,8 @@ public interface ReviewStringQuery {
 	String CHECK_TAG_BY_CITY = "select distinct city, location from location where city like ?";
 	String TAG_EXIST = "select * from tag where word=?";
 	String GET_TOTAL_REVIEW = "SELECT COUNT(-1) FROM review";
-
+	String GET_ATTRACTION_BY_NAME = "SELECT tourspot.spot_name,spot_image.spot_image img from tourspot,spot_image WHERE tourspot.spot_name="
+			+ "spot_image.spot_name AND tourspot.spot_name = ?";
 }
 
 /*

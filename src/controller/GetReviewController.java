@@ -12,19 +12,25 @@ public class GetReviewController implements Controller{
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		boolean flag = true; // ±ÛÀÛ¼ºÀÎÁö ¼öÁ¤ÀÎÁö È®ÀÎ
-		request.setAttribute("flag", flag);
-		
+				
 		int reviewNum = Integer.parseInt(request.getParameter("reviewNum"));
 		ReviewVO rvo = TourDao.getInstance().checkReview(reviewNum);
 		request.setAttribute("rvo", rvo);
+		request.setAttribute("reviewNum", reviewNum);
+		
+		String updateContent = TourDao.getInstance().getChangeContent(rvo.getContent());
+		request.setAttribute("updateContent", updateContent);
+		
+		ArrayList<String> ilist = TourDao.getInstance().getImages(reviewNum);
+		int imgcount = ilist.size();
+		request.setAttribute("imgcount", imgcount);
+		request.setAttribute("ilist", ilist); /* ilistï¿½ï¿½ write.jspï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½~! ï¿½ï¿½...*/ 
 		
 		ArrayList<String> tlist = TourDao.getInstance().getTags(reviewNum);
 		request.setAttribute("tlist", tlist);
 		
-		ArrayList<String> ilist = TourDao.getInstance().getImages(reviewNum);
-		request.setAttribute("ilist", ilist); /* ilist¸¦ write.jspÀÇ Ä³·¯¼¿¿¡ Ãß°¡ÇØÁÖ¼¼¿©~! */
 		
-		return new ModelAndView("write.jsp");
+		
+		return new ModelAndView("updateReview.jsp");
 	}
 }

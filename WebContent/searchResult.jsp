@@ -10,7 +10,36 @@
 <link rel="stylesheet" href="css/nav.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <c:forEach items="${alist}" var="item">
+		<c:set value="${item.spotName}" var="spotName"></c:set>
+		<c:set value="${item.address}" var="address"></c:set>
+		<c:set value="${item.location}" var="location"></c:set>
+		<c:set value="${item.city}" var="city"></c:set>
+		<c:set value="${item.info}" var="info"></c:set>
+		<c:set value="${item.mainImage}" var="mainImage"></c:set>
+	</c:forEach>
+<script type="text/javascript">
+	$(function(){
+		$('#btn').click(function(){
+			$.ajax({
+		         type : "get",
+		         url : "JsonServlet",
+		         dataType:"json",
+ 		         data : {
+		        	"spotName" : "${spotName}",
+		            "img" : "${mainImage}",
+		            "flag" : "add"
+		         },
 
+		         success : function(data) {
+		            $('#mySidebar').append("<img src="+data.img+" width='300px'>");
+		            $('#mySidebar').append("<p>"+data.spotName);
+		         }//callback
+		      });//ajax
+		});
+	});
+	
+</script>
 <style>
    	
    	#mainImage {
@@ -27,6 +56,26 @@
    		width: 400px;
    		height: 200px
    	}
+   	.sidebar {
+   	margin-top:190px;
+    position: absolute;
+    right: -200px;
+    transition: 0.3s;
+    width: 300px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    height:1200px;
+    background-color: white;
+    z-index: 100;
+    top: -100px;
+	}
+		.sidebar:hover {
+    right: 0;
+}
+	
+   	
 </style>
 
 <script type="text/javascript" src="js/nav.js"></script>
@@ -81,33 +130,32 @@
 	
     <div style="height: 120px"></div>
     
-    <c:forEach items="${alist}" var="item">
-		<c:set value="${item.spotName}" var="spotName"></c:set>
-		<c:set value="${item.address}" var="address"></c:set>
-		<c:set value="${item.location}" var="location"></c:set>
-		<c:set value="${item.city}" var="city"></c:set>
-		<c:set value="${item.info}" var="info"></c:set>
-		<c:set value="${item.mainImage}" var="mainImage"></c:set>
-	</c:forEach>
-   
     <div>
 	    <c:choose>
-	    	<c:when test="${emptyFlag == true || flag == true}">
-	    		<h3 align="center">${spotName}</h3><br><br>
-			
-				<div align="right" class="col-sm-12" style="margin-bottom: 10pxl"> 
-					<div align="right" class="col-sm-6">  
-						<img alt="${spotName}" src="${mainImage}" id="mainImage"> 
-					</div>
-					<div align="left" class="col-sm-6" id="info"> 
-						${address}<br><br>
-						${info}
-					</div>
-				</div>
-				<div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
-	    	</c:when>
-	    	<c:otherwise></c:otherwise>
-	    </c:choose>
+          <c:when test="${emptyFlag == true || flag == true}">
+             <div class="col-sm-12">
+                <div align="right" class="col-sm-6">
+                   <h3>${spotName}</h3><br>
+                </div>
+                
+               <div align="left" class="col-sm-6" style="margin-top: 21px">
+                   <a href="#" id="btn"><img src="img/courseAdd.png" width="75"></a>
+                </div>
+             </div>
+         
+            <div align="right" class="col-sm-12" style="margin-bottom: 10pxl"> 
+               <div align="right" class="col-sm-6">  
+                  <img alt="${spotName}" src="${mainImage}" id="mainImage"> 
+               </div>
+               <div align="left" class="col-sm-6" id="info"> 
+                  ${address}<br><br>
+                  ${info}
+               </div>
+            </div>
+            <div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
+          </c:when>
+          <c:otherwise></c:otherwise>
+       </c:choose>
 		
 		<div align="center" class="col-sm-12" style="margin-top: 15px"> 
 			<h3 align="center" style="margin-top: 10">관련 리뷰</h3><br><br>
@@ -158,6 +206,7 @@
 			</div>			
 		</div>
     </div>
+   				<div id="mySidebar" class="sidebar"></div>
    	
 </body>
 

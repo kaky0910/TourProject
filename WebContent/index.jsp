@@ -96,8 +96,26 @@
 		font-family: BMDOHYEON_ttf;
 		border: 1px gray double;
 		border-radius:50px;
+		width:30%;
 		
 	}
+	.sidebar {
+    position: absolute;
+    right: -150px;
+    transition: 0.3s;
+    width: 200px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    height:1000px;
+    background-color: white;
+    z-index: 100;
+}
+	.sidebar:hover {
+    right: 0;
+}
+	
 </style>
 
 <script type="text/javascript" src="js/nav.js"></script>
@@ -197,7 +215,19 @@
 	</form>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
 	<script src="js/script.js"></script>
+	<script>
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    $('#btn').attr('onclick','closeNav()');
+    
+}
 
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    $('.rightbar button').attr('onclick','openNav()');
+}
+</script>
+	
    <div style="height: 100px"></div>
    
    <div style="background-color: #DDDDDD; margin-top: 20px; padding-top: 50px; padding-bottom: 50px">

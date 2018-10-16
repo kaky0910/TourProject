@@ -3,21 +3,31 @@ package model.vo;
 import java.util.ArrayList;
 
 public class ReviewVO {
-	int reviewNum; 
-	String title;
-	String id;
-	String location;
-	String city;
-	String content;
-	String date;
-	int like;
-	String mainImage;
-	ArrayList<String> tags;
-	ArrayList<CommentVO> comments;
-	ArrayList<String> images;
+	private int reviewNum; 
+	private String title;
+	private String id;
+	private String location;
+	private String city;
+	private String content;
+	private String date;
+	private int like;
+	private String mainImage;
+	private ArrayList<String> tags;
+	private ArrayList<CommentVO> comments;
+	private ArrayList<String> images;
 	
 	public ReviewVO() {}
-
+	
+	public ReviewVO(int reviewNum,String title, String id,String location, String city, String content) {
+		this.reviewNum = reviewNum;
+		this.title = title;
+		this.location = location;
+		this.city = city;
+		this.content = content;
+		this.id = id;
+		this.content = content;
+	}
+	
 	public ReviewVO(String title, String id, String location, String city, String content) {
 		this.title = title;
 		this.id = id;

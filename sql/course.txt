@@ -1,0 +1,27 @@
+CREATE TABLE course_info(course_num NUMBER , 
+		    spot_name varchar2(100) not null,
+		    course_order NUMBER default 0,
+		    CONSTRAINT FK_TOURSPOT2 FOREIGN KEY (spot_name) REFERENCES tourspot(spot_name) on delete cascade,
+		    CONSTRAINT FK_COURSE FOREIGN KEY (course_num) REFERENCES course(course_num) on delete cascade
+		    );
+
+
+
+
+
+CREATE SEQUENCE course_seq
+		start with 1
+	        increment by 1
+		nocache;
+
+
+
+
+
+CREATE TABLE course(id varchar2(30),
+			  course_num NUMBER primary key,
+			  course_name varchar2(50),
+			  CONSTRAINT FK_MEMBERS6 FOREIGN KEY (ID) REFERENCES member(id) on delete cascade)
+
+
+
