@@ -88,7 +88,6 @@
 		cursor:pointer;
 	}
 	.haha{
-		margin-top:161px; 
 		max-height:700px;
 		display:inline-block;
 		overflow-y : hidden;
@@ -168,27 +167,13 @@
 		<div class="col-lg-6 col-md-12 col-sm-12">
 			<div id="container" style="display: inline-block; margin-top: 161px;"></div>
 		</div>
-<!-- 		<div class="col-lg-4" style="margin-top:161px;">
- -->
-			<!-- <section>
-				<nav id="tabs">
-					<h1 align="center" style="cursor:default">RECENT REVIEWS</h1>
-					<ul>
-						<li><a href="javascript:void(0)">맛집</a></li>
-						<li><a href="javascript:void(0)">관광</a></li>
-						<li><a href="javascript:void(0)">숙소</a></li>
-					</ul>
-					<div id="tab-1"></div>
-					<div id="tab-2"></div>
-					<div id="tab-3"></div>
-				</nav>
-
-			</section> -->
-			<div class="col-lg-5 haha col-md-12 col-sm-12">
-				
+			<div class="col-lg-5 col-md-12 col-sm-12" style="margin-top:161px;">
+				<h2 align="center">reviews</h2>
+				<div class="haha" width="100%">
+					
+				</div>
 			</div>
-<!-- 		</div>
- -->	</div>
+		</div>
 	<div class="footer" style="display: none;">
 		
 	</div>

@@ -1149,7 +1149,8 @@ public class TourDao {
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				vo = new MemberVO(rs.getString("id"), rs.getString("member_name"));
+				vo = new MemberVO(rs.getString("member_name"), rs.getInt("ssn"),rs.getString("id"),rs.getString("password"),rs.getString("tel"),rs.getString("mail"));
+
 			}
 
 		} finally {
@@ -1213,7 +1214,7 @@ public class TourDao {
 			while(rs.next()) {
 				rlist.add(new ReviewVO(rs.getInt("review_num"), rs.getString("location"), rs.getString("city"),rs.getString("title"), rs.getString("id")));
 			}
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < rlist.size(); i++) {
 				ArrayList<String> tags = getTags(rlist.get(i).getReviewNum());
 				rlist.get(i).setTags(tags);
 				ArrayList<String> img = getImages(rlist.get(i).getReviewNum());
