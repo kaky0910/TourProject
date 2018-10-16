@@ -2,13 +2,13 @@ package model.vo;
 import java.util.ArrayList;
 
 public class AttractionVO {
-	String spotName;
-	String address; // ÃÑ ÁÖ¼Ò
-	String location; //½Ã µµ
-	String city; // ½Ã ±º ±¸
-	String info;
-	String mainImage;
-	ArrayList<String> images;
+	private String spotName;
+	private String address; // ÃÑ ÁÖ¼Ò
+	private String location; //½Ã µµ
+	private String city; // ½Ã ±º ±¸
+	private String info;
+	private String mainImage;
+	private ArrayList<String> images;
 	
 	
 	public AttractionVO() {}

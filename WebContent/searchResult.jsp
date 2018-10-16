@@ -10,7 +10,36 @@
 <link rel="stylesheet" href="css/nav.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <c:forEach items="${alist}" var="item">
+		<c:set value="${item.spotName}" var="spotName"></c:set>
+		<c:set value="${item.address}" var="address"></c:set>
+		<c:set value="${item.location}" var="location"></c:set>
+		<c:set value="${item.city}" var="city"></c:set>
+		<c:set value="${item.info}" var="info"></c:set>
+		<c:set value="${item.mainImage}" var="mainImage"></c:set>
+	</c:forEach>
+<script type="text/javascript">
+	$(function(){
+		$('#btn').click(function(){
+			$.ajax({
+		         type : "get",
+		         url : "JsonServlet",
+		         dataType:"json",
+ 		         data : {
+		        	"spotName" : "${spotName}",
+		            "img" : "${mainImage}",
+		            "flag" : "add"
+		         },
 
+		         success : function(data) {
+		            $('#mySidebar').append("<img src="+data.img+" width='300px'>");
+		            $('#mySidebar').append("<p>"+data.spotName);
+		         }//callback
+		      });//ajax
+		});
+	});
+	
+</script>
 <style>
    	
    	#mainImage {
@@ -27,6 +56,26 @@
    		width: 400px;
    		height: 200px
    	}
+   	.sidebar {
+   	margin-top:190px;
+    position: absolute;
+    right: -200px;
+    transition: 0.3s;
+    width: 300px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    height:1200px;
+    background-color: white;
+    z-index: 100;
+    top: -100px;
+	}
+		.sidebar:hover {
+    right: 0;
+}
+	
+   	
 </style>
 
 <script type="text/javascript" src="js/nav.js"></script>
@@ -42,7 +91,7 @@
 	               		<span class="icon-bar" style="margin-top: 2px"></span>
 	               		<span class="icon-bar"></span>
             		</button>
-            		<img src="img/main_logo2.png" width="150">
+            		<a href="index.jsp"><img src="img/main_logo2.png" width="150" height="47" style="background-color: #FFFAE5/* #0F6A8B  #F5EED2*/"></a>
          		</div> <!-- navbar-header -->
          		
 	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
@@ -66,8 +115,8 @@
 		                  	</a>
 		                  	<ul class="dropdown-menu">
 		                     	<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;로그아웃</a></li>
-		                     	<li><a href="myreviews.do?id=yun"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
-		                     	<li><a href="scrap.do?id=yun"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
+		                     	<li><a href="myreviews.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
+		                     	<li><a href="scrap.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
 		                     	<li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;글 작성</a></li>
 		                     	<li><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;정보 수정</a></li>
 		                  	</ul>
@@ -81,33 +130,32 @@
 	
     <div style="height: 120px"></div>
     
-    <c:forEach items="${alist}" var="item">
-		<c:set value="${item.spotName}" var="spotName"></c:set>
-		<c:set value="${item.address}" var="address"></c:set>
-		<c:set value="${item.location}" var="location"></c:set>
-		<c:set value="${item.city}" var="city"></c:set>
-		<c:set value="${item.info}" var="info"></c:set>
-		<c:set value="${item.mainImage}" var="mainImage"></c:set>
-	</c:forEach>
-   
     <div>
 	    <c:choose>
-	    	<c:when test="${emptyFlag == true || flag == true}">
-	    		<h3 align="center">${spotName}</h3><br><br>
-			
-				<div align="right" class="col-sm-12" style="margin-bottom: 10pxl"> 
-					<div align="right" class="col-sm-6">  
-						<img alt="${spotName}" src="${mainImage}" id="mainImage"> 
-					</div>
-					<div align="left" class="col-sm-6" id="info"> 
-						${address}<br><br>
-						${info}
-					</div>
-				</div>
-				<div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
-	    	</c:when>
-	    	<c:otherwise></c:otherwise>
-	    </c:choose>
+          <c:when test="${emptyFlag == true || flag == true}">
+             <div class="col-sm-12">
+                <div align="right" class="col-sm-6">
+                   <h3>${spotName}</h3><br>
+                </div>
+                
+               <div align="left" class="col-sm-6" style="margin-top: 21px">
+                   <a href="#" id="btn"><img src="img/courseAdd.png" width="75"></a>
+                </div>
+             </div>
+         
+            <div align="right" class="col-sm-12" style="margin-bottom: 10pxl"> 
+               <div align="right" class="col-sm-6">  
+                  <img alt="${spotName}" src="${mainImage}" id="mainImage"> 
+               </div>
+               <div align="left" class="col-sm-6" id="info"> 
+                  ${address}<br><br>
+                  ${info}
+               </div>
+            </div>
+            <div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
+          </c:when>
+          <c:otherwise></c:otherwise>
+       </c:choose>
 		
 		<div align="center" class="col-sm-12" style="margin-top: 15px"> 
 			<h3 align="center" style="margin-top: 10">관련 리뷰</h3><br><br>
@@ -158,6 +206,7 @@
 			</div>			
 		</div>
     </div>
+   				<div id="mySidebar" class="sidebar"></div>
    	
 </body>
 

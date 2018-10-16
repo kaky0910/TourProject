@@ -13,16 +13,16 @@ public class UpdateReviewController implements Controller{
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int reviewNum = Integer.parseInt(request.getParameter("reviewNum"));
+		System.out.println("����ѹ���@@@@@@@@"+reviewNum );
 		String id = request.getParameter("id");
 		String location = request.getParameter("loaction");
 		String city = request.getParameter("city");
 		String title = request.getParameter("title");
 		String[] categorys = request.getParameterValues("category");
 		String content = request.getParameter("smarteditor");
-		String date = request.getParameter("date");
 		int count = Integer.parseInt(request.getParameter("count"));
 		
-		ReviewVO rvo = new ReviewVO(reviewNum,title, id, location, city, content, date);
+		ReviewVO rvo = new ReviewVO(reviewNum,title, id, location, city, content);
 		TourDao.getInstance().updateReview(rvo);
 
 		ArrayList<String> tags = TourDao.getInstance().getTagsByContent(content);
@@ -38,6 +38,8 @@ public class UpdateReviewController implements Controller{
 		for(int i=0 ; i<count;i++) {
 			imagepaths.add(request.getParameter("img"+(i+1)));
 		}
+		TourDao.getInstance().deleteImage(rvo.getReviewNum());
+		
 		rvo.setImages(imagepaths);
 		TourDao.getInstance().writeReviewImage(reviewNum, imagepaths);
 		

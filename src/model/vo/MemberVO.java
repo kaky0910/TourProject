@@ -3,12 +3,13 @@ package model.vo;
 import java.util.ArrayList;
 
 public class MemberVO {
-	String userName;
-	int ssn;
-	String id;
-	String password;
-	String tel;
-	String mail;
+	private String userName;
+	private int ssn;
+	private String id;
+	private String password;
+	private String tel;
+	private String mail;
+	private ArrayList<CourseVO> courses;
 	
 	ArrayList<Integer> scraps = new ArrayList<Integer>();
 	
@@ -85,6 +86,19 @@ public class MemberVO {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
+	public ArrayList<CourseVO> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(ArrayList<CourseVO> courses) {
+		this.courses = courses;
+	}
+
+	public void setScraps(ArrayList<Integer> scraps) {
+		this.scraps = scraps;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVO [userName=" + userName + ", ssn=" + ssn + ", id=" + id + ", password=" + password + ", tel="

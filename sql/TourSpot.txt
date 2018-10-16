@@ -3,4 +3,5 @@ CREATE TABLE tourspot(spot_name VARCHAR2(100) PRIMARY KEY,
 		      location VARCHAR2(30) NOT NULL,
 		      city VARCHAR2(30) NOT NULL,
 		      info VARCHAR2(100),
-		      img VARCHAR2(200));
+		      img VARCHAR2(200)
+		      description VARCHAR2(2000));

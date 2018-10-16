@@ -1,14 +1,14 @@
 package model.vo;
 
 public class FestivalVO {
-	String festivalName;
-	String festivalLocation;
-	String location;
-	String city;
-	String startDate;
-	String endDate;
-	String agency;
-	String img;
+	private String festivalName;
+	private String festivalLocation;
+	private String location;
+	private String city;
+	private String startDate;
+	private String endDate;
+	private String agency;
+	private String img;
 	
 	public FestivalVO(String festivalName, String festivalLocation, String location, 
 			String city, String startDate,

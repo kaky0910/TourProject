@@ -1,8 +1,11 @@
 package controller;
 
+import java.util.HashMap;
+
 public class ModelAndView {
 	String path;
 	boolean isRedirect;
+	HashMap<String, String> map;
 	
 	public ModelAndView() {}
 	public ModelAndView(String path) {
@@ -13,7 +16,10 @@ public class ModelAndView {
 		this.path = path;
 		this.isRedirect = isRedirect;
 	}
-
+	public ModelAndView(String path,HashMap map) {
+		this.path = path;
+		this.map = map;
+	}
 	public String getPath() {
 		return path;
 	}

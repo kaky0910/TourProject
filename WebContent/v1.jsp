@@ -393,14 +393,14 @@ tr td {
             <c:forEach items="${clist}" var="rList">
 
                <div align="center" class="col-sm-2">
-                  <hr>
+                <hr>
                   <br> <a
                      style="font-size: 25px; color: #FFFFFF/* rgb(116, 191, 237) */; text-decoration: none; font-weight: bold;"
                      href="getAttraction.do?city=${rList}&&location=${requestScope.location}">${rList}</a><br>
                   <br>
                </div>
             </c:forEach>
-            <hr>
+           <!--  <hr> -->
             <br> <br>
          </article>
       </section>

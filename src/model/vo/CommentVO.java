@@ -1,9 +1,9 @@
 package model.vo;
 
 public class CommentVO {
-	int reviewNum;
-	String id;
-	String comment;
+	private int reviewNum;
+	private String id;
+	private String comment;
 	
 	
 	public CommentVO() {
