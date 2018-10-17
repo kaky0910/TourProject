@@ -35,7 +35,7 @@ header {
    -moz-border-imag: -moz-linear-gradient(left, DarkGreen, #64AB4C);
    /* #CEF6EC #A4A4A4 #BDBDBD #AEB404*/
    -webkit-border-image: -webkit-linear-gradient(left, DarkGreen, #64AB4C);
-   border-image: linear-gradient(to right, DarkGreen, #64AB4C);
+   border-image: linear-gradient(to right, #fcf8e3, #f9d303);
    border-image-slice: 1;
    margin-top: 8px;
    padding-bottom: 8px;
@@ -44,6 +44,47 @@ header {
       sans-serif;
    font-size: 14px;
 }
+/* ///////////sidebar///////// */
+.text-success {
+    color: #000000;
+}
+.ui-widget-header {
+    border: 1px solid #fffbfb;
+    background: #fcf8e3;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid #fcf8e3;
+    background: #f6f6f6;
+    font-weight: normal;
+    color: #454545;
+}
+
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    border: 1px solid #fffbfb;
+    background: #ead09f;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 0;
+    /* margin: 1px .2em 0 0; */
+    border-bottom-width: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+/* //////////////////// */
+
+
 
 .caret {
    margin-left: 10px
@@ -54,13 +95,16 @@ header {
 }
 
 body {
+	border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    margin-left: 10%;
+    margin-right: 10%;
    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Create two columns/boxes that floats next to each other */
 nav {
    float: left;
-   left: 20px;
    width: 23%;
    height: 100%; /* only for demonstration, should be removed */
    padding: 20px;
@@ -346,7 +390,7 @@ body {
                <span class="icon-bar"></span> <span class="icon-bar"
                   style="margin-top: 2px"></span> <span class="icon-bar"></span>
             </button>
-            <a href="index.jsp"><img src="img/main_logo.png" width="150"></a>
+            <a href="index.jsp"><img src="img/main_logo2.png" width="150"></a>
          </div>
          <!-- navbar-header -->
 
@@ -402,11 +446,12 @@ body {
    </header>
    <!-- header -->
    <div id="line"></div>
-   <div style="height: 70px;"></div>
    <section>
-      <nav id="tabs" style="overflow-y: scroll; height: 800px; width: 25%">
-         <h1 align="center">BEST REVIEWS</h1>
+      <nav id="tabs" style="overflow-y: hidden; height: 800px; width: 25%; border: none;">
+         <h2 align="center" style="font-color: gray;">인기 게시물</h2>
          <ul>
+         	<li><a href="javascript:void(0)">전체</a></li>
+         	<li><a href="javascript:void(0)">쇼핑</a></li>
             <li><a href="javascript:void(0)">맛집</a></li>
             <li><a href="javascript:void(0)">관광</a></li>
             <li><a href="javascript:void(0)">숙소</a></li>

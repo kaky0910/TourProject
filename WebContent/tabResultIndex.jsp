@@ -7,7 +7,9 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 <style>
-	a, a:hover{text-decoration: none}
+	a, a:hover{text-decoration: none;
+	color:#2e5a80;
+	}
 	td{
 		text-align: center;
 		

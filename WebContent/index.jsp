@@ -12,6 +12,15 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link rel="stylesheet" href="css/nav.css">
+   <!-- owl carousel-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/owl.carousel/assets/owl.carousel.css">
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/owl.carousel/assets/owl.theme.default.css">
+    <!-- Device Mockups-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/css/device-mockups.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/font-awesome/css/font-awesome.min.css">
+    
+    
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
  	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
@@ -21,6 +30,21 @@
 	<script>
 
 	$(function() {
+		var owl = $('.owl-carousel');
+		owl.owlCarousel({
+		    items:1,
+		    loop:true,
+		    margin:10,
+		    autoplay:true,
+		    autoplayTimeout:3000,
+		    autoplayHoverPause:true,
+		});
+		$('.play').on('click',function(){
+		    owl.trigger('play.owl.autoplay',[3000])
+		})
+		$('.stop').on('click',function(){
+		    owl.trigger('stop.owl.autoplay')
+		})
 		
 		$('.haha').hover(function(){
 			$('.haha').css('overflow-y','auto');
@@ -50,7 +74,40 @@
 	function effect2(){
 		TweenLite.to($('#label-경기도'), 1, {y:131});	
 	} 
-	
+	/* ============휠 스크롤=============== */
+	 window.onload = function () {
+         $(".box").each(function () {
+             
+             $(this).on("mousewheel DOMMouseScroll", function (e) {
+                 e.preventDefault();
+                 var delta = 0;
+                 if (!event) event = window.event;
+                 if (event.wheelDelta) {
+                     delta = event.wheelDelta / 120;
+                     if (window.opera) delta = -delta;
+                 } else if (event.detail) delta = -event.detail / 3;
+                 var moveTop = null;
+                 
+                 if (delta < 0) {
+                     if ($(this).next() != undefined) {
+                         moveTop = $(this).next().offset().top;
+                     }
+             
+                 } else {
+                     if ($(this).prev() != undefined) {
+                         moveTop = $(this).prev().offset().top;
+                     }
+                 }
+                
+                 $("html,body").stop().animate({
+                     scrollTop: moveTop + 'px'
+                 }, {
+                     duration: 800, complete: function () {
+                     }
+                 });
+             });
+         });
+     }
 </script>
 <style>
 @font-face{
@@ -58,7 +115,11 @@
 	src:url(font/BMDOHYEON_ttf.ttf) format('truetype');
 }
 	body{
-		font-family: BMDOHYEON_ttf;
+	font-family: BMDOHYEON_ttf;
+	border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    margin-left: 10%;
+    margin-right: 10%;
 	}
 	::-webkit-scrollbar {
 	width: 10px;
@@ -93,7 +154,7 @@
 		overflow-y : hidden;
 		overflow-x : hidden;
 		font-family: BMDOHYEON_ttf;
-		border: 1px gray double;
+		/* border: 1px gray double; */
 		border-radius:50px;
 		
 	}
@@ -103,7 +164,7 @@
 </head>
 <body style="background-color: rgba(249, 248, 244, 0.5)/* #EEF4F2 */">
 
-
+	<div class="box">
    	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
       	<div id="header"> 
       		<div class="container">
@@ -115,7 +176,15 @@
             		</button>
             		<a href="index.jsp"><img src="img/main_logo2.png" width="150" height="47" style="background-color: #FFFAE5/* #0F6A8B  #F5EED2*/"></a>
          		</div> <!-- navbar-header -->
-         		
+  <!--    <div class="container-fluid">
+   -->
+    <ul class="nav navbar-nav" style="font:20px;">
+      <li class="active" style="top: 10px;"><a href="#">여행지</a></li>
+      <li style="top: 10px;"><a href="#">이벤트</a></li>
+      <li style="top: 10px;"><a href="#">매거진</a></li>
+      <li style="top: 10px;"><a href="#">랭킹</a></li>
+    </ul>
+ <!--  </div> -->
 	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
 	            	<form class="navbar-form navbar-left" action="getdata.do">
 	               		<div class="input-group">
@@ -188,20 +257,130 @@
 			</div>
 <!-- 		</div>
  -->	</div>
-	<div class="footer" style="display: none;">
-		
+ </div>
+ <div class="box">
+   <!-- 캐러셀 섹션 -->
+    <section id="success-stories" class="success-stories">
+      <div class="container">
+        <header class="text-center">
+          <h1 class="small-heading"></h1>
+        </header>
+        <div class="owl-carousel owl-theme stories-slider">
+          <!-- Item-->
+          <div class="story">
+            <div class="row align-items-center">
+              <div class="mockup col-lg-6">
+                <div class="device-mockup">
+                  <div data-device="Macbook2015" data-orientation="portrait" data-color="gold" class="device">
+                    <div class="screen"><img src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/img/trifold.jpg" alt="..."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="text col-lg-6 text-center text-lg-left mt-5 mt-lg-0">
+                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                <ul class="values list-inline">
+                  <li class="list-inline-item"><strong>250</strong><span>Daily Users</span></li>
+                  <li class="list-inline-item"><strong>400</strong><span>Leads collected</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End Item-->
+          <!-- Item-->
+          <div class="story">
+            <div class="row align-items-center">
+              <div class="mockup col-lg-6">
+                <div class="device-mockup">
+                  <div data-device="Macbook2015" data-orientation="portrait" data-color="gold" class="device">
+                    <div class="screen"><img src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/img/portfolio-6.jpg" alt="..."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="text col-lg-6 text-center text-lg-left mt-5 mt-lg-0">
+                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                <ul class="values list-inline">
+                  <li class="list-inline-item"><strong>10</strong><span>Time Difference</span></li>
+                  <li class="list-inline-item"><strong>90%</strong><span>Revenue Increase</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End Item-->
+          <!-- Item-->
+          <div class="story">
+            <div class="row align-items-center">
+              <div class="mockup col-lg-6">
+                <div class="device-mockup">
+                  <div data-device="Macbook2015" data-orientation="portrait" data-color="gold" class="device">
+                    <div class="screen"><img src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/img/portfolio-3.jpg" alt="..."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="text col-lg-6 text-center text-lg-left mt-5 mt-lg-0">
+                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                <ul class="values list-inline">
+                  <li class="list-inline-item"><strong>25</strong><span>Weekly Users</span></li>
+                  <li class="list-inline-item"><strong>40</strong><span>Pages Case study</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End Item-->
+          <!-- Item-->
+          <div class="story">
+            <div class="row align-items-center">
+              <div class="mockup col-lg-6">
+                <div class="device-mockup">
+                  <div data-device="Macbook2015" data-orientation="portrait" data-color="gold" class="device">
+                    <div class="screen"><img src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/img/portfolio-4.jpg" alt="..."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="text col-lg-6 text-center text-lg-left mt-5 mt-lg-0">
+                <h2>Lorem ipsum dolor sit amet, consectetur</h2>
+                <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate</p>
+                <ul class="values list-inline">
+                  <li class="list-inline-item"><strong>10</strong><span>Time Difference</span></li>
+                  <li class="list-inline-item"><strong>90%</strong><span>Team Increas</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End Item-->
+        </div>
+      </div>
+    </section>
+  </div>
+    
+	<div class="col-lg-12" style="display: none;">
+	
 	</div>
 	<form action="locationpage.do">
 		<input type="hidden" name="location" value="">
 	</form>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
 	<script src="js/script.js"></script>
+	    <!-- 10/16 JavaScript files-->
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/jquery/jquery.min.js"></script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/owl.carousel/owl.carousel.min.js"></script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="https://d19m59y37dris4.cloudfront.net/foliou/2-0-0/js/front.js"></script>
 
    <div style="height: 100px"></div>
    
    <div style="background-color: #DDDDDD; margin-top: 20px; padding-top: 50px; padding-bottom: 50px">
 		<h2 align="center" style="color: gray">footer</h2>
    </div>
+
+
+ 
 </body>
 
 </html>

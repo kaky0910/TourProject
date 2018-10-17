@@ -306,26 +306,25 @@ $(function() {
 				}
 			});
 		
-		$('.deleteComment').click(function() {
-		
+		$('.deleteComment button').click(function() {
+			var num = $(this).attr("id").replace("deletebtn","");
+			var span = $('span[id=comment'+num+']').html();
 				$.ajax({
 					type : "get",
 					url : "deleteComment.do",
 					data : {
 						"reviewNum" : "${rvo.reviewNum}",
 						"id" : "${rvo.id}",
-						"content" : $('#content').val()+""
+						"content" : span
 						
 					},
 					success : function(data) {
 						alert("코멘트 삭제완료");
 					}
 				
-				});//ajax
-		})
+				});//ajax	
 				
-			
-		
+		});
 	$(window).load(function() {
 	  $('.flexslider').flexslider({
 	    animation: "slide",
@@ -528,26 +527,14 @@ $(function() {
  </c:otherwise> 
  </c:choose>
 
-  	<c:forEach items="${rvo.comments}" var="cvo">
-		&emsp;작성자:: ${cvo.id}    |  댓글내용:: ${cvo.comment}
+  	<c:forEach items="${rvo.comments}" var="cvo" varStatus="status">
+		&emsp;<span>작성자:: ${cvo.id}</span>    |  댓글내용:: <span id="comment${status.index}">${cvo.comment}</span>
 		<c:if test="${sessionScope.vo.id==cvo.id && sessionScope.vo.id !=null}">
-				<a class="deleteComment"><button type="button" class="btn btn-light" style="margin-top: 70px;">삭제</button></a><hr><br>
+			<a class="deleteComment"><button id="deletebtn${status.index}" type="button" class="btn btn-light" style="text-align:right;">삭제</button></a><hr><br>
 		</c:if>
+		<hr><br>
 	</c:forEach>
- <%-- 
-<c:choose>
- 	<c:when test="${sessionScope.vo.id == requestScope.cvo.id&& sessionScope.vo.id !=null}">
- 		<c:forEach items="${rvo.comments}" var="cvo">
-		<a href="#"><img src="./img/delete_btn.jpg"></a><hr><br>
-		</c:forEach>
-	</c:when>
-	
-	<c:otherwise>
-	 	<c:forEach items="${rvo.comments}" var="cvo">
-		&emsp;작성자:: ${cvo.id}    |  댓글내용:: ${cvo.comment}<hr><br>
-		</c:forEach>
-	</c:otherwise>
-</c:choose>  --%>
+ 
 </div>
 <div class="footer">
   <p>관련글(카테고리)</p>
