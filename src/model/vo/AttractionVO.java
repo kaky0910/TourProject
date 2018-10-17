@@ -13,6 +13,11 @@ public class AttractionVO {
 	
 	public AttractionVO() {}
 
+	public AttractionVO(String spotName, String address, String mainImage) {
+		this.spotName = spotName;
+		this.address = address;
+		this.mainImage = mainImage;
+	}
 	public AttractionVO(String spotName, String address, String location, String city, String info) {
 		super();
 		this.spotName = spotName;
