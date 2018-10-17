@@ -2,11 +2,11 @@ package model.dao;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -19,7 +19,6 @@ import model.vo.AttractionVO;
 import model.vo.CommentVO;
 import model.vo.CourseVO;
 import model.vo.FestivalVO;
-
 import model.vo.MemberVO;
 import model.vo.ReviewVO;
 import query.course.CourseStringQuery;
@@ -1256,38 +1255,49 @@ public class TourDao {
 		return ReviewStringQuery.RELATED_REVIEW_IN_CHECKREVIEW+sum+")))";
 	}
 	
-	public void insertCourse(CourseVO cvo) throws SQLException{
-		Connection conn = null;
-		PreparedStatement ps = null;
-		Iterator<Integer> iter = cvo.getMap().keySet().iterator();
-		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(CourseStringQuery.INSERT_COURSE);
-			while(iter.hasNext()) {
-				int order = iter.next();
-				ps.setInt(1, cvo.getCourseNum());
-				ps.setString(2,cvo.getMap().get(order).getSpotName());
-				ps.setInt(3, order);
-				ps.executeUpdate();
-			}
-		}finally {
-			closeAll(ps, conn);
-		}
-	}
-	
-	public void makeCourse(MemberVO mvo,String course_name) throws SQLException{
-		Connection conn = null;
-		PreparedStatement ps = null;
-		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(CourseStringQuery.MAKE_COURSE);
-			ps.setString(1, mvo.getId());
-			ps.setString(2, course_name);
-			ps.executeUpdate();
-		}finally {
-			closeAll(ps, conn);
-		}
-	}
+	public void insertCourse(CourseVO cvo) throws SQLException {
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      Iterator<Integer> iter = cvo.getMap().keySet().iterator();
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement(CourseStringQuery.INSERT_COURSE);
+	         while (iter.hasNext()) {
+	            int order = iter.next();
+	            ps.setInt(1, cvo.getCourseNum());
+	            ps.setString(2, cvo.getMap().get(order).getSpotName());
+	            ps.setInt(3, order);
+	            ps.executeUpdate();
+	         }
+	      } finally {
+	         closeAll(ps, conn);
+	      }
+	   }
+
+	   public CourseVO makeCourse(String id, String course_name) throws SQLException {
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      int courseNum = 0;
+	      CourseVO cvo = null;
+	      
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement(CourseStringQuery.MAKE_COURSE);
+	         ps.setString(1, id);
+	         ps.setString(2, course_name);
+	         ps.executeUpdate();
+	         
+	         ps = conn.prepareStatement("select course_seq.currVal course_num from dual");
+	         courseNum = ps.executeUpdate();
+	         System.out.println(courseNum + " course exist...");
+	         cvo = new CourseVO(courseNum, course_name);
+	         
+	      } finally {
+	         closeAll(ps, conn);
+	      }
+	      
+	      return cvo;
+	   }
 	
 	public int max(Set<Integer> set) {
 		Iterator<Integer> iter = set.iterator();
@@ -1300,24 +1310,39 @@ public class TourDao {
 		return max;
 	}
 	
-	public ArrayList<Map<Integer,AttractionVO>> getCourses(String id) throws SQLException{
+	public ArrayList<CourseVO> getCourses(String id) throws SQLException{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		int count = 0;
-		ArrayList<Map<Integer,AttractionVO>> cList = new ArrayList<Map<Integer,AttractionVO>>();
+		ResultSet rs2 = null;
+		ArrayList<CourseVO> cList = new ArrayList<CourseVO>();
+//		ArrayList<Integer> nList = new ArrayList<>();
 		try {
 			conn = getConnect();
-			ps = conn.prepareStatement("SELECT distinct count(course_num) FROM course_info GROUP BY course_num");
+			ps = conn.prepareStatement("SELECT course_num,course_name FROM course WHERE id=? ORDER BY course_num DESC");
+			ps.setString(1, id);
 			rs = ps.executeQuery();
-			if(rs.next()) count = rs.getInt(1);
-			for(int i=0; i<count;i++) {
-				
+			while(rs.next()) {
+				CourseVO cvo = null; 
+//				nList.add(rs.getInt(1));
+				HashMap<Integer,AttractionVO> cmap = new HashMap<Integer, AttractionVO>();
+				ps = conn.prepareStatement("SELECT course_num,course_info.spot_name spot_name,course_order,address,spot_image FROM course_info,"
+										+ "(SELECT tourspot.spot_name spot_name,address,spot_image FROM tourspot,spot_image WHERE tourspot.spot_name=spot_image.spot_name) tour"
+										+ " WHERE course_num = ? AND (course_info.spot_name = tour.spot_name) ORDER BY course_order");
+				ps.setInt(1, rs.getInt("course_num"));		//nList.get(i) ::: courseNum
+				rs2 = ps.executeQuery();
+				while(rs2.next()) {
+					cmap.put(rs2.getInt("course_order"), new AttractionVO(rs2.getString("spot_name"),rs2.getString("address"),rs2.getString("spot_image")));
+				}
+				cvo = new CourseVO(rs.getString("course_name"));
+				cvo.setCourseNum(rs.getInt("course_num"));
+				cvo.setMap(cmap);
+				cList.add(cvo);
 			}
-			
 		}finally {
 			closeAll(rs, ps, conn);
 		}
+		return cList;
 	}
 	
 

@@ -1,4 +1,4 @@
-CREATE TABLE course_info(course_num NUMBER , 
+CREATE TABLE course_info(course_num NUMBER, 
 		    spot_name varchar2(100) not null,
 		    course_order NUMBER default 0,
 		    CONSTRAINT FK_TOURSPOT2 FOREIGN KEY (spot_name) REFERENCES tourspot(spot_name) on delete cascade,

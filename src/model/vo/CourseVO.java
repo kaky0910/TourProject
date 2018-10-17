@@ -35,5 +35,28 @@ public class CourseVO {
 		super();
 	}
 	
+	public CourseVO(int courseNum, String courseName) {
+		this.courseNum = courseNum;
+		this.courseName = courseName;
+	}
+	public String getAllCourse() {
+		if(map!=null) {
+			System.out.println("map size!!!!!!!!!!!!!!!!!!111"+map.size());
+			String str = "<h3 align=\"center\" style=\"color: black\">코스만들기</h3>";
+			for(int i=1; i<=map.size();i++) {
+				str += "<img src="+map.get(i).getMainImage()+" width='200' height='200'><br><div><span style='color:red'>"+map.get(i).getSpotName()
+						+ "</span><span align='right'><a id='"+map.get(i).getSpotName()+"'>삭제</a></span></div><br>";
+			}
+			str += "<script src='js/soRj.js'></script>";
+			return str;
+		}
+		return null;
+	}
+	
+	@Override
+	public String toString() {
+		return "CourseVO [courseNum=" + courseNum + ", courseName=" + courseName + ", map=" + map + "]";
+	}
+	
 	
 }

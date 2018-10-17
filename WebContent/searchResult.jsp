@@ -28,14 +28,43 @@
  		         data : {
 		        	"spotName" : "${spotName}",
 		            "img" : "${mainImage}",
-		            "flag" : "add"
+		            "flag" : "add",
+		            "address" : "${address}" 
 		         },
 
 		         success : function(data) {
-		            $('#mySidebar').append("<img src="+data.img+" width='300px'>");
-		            $('#mySidebar').append("<p>"+data.spotName);
+		            $('#mySidebar').append("<img src="+data.img+" width='200' height='200'><br>");
+		            $('#mySidebar').append("<div><span style='color:red'>"+data.spotName+"</span><span align='right'><a id='"+data.spotName+"'>삭제</a></span></div>"+"<script src=js/soRj.js><"+"/script>");
 		         }//callback
+		         ,
+		         error : function(data){
+		        	 alert("중복 불가");
+		         }
 		      });//ajax
+		});
+		$('#mySidebar a').click(function(){
+			alert($(this).attr('id'));
+			$.ajax({
+		         type : "get",
+		         url : "JsonServlet",
+		         dataType:"json",
+		         data : {
+		        	"spotName" : $(this).attr('id'),
+		            "flag" : "cons"
+		         },
+
+		         success : function(data) {
+		        	$('#mySidebar').html(data.str);
+		            
+		         }//callback
+		         ,
+		         error : function(data){
+		        	 alert("삭제 실패");
+		         }
+		      });//ajax
+		});
+		$('#regBtn').click(function(){
+			window.document.location.href="course.jsp";
 		});
 	});
 	
@@ -159,6 +188,7 @@
 		
 		<div align="center" class="col-sm-12" style="margin-top: 15px"> 
 			<h3 align="center" style="margin-top: 10">관련 리뷰</h3><br><br>
+			<h1>그만 그만 그만 그만!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1</h1>
 			
 			<c:forEach items="${lvo.list}" var="rList">
 				<a href="#">
@@ -206,7 +236,15 @@
 			</div>			
 		</div>
     </div>
-   				<div id="mySidebar" class="sidebar"></div>
+   				<div id="mySidebar" class="sidebar">
+   					<h3 align="center" style="color: black">코스만들기</h3>
+   					<c:choose>
+   						<c:when test="${sessionScope.cvo!=null}">
+   							${sessionScope.cvo.allCourse}
+   						</c:when>
+   					</c:choose>
+   				</div>
+   				<button id="regBtn">만들기~</button>
    	
 </body>
 
