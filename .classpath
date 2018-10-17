@@ -15,6 +15,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/pro/web/apache-tomcat-7.0.90/apache-tomcat-7.0.90/lib/cos.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_171/jre/lib/json-lib-2.4-jdk15.jar"/>
-	<classpathentry kind="lib" path="C:/yjk/webPro2/apache-tomcat-7.0.90/lib/cos.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

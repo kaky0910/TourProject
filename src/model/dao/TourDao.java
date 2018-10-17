@@ -1309,9 +1309,10 @@ public class TourDao {
 		ArrayList<Map<Integer,AttractionVO>> cList = new ArrayList<Map<Integer,AttractionVO>>();
 		try {
 			conn = getConnect();
-			ps = conn.prepareStatement("SELECT distinct count(course_num) FROM course_info GROUP BY course_num");
+			ps = conn.prepareStatement("SELECT distinct course_num FROM course WHERE id=?");
+			ps.setString(1, id);
 			rs = ps.executeQuery();
-			if(rs.next()) count = rs.getInt(1);
+			if(rs.next()) count = rs.getInt(1); 
 			for(int i=0; i<count;i++) {
 				
 			}
