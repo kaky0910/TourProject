@@ -27,8 +27,8 @@
 	<script src="http://d3js.org/d3.v3.min.js"></script>
 	<script type="text/javascript" src="js/nav.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
 	<script>
-
 	$(function() {
 		var owl = $('.owl-carousel');
 		owl.owlCarousel({
@@ -52,9 +52,10 @@
 			$('.haha').css('overflow-y','hidden');
 		});
 
-/* 		setTimeout(function () {
+ 		setTimeout(function () {
 			effect();
-		}, 1000); */
+			effect2();
+		}, 1000); 
 		$.ajax({
 			type : "get",
 			url : "getRecentReviews.do",
@@ -69,7 +70,7 @@
 		
 	});
 	function effect(){
-		TweenMax.staggerTo($('#states path,text'), 1, {opacity:"1", width:"100", ease:Bounce.easeIn}, 0.1);
+		TweenMax.staggerTo($('#states path,text'), 1, {opacity:"1", width:"100", ease:Bounce.easeIn}, 0.001);
 	}
 	function effect2(){
 		TweenLite.to($('#label-경기도'), 1, {y:131});	
@@ -162,7 +163,7 @@
 
 <script type="text/javascript" src="js/nav.js"></script>
 </head>
-<body style="background-color: rgba(249, 248, 244, 0.5)/* #EEF4F2 */">
+<body><!-- style="background-color: rgba(249, 248, 244, 0.5)/* #EEF4F2 */" -->
 
 	<div class="box">
    	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
