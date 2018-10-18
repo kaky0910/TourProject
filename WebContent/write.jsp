@@ -172,6 +172,7 @@ function pasteHTML(filepath){
 
 
 </script>   
+	<%@include file="nav.jsp" %>
 <h1 align="center"> 글 작성 </h1>
 <form action="write.do" method="post" name="frm"> <!--  enctype="multipart/form-data" -->
 <!-- <input type="hidden" name="command" value="write"> -->
@@ -214,7 +215,7 @@ function pasteHTML(filepath){
    <tr>
       <th>카테고리</th>
       <td colspan="4">
-      <input type="checkbox" name="category" value="맛집">먹거리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="맛집">맛집&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="checkbox" name="category" value="자연">자연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="checkbox" name="category" value="사진">사진
       </td>

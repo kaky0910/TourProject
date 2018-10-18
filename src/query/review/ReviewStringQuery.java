@@ -20,8 +20,6 @@ public interface ReviewStringQuery {
 	/*String BEST_REVIEW_LOCATION_TAG = "select review_num, title, likes,city from (select * from review order by likes desc) where rownum<4"
 			+ " AND review_num IN ((SELECT review_num FROM tag WHERE word=?)) AND location=?"; // v1에서 왼쪽 리뷰 리스트
 */
-	String INSERT_REVIEWIMAGE = "INSERT INTO review_image(review_num, review_image) VALUES(?, ?)";
-    String INSERT_TAG = "INSERT INTO tag(review_num, word) VALUES(?, ?)";
 
 	String CHECK_REVIEW = "select * from review where review_num = ?"; // 글 정보 return
 	
@@ -29,17 +27,10 @@ public interface ReviewStringQuery {
 	String BEST_REVIEW_LOCATION_TAG = "select review_num, title, likes,city from (select * from review order by likes desc) where rownum<4"
 			+ " AND review_num IN ((SELECT review_num FROM tag WHERE word=?)) AND location=?"; // v1에서 왼쪽 리뷰 리스트
 	String SCRAP = "insert into scrap values(?,?)";									// 스크랩
-	String GET_ATTRACTION = "select spot_name,address,location,city,info from tourspot where city=? and location like ?"; // city별 관광지 정보 return
+	String GET_ATTRACTION = "select spot_name,address,location,city,info from tourspot where (city=? or city=?) and location like ?"; // city별 관광지 정보 return
 	String GET_ATTRACTION_IMG= "select spot_image from spot_image where spot_name=?";					  // 관광지 이미지 리턴
 	String GET_FESTIVAL_INFO = "select festival_Name,festival_Location,location,city,start_Date,end_Date,agency,img from festival where location like ?" + 
 			" AND ((start_Date BETWEEN SYSDATE AND SYSDATE+7) OR (SYSDATE BETWEEN start_Date AND end_Date))";// location별 축제정보 return 안되면 start,end Date에 ''추가
-//	String SEARCH_BY_TAG = "SELECT review_num,location,city,title,content,date_writing,likes,id "
-//			+ "FROM review WHERE review_num = all(select review_num from tag where word=?)";	// �떎�떆
-	//String GET_SCRAP_LIST = "select * from review where review_num in (select review_num from scrap where id=?)";
-	//String GET_MY_REVIEW = "select * from review where id=?";
-	//String GET_BEST_REVIEWS_BY_TAG = "SELECT location,city,title,review_num,likes FROM (SELECT location,title.review_num,likes,city ORDER BY likes desc) "
-	//		+ "WHERE rownum<10 review_num IN (SELECT review_num FROM tag WHERE word=?)";			// index review list
-
 	String DELETE_REVIEW = "delete from review where review_num=?";
 	String DELETE_ALL_SCRAP = "delete from scrap where review_num=?";
 	String DELETE_TAG = "delete from tag where review_num=?";
@@ -79,12 +70,6 @@ public interface ReviewStringQuery {
 			+ ") page from"
 			+ " (select review_num, title, date_writing, id from review where id=? order by review_num desc)) where page=?"; // 由щ럭
 	String RELATED_REVIEW_IN_CHECKREVIEW = "SELECT * FROM review WHERE review_num IN ((SELECT review_num FROM tag WHERE word IN (";
-	/*
-	 * String TEST = "select * from review where review_num in\n" +
-	 * "(select review_num from\n" + "(select review_num, ceil(rownum/" +
-	 * CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from\n" +
-	 * "(select review_num from review order by likes desc)) where page=?)";
-	 */
 
 	String GET_BESTREVIEW_BY_TAG_LOCA = "SELECT * FROM " + "(SELECT review_num,city,title,ceil(rownum/3) page FROM ("
 			+ "SELECT review_num,title,city FROM (SELECT * FROM review WHERE review_num IN ((SELECT review_num from tag WHERE word=?)) AND location=?) ORDER BY likes desc))"

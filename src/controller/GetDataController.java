@@ -24,24 +24,10 @@ public class GetDataController implements Controller{
 		
 		alist = TourDao.getInstance().getData(tag);
 		System.out.println(alist+"이건 ㅂ어라");
-		if(!alist.isEmpty()) 
+		if(!alist.isEmpty()) //////////tag로 attraction검색 성공
 			emptyFlag = true;
 		
-		else {
-			/*boolean tagExist = TourDao.getInstance().tagExist(tag);
-			if(tagExist) {
-				String check = TourDao.getInstance().checkTag(tag);
-				if(check.equals("location"))
-					path = "index.jsp"; // 나중에 location(v1) 페이지로 이동
-					
-				else if(check.equals("city")) 
-					path = "index.jsp"; // 나중에 city(v2) 페이지로 이동
-			}
-			else {
-				alist = TourDao.getInstance().checkSpot(tag);
-				flag = true;
-			}*/
-			
+		else {				///////////tag로 attraction검색 실패
 			String check = TourDao.getInstance().checkTag(tag);
 			System.out.println(check+"check 확인");
 			if(check.equals("location")) {				//검색어가 location 이름이면
@@ -51,12 +37,13 @@ public class GetDataController implements Controller{
 				
 			else if(check.equals("city")) {				//검색어가 city 이름이면
 				ArrayList<String> locationList = TourDao.getInstance().checkLocationByCity(tag);
-				if(locationList.size()!=1) {
+				if(locationList.size()>2) {
 					request.setAttribute("locationList", locationList);
 					request.setAttribute("city", tag);
 					path = "searchLocationByCity.jsp"; // 나중에 city(v2) 페이지로 이동
 					return new ModelAndView(path);
 				} else {
+					System.out.println(locationList);
 					path = "getAttraction.do?city="+tag+"&&location="+locationList.get(0);
 					return new ModelAndView(path);
 				}
@@ -78,9 +65,10 @@ public class GetDataController implements Controller{
 						
 						else {							//띄어쓰기 있어
 							String[] arr = tag.trim().split(" ");
-							String strL = arr[arr.length-2];			//그 앞에꺼
-							String strC = arr[arr.length-1];			//제일뒤에꺼
+							String strL = arr[0];			//그 앞에꺼
+							String strC = arr[1];			//제일뒤에꺼
 							String checkC = TourDao.getInstance().checkTag(strC);
+							String checkL = TourDao.getInstance().checkTag(strL);
 							boolean cflag = false;
 							System.out.println(checkC+"   checkC를 확인해보자    strL : "+strL+"     strC"+strC);
 							
@@ -102,6 +90,9 @@ public class GetDataController implements Controller{
 								return new ModelAndView(path);
 								
 							}//if
+							else if(checkL.equals("location")) {
+								
+							}
 							else {
 								alist = TourDao.getInstance().checkSpot(strC);
 							}

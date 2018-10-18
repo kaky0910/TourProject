@@ -28,7 +28,7 @@ public class CourseBiz {
 		 */
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		ArrayList<CourseVO> course = member.getCourses();
+		ArrayList<CourseVO> course = member.getCourses(); 
 
 		return course;
 	}
