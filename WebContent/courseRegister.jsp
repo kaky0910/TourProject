@@ -14,7 +14,7 @@
 <title>Insert title here</title>
    <script type="text/javascript">
       $(function() {
-         $('input[type=button]').click(function() {
+         $('input[type=button]').one('click',function() {
             var of = window.opener.document;
             of.location.href = "saveCourse.do?id=${param.id}&&courseName="+$('#courseName').val();
             self.close();

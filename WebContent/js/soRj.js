@@ -1,5 +1,4 @@
 $('#mySidebar a').click(function(){
-			alert($(this).attr('id'));
 			$.ajax({
 		         type : "get",
 		         url : "JsonServlet",

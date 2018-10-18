@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import filter.MVCFilter;
 import model.dao.TourDao;
 import model.vo.MemberVO;
+import service.ReviewService;
 
 public class LoginController implements Controller {
 
@@ -19,7 +20,7 @@ public class LoginController implements Controller {
 		String path = "loginresult.jsp";
 		
 		MemberVO vo=TourDao.getInstance().login(id, password);
-		vo.setCourses(TourDao.getInstance().getCourses(vo.getId()));
+		vo.setCourses(ReviewService.getInstance().getCourses(vo.getId(),null).getList());
 		System.out.println(vo);
 		if(vo !=null){ // 쨌횓짹횞�횓 쩌쨘째첩
 			HttpSession session = request.getSession();

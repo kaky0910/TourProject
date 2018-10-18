@@ -33,8 +33,11 @@
 		         },
 
 		         success : function(data) {
-		            $('#mySidebar').append("<img src="+data.img+" width='200' height='200'><br>");
-		            $('#mySidebar').append("<div><span style='color:red'>"+data.spotName+"</span><span align='right'><a id='"+data.spotName+"'>삭제</a></span></div>"+"<script src=js/soRj.js><"+"/script>");
+		        	 if(data.img!=undefined){
+			            $('#mySidebar').append("<img src="+data.img+" width='200' height='200'><br>");
+			            $('#mySidebar').append("<div><span style='color:red'>"+data.spotName+"</span><span align='right'><a id='"+data.spotName+"'>삭제</a></span></div>"+"<script src=js/soRj.js><"+"/script>");
+		        	 }
+		        	 else alert("중복 불가");
 		         }//callback
 		         ,
 		         error : function(data){
@@ -43,7 +46,6 @@
 		      });//ajax
 		});
 		$('#mySidebar a').click(function(){
-			alert($(this).attr('id'));
 			$.ajax({
 		         type : "get",
 		         url : "JsonServlet",
@@ -64,7 +66,8 @@
 		      });//ajax
 		});
 		$('#regBtn').click(function(){
-			window.document.location.href="course.jsp";
+			if(${vo!=null})
+				window.document.location.href="course.jsp";
 		});
 	});
 	
@@ -111,52 +114,7 @@
 
 </head>
 <body>
-   	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
-      	<div id="header">
-      		<div class="container">
-         		<div class="navbar-header" style="margin-top: 15px">
-            		<button type="button" class="navbar-toggle" id="menuSpan" data-toggle="collapse" data-target="#myNavbar">
-	                    <span class="icon-bar"></span>
-	               		<span class="icon-bar" style="margin-top: 2px"></span>
-	               		<span class="icon-bar"></span>
-            		</button>
-            		<a href="index.jsp"><img src="img/main_logo2.png" width="150" height="47" style="background-color: #FFFAE5/* #0F6A8B  #F5EED2*/"></a>
-         		</div> <!-- navbar-header -->
-         		
-	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
-	            	<form class="navbar-form navbar-left" action="getdata.do">
-	               		<div class="input-group">
-	                  		<input type="text" class="form-control" placeholder="Search" name="search" id="myInput">
-	                  		<div class="input-group-btn">
-	                     		<button class="btn btn-default" type="submit">
-	                        		<i class="glyphicon glyphicon-search"></i>
-	                     		</button>
-	                  		</div>
-	               		</div>
-	            	</form>
-	            	
-	            	<ul class="nav navbar-nav navbar-right">
-	               		<li class="dropdown">
-		                  	<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="userMenu">
-		                     	<span class="glyphicon glyphicon-user white">
-		                     		<span class="caret" style="margin-left: 10px"></span>
-		                     	</span>
-		                  	</a>
-		                  	<ul class="dropdown-menu">
-		                     	<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;로그아웃</a></li>
-		                     	<li><a href="myreviews.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
-		                     	<li><a href="scrap.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
-		                     	<li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;글 작성</a></li>
-		                     	<li><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;정보 수정</a></li>
-		                  	</ul>
-	               		</li>
-					</ul>
-				</div> <!-- myNavbar -->
-      		</div> <!-- container -->
-		</div> <!-- header -->
-    	<div id="line"></div>
-	</nav>
-	
+   	<%@include file="nav.jsp" %>
     <div style="height: 120px"></div>
     
     <div>
@@ -237,11 +195,13 @@
 		</div>
     </div>
    				<div id="mySidebar" class="sidebar">
-   					<h3 align="center" style="color: black">코스만들기</h3>
    					<c:choose>
    						<c:when test="${sessionScope.cvo!=null}">
    							${sessionScope.cvo.allCourse}
    						</c:when>
+   						<c:otherwise>
+   							<h3 align="center" style="color: black">코스만들기</h3>
+   						</c:otherwise>
    					</c:choose>
    				</div>
    				<button id="regBtn">만들기~</button>

@@ -1,11 +1,11 @@
-package file.method.step1.test;
+package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /*
- * File class ÀÇ method¸¦ ÇÏ³ªÇÏ³ªÀÛ¼º
+ * File class ï¿½ï¿½ methodï¿½ï¿½ ï¿½Ï³ï¿½ï¿½Ï³ï¿½ï¿½Û¼ï¿½
  */
 public class FileMethodTest1 {
 	static {
@@ -34,45 +34,46 @@ public class FileMethodTest1 {
 		System.out.println(f.getPath());
 		System.out.println(f.isFile());
 		System.out.println(f.isDirectory());
-		System.out.println("getParent : "+f.getParent());  //////////fileÀÇ method getParent() : return String......... ¿¬¼ÓÀ¸·Î ¸ø¾¸
-														// »óÀ§ µğ·ºÅä¸® À¯¹« È®ÀÎÇÒ¶§ ¾²ÀÓ ¾øÀ¸¸é getParentFile()»óÅÂ¿¡¼­ .mkdirs() ÇÏ¸é µğ·ºÅä¸® »ı¼º ---> È®ÀÎ,»ı¼º      ÈÄ createNewFile()
+		System.out.println("getParent : "+f.getParent());  //////////fileï¿½ï¿½ method getParent() : return String......... ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+														// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ getParentFile()ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ .mkdirs() ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ ---> È®ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½      ï¿½ï¿½ createNewFile()
 		
 		String name = f.getName();
-		System.out.println(name.substring(0, name.indexOf("."))); //È®ÀåÀÚÁ¦¿Ü
-		System.out.println(name.substring(name.indexOf(".")+1));//È®ÀåÀÚ¸¸
+		System.out.println(name.substring(0, name.indexOf("."))); //È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		System.out.println(name.substring(name.indexOf(".")+1));//È®ï¿½ï¿½ï¿½Ú¸ï¿½
 */		Connection conn= DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "tour", "oracle");
 		PreparedStatement ps = null;
 		
-		ArrayList<File> list = new ArrayList<File>();
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\°­¿øµµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\°æ±âµµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\°æ»ó³²µµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\°æ»óºÏµµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\±¤ÁÖ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\´ë±¸.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\´ëÀü.txt"));
+		ArrayList<String> list = new ArrayList<String>();
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ê²½ê¸°ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ê°•ì›ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ê²½ìƒë‚¨ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ê²½ìƒë¶ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ê´‘ì£¼ê´‘ì—­ì‹œ.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ëŒ€êµ¬ê´‘ì—­ì‹œ.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ëŒ€ì „ê´‘ì—­ì‹œ.txt");
 
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ºÎ»ê.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\¼­¿ï.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\¿ï»ê.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ÀÎÃµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\Àü¶ó³²µµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\Àü¶óºÏµµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\Á¦ÁÖµµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ÃæÃ»³²µµ.txt"));
-		list.add(new File("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ÃæÃ»ºÏµµ.txt"));
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ë¶€ì‚°ê´‘ì—­ì‹œ.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì„œìš¸íŠ¹ë³„ì‹œ.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ìš¸ì‚°ê´‘ì—­ì‹œ.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì¸ì²œê´‘ì—­ì‹œ.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì „ë¼ë‚¨ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì „ë¼ë¶ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì œì£¼ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì¶©ì²­ë‚¨ë„.txt");
+		list.add("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\ì¶©ì²­ë¶ë„.txt");
 		
-		for(File f : list) {
+		for(String f : list) {
 			FileReader fr = new FileReader(f);
-			BufferedReader br = new BufferedReader(fr);
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(f),"UTF8"));
+
 			String city;
 			while(( city=br.readLine())!=null) {
 		//		String city = br.readLine();
 				ps =conn.prepareStatement("INSERT INTO location VALUES(?,?)");
-				ps.setString(1, f.getName().replace(".txt", ""));
+				ps.setString(1, f.replace("C:\\yjk\\webPro2\\eclipse\\workspace\\TourReview\\WebContent\\data\\", "").replace(".txt", ""));
 				ps.setString(2, city);
 				ps.executeQuery();
-				System.out.println("¼º°ø");
+				System.out.println("ì„±ê³µ");
 				}
 		}
 		/*System.out.println(f1.getPath());
