@@ -18,43 +18,39 @@ public interface ReviewStringQuery {
 	/*String BEST_REVIEW_LOCATION_TAG = "select review_num, title, likes,city from (select * from review order by likes desc) where rownum<4"
 			+ " AND review_num IN ((SELECT review_num FROM tag WHERE word=?)) AND location=?"; // v1에서 왼쪽 리뷰 리스트
 */
+
 	String CHECK_REVIEW = "select * from review where review_num = ?"; // 글 정보 return
+	
 	
 	String BEST_REVIEW_LOCATION_TAG = "select review_num, title, likes,city from (select * from review order by likes desc) where rownum<4"
 			+ " AND review_num IN ((SELECT review_num FROM tag WHERE word=?)) AND location=?"; // v1에서 왼쪽 리뷰 리스트
 	String SCRAP = "insert into scrap values(?,?)";									// 스크랩
-	   String GET_ATTRACTION = "select spot_name,address,location,city,info from tourspot where (city=? or city=?) and location like ?"; // city별 관광지 정보 return
+	String GET_ATTRACTION = "select spot_name,address,location,city,info from tourspot where (city=? or city=?) and location like ?"; // city별 관광지 정보 return
 	String GET_ATTRACTION_IMG= "select spot_image from spot_image where spot_name=?";					  // 관광지 이미지 리턴
 	String GET_FESTIVAL_INFO = "select festival_Name,festival_Location,location,city,start_Date,end_Date,agency,img from festival where location like ?" + 
 			" AND ((start_Date BETWEEN SYSDATE AND SYSDATE+7) OR (SYSDATE BETWEEN start_Date AND end_Date))";// location별 축제정보 return 안되면 start,end Date에 ''추가
-//	String SEARCH_BY_TAG = "SELECT review_num,location,city,title,content,date_writing,likes,id "
-//			+ "FROM review WHERE review_num = all(select review_num from tag where word=?)";	// �떎�떆
-	//String GET_SCRAP_LIST = "select * from review where review_num in (select review_num from scrap where id=?)";
-	//String GET_MY_REVIEW = "select * from review where id=?";
-	//String GET_BEST_REVIEWS_BY_TAG = "SELECT location,city,title,review_num,likes FROM (SELECT location,title.review_num,likes,city ORDER BY likes desc) "
-	//		+ "WHERE rownum<10 review_num IN (SELECT review_num FROM tag WHERE word=?)";			// index review list
-
 	String DELETE_REVIEW = "delete from review where review_num=?";
 	String DELETE_ALL_SCRAP = "delete from scrap where review_num=?";
 	String DELETE_TAG = "delete from tag where review_num=?";
 	String DELETE_REVIEW_IMG = "delete from review_image where review_num=? and review_image=?";
+	String DELETE_REVIEW_IMG1 = "delete from review_image where review_num=?";
 	// 스크랩
-		String INSERT_SCRAP = "insert into scrap(id,review_num) values(?,?)";
-		String DELETE_SCRAP = "delete from scrap where id=? AND review_num=?";
-		String SCRAP_SELECT = "select * from scrap where id=? AND review_num=?";
-		String CHECK_SCRAP = "select * from scrap where id=? AND review_num=?";
-		String GET_SCRAP_LIST = "select * from review where review_num in" + " (select review_num from"
-				+ " (select review_num, ceil(rownum/" + CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from"
-				+ " (select review_num from scrap where id=? order by review_num desc)) where page=?)"; // �뒪�겕�옪 由ъ뒪�듃 由ы꽩
+	String INSERT_SCRAP = "insert into scrap(id,review_num) values(?,?)";
+	String DELETE_SCRAP = "delete from scrap where id=? AND review_num=?";
+	String SCRAP_SELECT = "select * from scrap where id=? AND review_num=?";
+	String CHECK_SCRAP = "select * from scrap where id=? AND review_num=?";
+	String GET_SCRAP_LIST = "select * from review where review_num in" + " (select review_num from"
+			+ " (select review_num, ceil(rownum/" + CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from"
+			+ " (select review_num from scrap where id=? order by review_num desc)) where page=?)"; // �뒪�겕�옪 由ъ뒪�듃 由ы꽩
 		
 	//좋아요
-		String LIKE_ADD = "update review set likes=likes+1 where review_num=?"; 
-		String LIKE_REMOVE = "update review set likes=likes-1 where review_num=?";
-		String INSERT_CHECK = "insert into likes(id,review_num) values(?,?)";
-		String DELETE_CHECK = "delete from likes where id=? AND review_num=?";
-		String CHECK_SELECT = "select * from likes where id=? AND review_num=?";	
+	String LIKE_ADD = "update review set likes=likes+1 where review_num=?"; 
+	String LIKE_REMOVE = "update review set likes=likes-1 where review_num=?";
+	String INSERT_CHECK = "insert into likes(id,review_num) values(?,?)";
+	String DELETE_CHECK = "delete from likes where id=? AND review_num=?";
+	String CHECK_SELECT = "select * from likes where id=? AND review_num=?";	
 		
-	String UPDATE_REVIEW = "update review set location=?, city=?, title=?, content=? where review_num=?";
+	String UPDATE_REVIEW = "update review set location=?, city=?, title=?, content=?, date_writing=sysdate where review_num=?";
 	String TOTAL_SCRAP_COUNT = "select count(-1) from scrap where id=?";
 	String TOTAL_MY_REVIEW_COUNT = "select count(-1) from review where id=?";
 	String TOTAL_RELATED_REVIEW_COUNT = "select count(-1) from review where review_num in"
@@ -72,12 +68,6 @@ public interface ReviewStringQuery {
 			+ ") page from"
 			+ " (select review_num, title, date_writing, id from review where id=? order by review_num desc)) where page=?"; // 由щ럭
 	String RELATED_REVIEW_IN_CHECKREVIEW = "SELECT * FROM review WHERE review_num IN ((SELECT review_num FROM tag WHERE word IN (";
-	/*
-	 * String TEST = "select * from review where review_num in\n" +
-	 * "(select review_num from\n" + "(select review_num, ceil(rownum/" +
-	 * CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from\n" +
-	 * "(select review_num from review order by likes desc)) where page=?)";
-	 */
 
 	String GET_BESTREVIEW_BY_TAG_LOCA = "SELECT * FROM " + "(SELECT review_num,city,title,ceil(rownum/3) page FROM ("
 			+ "SELECT review_num,title,city FROM (SELECT * FROM review WHERE review_num IN ((SELECT review_num from tag WHERE word=?)) AND location=?) ORDER BY likes desc))"
@@ -110,7 +100,8 @@ public interface ReviewStringQuery {
 	String CHECK_TAG_BY_CITY = "select distinct city, location from location where city like ?";
 	String TAG_EXIST = "select * from tag where word=?";
 	String GET_TOTAL_REVIEW = "SELECT COUNT(-1) FROM review";
-
+	String GET_ATTRACTION_BY_NAME = "SELECT tourspot.spot_name,spot_image.spot_image img from tourspot,spot_image WHERE tourspot.spot_name="
+			+ "spot_image.spot_name AND tourspot.spot_name = ?";
 }
 
 /*

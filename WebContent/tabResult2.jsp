@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<table align="center">
+	<table align="center" width="100%">
 		<c:forEach var="vo" items="${cblist.list}">
 			<tr>
 				<td><img src="${vo.mainImage}"><br></td>

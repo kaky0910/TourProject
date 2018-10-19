@@ -21,7 +21,7 @@ public class GetAttractionController implements Controller {
 		String city = request.getParameter("city");
 		String pageNo = request.getParameter("pageNo");
 		String location = request.getParameter("location");
-		
+		System.out.println("getAttraction에서 .. "+city+"        "+location);
 		ArrayList<AttractionVO> avo = TourDao.getInstance().getAttraction(city,location);
 		/*
 		request.setAttribute("pageNo", pageNo);

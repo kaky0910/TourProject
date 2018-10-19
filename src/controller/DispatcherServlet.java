@@ -30,7 +30,7 @@ public class DispatcherServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(mv==null) {}//error
+		if(mv==null) {}//error 
 		else if(mv.isRedirect()) response.sendRedirect(path);
 		else request.getRequestDispatcher(path).forward(request, response);
 	}

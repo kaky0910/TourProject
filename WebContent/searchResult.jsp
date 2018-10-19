@@ -10,7 +10,70 @@
 <link rel="stylesheet" href="css/nav.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <c:forEach items="${alist}" var="item">
+		<c:set value="${item.spotName}" var="spotName"></c:set>
+		<c:set value="${item.address}" var="address"></c:set>
+		<c:set value="${item.location}" var="location"></c:set>
+		<c:set value="${item.city}" var="city"></c:set>
+		<c:set value="${item.info}" var="info"></c:set>
+		<c:set value="${item.mainImage}" var="mainImage"></c:set>
+	</c:forEach>
+<script type="text/javascript">
+	$(function(){
+		$('#btn').click(function(){
+			$.ajax({
+		         type : "get",
+		         url : "JsonServlet",
+		         dataType:"json",
+ 		         data : {
+		        	"spotName" : "${spotName}",
+		            "img" : "${mainImage}",
+		            "flag" : "add",
+		            "address" : "${address}" 
+		         },
 
+		         success : function(data) {
+		        	 if(data.img!=undefined){
+			            $('#mySidebar').append("<img src="+data.img+" width='200' height='200'><br>");
+			            $('#mySidebar').append("<div><span style='color:red'>"+data.spotName+"</span><span align='right'><a id='"+data.spotName+"'>삭제</a></span></div>"+"<script src=js/soRj.js><"+"/script>");
+		        	 }
+		        	 else alert("중복 불가");
+		         }//callback
+		         ,
+		         error : function(data){
+		        	 alert("중복 불가");
+		         }
+		      });//ajax
+		});
+		$('#mySidebar a').click(function(){
+			$.ajax({
+		         type : "get",
+		         url : "JsonServlet",
+		         dataType:"json",
+		         data : {
+		        	"spotName" : $(this).attr('id'),
+		            "flag" : "cons"
+		         },
+
+		         success : function(data) {
+		        	$('#mySidebar').html(data.str);
+		            
+		         }//callback
+		         ,
+		         error : function(data){
+		        	 alert("삭제 실패");
+		         }
+		      });//ajax
+		});
+		$('#regBtn').click(function(){
+			if(${vo!=null})
+				window.document.location.href="course.jsp";
+			else
+				alert("로그인이 필요합니다");
+		});
+	});
+	
+</script>
 <style>
    	
    	#mainImage {
@@ -27,90 +90,65 @@
    		width: 400px;
    		height: 200px
    	}
+   	.sidebar {
+   	margin-top:190px;
+    position: absolute;
+    right: -200px;
+    transition: 0.3s;
+    width: 300px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    height:1200px;
+    background-color: white;
+    z-index: 100;
+    top: -100px;
+	}
+		.sidebar:hover {
+    right: 0;
+}
+	
+   	
 </style>
 
 <script type="text/javascript" src="js/nav.js"></script>
 
 </head>
 <body>
-   	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
-      	<div id="header">
-      		<div class="container">
-         		<div class="navbar-header" style="margin-top: 15px">
-            		<button type="button" class="navbar-toggle" id="menuSpan" data-toggle="collapse" data-target="#myNavbar">
-	                    <span class="icon-bar"></span>
-	               		<span class="icon-bar" style="margin-top: 2px"></span>
-	               		<span class="icon-bar"></span>
-            		</button>
-            		<img src="img/main_logo2.png" width="150">
-         		</div> <!-- navbar-header -->
-         		
-	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
-	            	<form class="navbar-form navbar-left" action="getdata.do">
-	               		<div class="input-group">
-	                  		<input type="text" class="form-control" placeholder="Search" name="search" id="myInput">
-	                  		<div class="input-group-btn">
-	                     		<button class="btn btn-default" type="submit">
-	                        		<i class="glyphicon glyphicon-search"></i>
-	                     		</button>
-	                  		</div>
-	               		</div>
-	            	</form>
-	            	
-	            	<ul class="nav navbar-nav navbar-right">
-	               		<li class="dropdown">
-		                  	<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="userMenu">
-		                     	<span class="glyphicon glyphicon-user white">
-		                     		<span class="caret" style="margin-left: 10px"></span>
-		                     	</span>
-		                  	</a>
-		                  	<ul class="dropdown-menu">
-		                     	<li><a href="#"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;로그아웃</a></li>
-		                     	<li><a href="myreviews.do?id=yun"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
-		                     	<li><a href="scrap.do?id=yun"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
-		                     	<li><a href="#"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;글 작성</a></li>
-		                     	<li><a href="#"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;정보 수정</a></li>
-		                  	</ul>
-	               		</li>
-					</ul>
-				</div> <!-- myNavbar -->
-      		</div> <!-- container -->
-		</div> <!-- header -->
-    	<div id="line"></div>
-	</nav>
-	
+   	<%@include file="nav.jsp" %>
     <div style="height: 120px"></div>
     
-    <c:forEach items="${alist}" var="item">
-		<c:set value="${item.spotName}" var="spotName"></c:set>
-		<c:set value="${item.address}" var="address"></c:set>
-		<c:set value="${item.location}" var="location"></c:set>
-		<c:set value="${item.city}" var="city"></c:set>
-		<c:set value="${item.info}" var="info"></c:set>
-		<c:set value="${item.mainImage}" var="mainImage"></c:set>
-	</c:forEach>
-   
     <div>
 	    <c:choose>
-	    	<c:when test="${emptyFlag == true || flag == true}">
-	    		<h3 align="center">${spotName}</h3><br><br>
-			
-				<div align="right" class="col-sm-12" style="margin-bottom: 10pxl"> 
-					<div align="right" class="col-sm-6">  
-						<img alt="${spotName}" src="${mainImage}" id="mainImage"> 
-					</div>
-					<div align="left" class="col-sm-6" id="info"> 
-						${address}<br><br>
-						${info}
-					</div>
-				</div>
-				<div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
-	    	</c:when>
-	    	<c:otherwise></c:otherwise>
-	    </c:choose>
+          <c:when test="${emptyFlag == true || flag == true}">
+             <div class="col-sm-12">
+                <div align="right" class="col-sm-6">
+                   <h3>${spotName}</h3><br>
+                </div>
+                
+               <div align="left" class="col-sm-6" style="margin-top: 21px">
+                   <a href="#" id="btn"><img src="img/courseAdd.png" width="75"></a>
+                </div>
+             </div>
+         
+            <div align="right" class="col-sm-12" style="margin-bottom: 10pxl"> 
+               <div align="right" class="col-sm-6">  
+                  <img alt="${spotName}" src="${mainImage}" id="mainImage"> 
+               </div>
+               <div align="left" class="col-sm-6" id="info"> 
+                  ${address}<br><br>
+                  ${info}
+               </div>
+            </div>
+            <div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
+          </c:when>
+          <c:otherwise></c:otherwise>
+       </c:choose>
 		
 		<div align="center" class="col-sm-12" style="margin-top: 15px"> 
 			<h3 align="center" style="margin-top: 10">관련 리뷰</h3><br><br>
+			<h1>그만 그만 그만 그만!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1</h1>
 			
 			<c:forEach items="${lvo.list}" var="rList">
 				<a href="#">
@@ -158,6 +196,17 @@
 			</div>			
 		</div>
     </div>
+   				<div id="mySidebar" class="sidebar">
+   					<c:choose>
+   						<c:when test="${sessionScope.cvo!=null}">
+   							${sessionScope.cvo.allCourse}
+   						</c:when>
+   						<c:otherwise>
+   							<h3 align="center" style="color: black">코스만들기</h3>
+   						</c:otherwise>
+   					</c:choose>
+   				</div>
+   				<button id="regBtn">만들기~</button>
    	
 </body>
 

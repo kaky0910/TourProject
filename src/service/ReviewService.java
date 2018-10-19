@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.PagingBean;
 import model.dao.TourDao;
+import model.vo.CourseVO;
 import model.vo.ReviewVO;
 /*
  * 주로 SELECT 와 관련
@@ -61,6 +62,7 @@ public class ReviewService {
 	      else pn = Integer.parseInt(pageNo);
 	      
 	      ArrayList<ReviewVO> list = dao.getRecentReviews(pn);
+	      System.out.println(list);
 	      int total = dao.getTotalReview();
 	      PagingBean pb = new PagingBean(total, pn);
 	      return new ListVO(list, pb);
@@ -99,4 +101,14 @@ public class ReviewService {
 		PagingBean pb = new PagingBean(total, pn);
 		return new ListVO(list, pb); 
 	}
+	public CListVO getCourses(String id, String pageNo) throws SQLException{
+	      int pn = 0;
+	      if(pageNo == null) pn=1;
+	      else pn = Integer.parseInt(pageNo);
+	      
+	      ArrayList<CourseVO> list = dao.getCourses(id, pn);
+	      int total = dao.getCourseNumber(id);
+	      PagingBean pb = new PagingBean(total, pn);
+	      return new CListVO(list, pb);
+	   }
 }

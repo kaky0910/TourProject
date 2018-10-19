@@ -163,6 +163,7 @@ body {
 nav ul {
 	list-style-type: none;
 	padding: 0;
+
 }
 
 article {
@@ -175,6 +176,7 @@ article {
 
 article>div {
 	height: 100%
+
 }
 
 /* Clear floats after the columns */
@@ -206,13 +208,29 @@ tr td {
 	width: 0;
 	/* height: 100%; */
 	transition: .5s ease;
+
 }
 
+/* .container:hover .overlay {
+	width: 100%;
+	left: 0;
+} */
 .container:hover .overlay {
 	width: 100%;
 	left: 0;
 }
 
+/* .text {
+	color: white;
+	font-size: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	white-space: nowrap;
+} */
 .text {
 	color: white;
 	font-size: 20px;
@@ -224,7 +242,7 @@ tr td {
 	transform: translate(-50%, -50%);
 	white-space: nowrap;
 }
-
+/* 
 .image {
 	display: block;
 	width: 100%;
@@ -237,12 +255,12 @@ box-sizing
 border-box
 ;
 }
+ */
 /* force scrollbar */
 html {
 	overflow-y: scroll;
 }
 
-s
 body {
 	font-family: sans-serif;
 }
@@ -288,7 +306,6 @@ body {
 
 #img {
 	width: 250px;
-	/*  height: 182px; */
 }
 
 .hashtag:before {
@@ -317,10 +334,11 @@ body {
 		count += 1;
 		$.ajax({
 			type : "get",
-			url : "getBestReviewBytag.do",
+
+			url : "getBestReviewCityBytag.do",
 			data : {
-				"location" : "${location}",
-				"tag" : $('#distinguish').html(),
+				/*             "cblist" : "${cblist}",
+				 */"tag" : "맛집",
 				"pageNo" : count,
 				"size" : $('#listSize').html()
 			//더보기 누르기 전의 갯수.
@@ -341,10 +359,12 @@ body {
 
 		$.ajax({
 			type : "get",
-			url : "getBestReviewBytag.do",
+			url : "getBestReviewCityBytag.do",
 			data : {
-				"location" : "${location}",
-				"tag" : "맛집"
+				"tag" : "맛집",
+				"city" : city,
+				"location" : location,
+				"pageNo" : count
 			},
 
 			success : function(data) {
@@ -367,7 +387,7 @@ body {
 
 			$.ajax({
 				type : "get",
-				url : "getBestReviewBytag.do",
+				url : "getBestReviewCityBytag.do",
 				data : loca,
 
 				success : function(data) {
@@ -376,6 +396,7 @@ body {
 						$('#tab-1').html("");
 						$('#tab-3').html("");
 						$('#tab-4').html("");
+            
 					} else if (str == '숙소') {
 						$('#tab-3').html(data);
 						$('#tab-1').html("");
@@ -399,8 +420,6 @@ body {
 		});//click
 	});//tab
 </script>
-
-
 <script type="text/javascript">
 	$(function() {
 		//================================ menu ================================
@@ -612,5 +631,6 @@ body {
 			</div>
 		</article>
 	</section>
+
 </body>
 </html>

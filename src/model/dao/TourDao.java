@@ -2,11 +2,14 @@ package model.dao;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -14,10 +17,11 @@ import config.OracleInfo;
 import model.DataSourceManager;
 import model.vo.AttractionVO;
 import model.vo.CommentVO;
+import model.vo.CourseVO;
 import model.vo.FestivalVO;
-
 import model.vo.MemberVO;
 import model.vo.ReviewVO;
+import query.course.CourseStringQuery;
 import query.review.ReviewStringQuery;
 import query.user.UserStringQuery;
 
@@ -29,23 +33,12 @@ public class TourDao {
 		try {
 			ds=DataSourceManager.getInstance().getDataSource();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static TourDao getInstance() {
 		return reviewDao;
-	}
-
-	static {
-		try {
-			Class.forName(OracleInfo.DRIVER_NAME);
-			System.out.println("드라이버 로딩");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
 	}
 	
 	public int writeReview(ReviewVO rvo) throws SQLException {
@@ -64,6 +57,7 @@ public class TourDao {
 			ps.setString(5, rvo.getId());
 
 			int row = ps.executeUpdate();
+			ps.close();
 			System.out.println(row + " row insert posting ok....");
 			System.out.println("dao CURRENT_NO...before...." + rvo.getReviewNum());// x
 			// 쿼리문이 하나더 들어가야 한다...시퀀스가 PK로 지정된상황에서 INSERT문이 수행될때는...
@@ -502,40 +496,41 @@ public class TourDao {
 	}// getFestivalInfo 泥좎쭊�벐
 
 	public ArrayList<AttractionVO> getAttraction(String city,String location) throws SQLException { // v2 tourspot list
-	      ArrayList<AttractionVO> list = new ArrayList<>();
-	      ArrayList<AttractionVO> aList = new ArrayList<>();
-	      Connection conn = null;
-	      PreparedStatement ps = null;
-	      ResultSet rs = null;
 
-	      try {
-	         conn = getConnect();
-	         ps = conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
-	         ps.setString(1, city);
-	         ps.setString(2, city.substring(0,city.length()-1));
-	         ps.setString(3, location+"%");
-	         rs = ps.executeQuery();
-	         while (rs.next()) {
-	            list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-	                  rs.getString("city"), rs.getString("info")));
-	         }
-	         ps.close();
-	         for (AttractionVO vo : list) {
-	            ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
-	            ps.setString(1, vo.getSpotName());
-	            rs = ps.executeQuery();
-	            if (rs.next()) {
-	               vo.setMainImage(rs.getString("spot_image"));
-	               aList.add(vo);
-	            }
-	         }
+		ArrayList<AttractionVO> list = new ArrayList<>();
+		ArrayList<AttractionVO> aList = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnect();
+			ps = conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
+			ps.setString(1, city);
+			ps.setString(2, city.substring(0,city.length()-1));
+			ps.setString(3, location+"%");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
+						rs.getString("city"), rs.getString("info")));
+			}
+			ps.close();
+			for (AttractionVO vo : list) {
+				ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
+				ps.setString(1, vo.getSpotName());
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					vo.setMainImage(rs.getString("spot_image"));
+					aList.add(vo);
+				}
+			}
 
 	      } finally {
 	         closeAll(rs, ps, conn);
 	      }
 
-	      return aList;
-	   }// getAttraction 泥좎쭊�벐 �씠誘몄�!!!!
+		return aList;
+	}// getAttraction 泥좎쭊�벐 �씠誘몄�!!!!
 
 	public void scrap(String id, int review_num) throws Exception { // scrap
 		Connection conn = null;
@@ -688,12 +683,13 @@ public class TourDao {
 			ps.setString(1, id);
 			ps.setInt(2, pageNo);
 			rs = ps.executeQuery();
-
+			
 			while (rs.next()) {
 				list.add(new ReviewVO(rs.getInt("review_num"), rs.getString("title"), rs.getString("id"),
 						rs.getString("location"), rs.getString("city"), rs.getString("content"),
 						rs.getString("date_writing"), rs.getInt("likes")));
 			} // while
+			ps.close();
 			for (ReviewVO vo : list) {
 				if (vo != null) {
 					ps = conn.prepareStatement(ReviewStringQuery.REVIEW_IMG);
@@ -724,10 +720,12 @@ public class TourDao {
 			ps.setString(1, id);
 			ps.setInt(2, pageNo);
 			rs = ps.executeQuery();
+			
 			while (rs.next()) {
 				list.add(new ReviewVO(rs.getInt("review_num"), rs.getString("title"), rs.getString("id"),
 						rs.getString("date_writing")));
 			} // while
+			ps.close();
 			for (ReviewVO vo : list) {
 				if (vo != null) {
 
@@ -796,10 +794,10 @@ public class TourDao {
 			ps.setString(3, rvo.getTitle());
 			ps.setString(4, rvo.getContent());
 			ps.setInt(5, rvo.getReviewNum());
-			
 			int row = ps.executeUpdate();
 			System.out.println(row + " row update posting ok..");
-			
+			ps.close();
+
 			ps = conn.prepareStatement(ReviewStringQuery.DELETE_TAG);
 			ps.setInt(1, rvo.getReviewNum());
 			ps.executeUpdate();
@@ -823,7 +821,7 @@ public class TourDao {
 
 			while (rs.next())
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("info"), rs.getString("img")));
+						rs.getString("city"), rs.getString("info"), rs.getString("img"),rs.getString("lon"),rs.getString("lat")));
 
 		} finally {
 			closeAll(rs, ps, conn);
@@ -842,11 +840,11 @@ public class TourDao {
 			ps.setString(1, tag);
 			ps.setInt(2, pageNo);
 			rs = ps.executeQuery();
-
+			
 			while (rs.next()) {
 				list.add(new ReviewVO(rs.getInt("review_num"), rs.getString("title"), rs.getString("date_writing")));
 			}
-
+			ps.close();
 			for (ReviewVO vo : list) {
 				if (vo != null) {
 
@@ -876,11 +874,10 @@ public class TourDao {
 			ps = conn.prepareStatement(ReviewStringQuery.CHECK_TAG_BY_LOCATION);
 			ps.setString(1, tag+"%");
 			rs = ps.executeQuery();
-
 			if (rs.next())
 				flag = "location";
-
 			else {
+				ps.close();
 				ps = conn.prepareStatement(ReviewStringQuery.CHECK_TAG_BY_CITY);
 				ps.setString(1, tag+"%");
 				rs = ps.executeQuery();
@@ -933,6 +930,7 @@ public class TourDao {
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
 						rs.getString("city"), rs.getString("info")));
 			}
+			ps.close();
 			for (AttractionVO vo : list) {
 				ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
 				ps.setString(1, vo.getSpotName());
@@ -955,10 +953,11 @@ public class TourDao {
 		try {
 			conn = getConnect();
 			ps = conn.prepareStatement(ReviewStringQuery.CHECK_TAG_BY_CITY);
-			ps.setString(1, city);
+			ps.setString(1, city+"%");
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				list.add(rs.getString("location"));
+				list.add(rs.getString("city"));
 			}
 		}finally {
 			closeAll(rs, ps, conn);
@@ -977,10 +976,10 @@ public class TourDao {
 			ps.setString(1, tag);
 			ps.setInt(2, pageNo);
 			rs = ps.executeQuery();
-
 			while (rs.next()) {
 				list.add(new ReviewVO(rs.getInt("review_num"), rs.getString("title"), rs.getString("date_writing")));
 			}
+			ps.close();
 
 			for (ReviewVO vo : list) {
 				if (vo != null) {
@@ -1084,55 +1083,55 @@ public class TourDao {
 
 	public void register(MemberVO vo) throws SQLException { // member regist
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 		try {
 			conn = getConnect();
-			pstmt = conn.prepareStatement(UserStringQuery.REGISTER_USER);
-			pstmt.setString(1, vo.getUserName());
-			pstmt.setInt(2, vo.getSsn());
-			pstmt.setString(3, vo.getId());
-			pstmt.setString(4, vo.getPassword());
-			pstmt.setString(5, vo.getTel());
-			pstmt.setString(6, vo.getMail());
-			pstmt.executeUpdate();
+			ps = conn.prepareStatement(UserStringQuery.REGISTER_USER);
+			ps.setString(1, vo.getUserName());
+			ps.setInt(2, vo.getSsn());
+			ps.setString(3, vo.getId());
+			ps.setString(4, vo.getPassword());
+			ps.setString(5, vo.getTel());
+			ps.setString(6, vo.getMail());
+			ps.executeUpdate();
 		} finally {
-			closeAll(pstmt, conn);
+			closeAll(ps, conn);
 		}
 	}
 
 	public void updateInfo(MemberVO vo) throws SQLException {
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 
 		try {
 			conn = getConnect();
-			pstmt = conn.prepareStatement(UserStringQuery.UPDATE_USER);
-			pstmt.setString(1, vo.getPassword());
-			pstmt.setString(2, vo.getMail());
-			pstmt.setString(3, vo.getTel());
-			pstmt.setString(4, vo.getId());
-			pstmt.executeUpdate();
+			ps = conn.prepareStatement(UserStringQuery.UPDATE_USER);
+			ps.setString(1, vo.getPassword());
+			ps.setString(2, vo.getMail());
+			ps.setString(3, vo.getTel());
+			ps.setString(4, vo.getId());
+			ps.executeUpdate();
 		} finally {
-			closeAll(pstmt, conn);
+			closeAll(ps, conn);
 		}
 	}
 
 	public boolean idCheck(String id) throws SQLException {
 		boolean result = false;
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			conn = getConnect();
-			pstmt = conn.prepareStatement(UserStringQuery.IDCHECK_USER);
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
+			ps = conn.prepareStatement(UserStringQuery.IDCHECK_USER);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
 			if (rs.next()) {
 				if (rs.getInt(1) > 0)
 					result = true;
 			}
 		} finally {
-			closeAll(rs, pstmt, conn);
+			closeAll(rs, ps, conn);
 		}
 		return result;
 	}
@@ -1140,21 +1139,22 @@ public class TourDao {
 	public MemberVO login(String id, String password) throws SQLException {
 		MemberVO vo = null;
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 
 		try {
 			conn = getConnect();
-			pstmt = conn.prepareStatement(UserStringQuery.LOGIN_USER);
-			pstmt.setString(1, id);
-			pstmt.setString(2, password);
-			rs = pstmt.executeQuery();
+			ps = conn.prepareStatement(UserStringQuery.LOGIN_USER);
+			ps.setString(1, id);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
 			if (rs.next()) {
-				vo = new MemberVO(rs.getString("id"), rs.getString("member_name"));
+				vo = new MemberVO(rs.getString("member_name"), rs.getInt("ssn"),rs.getString("id"),rs.getString("password"),rs.getString("tel"),rs.getString("mail"));
+
 			}
 
 		} finally {
-			closeAll(pstmt, conn);
+			closeAll(ps, conn);
 		}
 		return vo;
 	}
@@ -1162,21 +1162,21 @@ public class TourDao {
 	public MemberVO findIdPass(String userName, int ssn, String tel) throws SQLException{
 		MemberVO vo = null;
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = getConnect();
-			pstmt = conn.prepareStatement(UserStringQuery.FINDIDPASS_USER);
-			pstmt.setString(1, userName);
-			pstmt.setInt(2, ssn);
-			pstmt.setString(3, tel);
-			rs = pstmt.executeQuery();
+			ps = conn.prepareStatement(UserStringQuery.FINDIDPASS_USER);
+			ps.setString(1, userName);
+			ps.setInt(2, ssn);
+			ps.setString(3, tel);
+			rs = ps.executeQuery();
 				if(rs.next()) {
 				vo = new MemberVO(rs.getString(1),rs.getString(2));
 				}
 		}finally {
-			closeAll(pstmt,conn);
+			closeAll(ps,conn);
 		}
 		return vo;
 	}
@@ -1189,19 +1189,33 @@ public class TourDao {
 		System.out.println(file.delete());
 
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement ps = null;
 
 		try {
 			conn = getConnect();
-			pstmt = conn.prepareStatement(ReviewStringQuery.DELETE_REVIEW_IMG);
-			pstmt.setInt(1, reviewNum);
-			pstmt.setString(2, img);
-			pstmt.executeUpdate();
+			ps = conn.prepareStatement(ReviewStringQuery.DELETE_REVIEW_IMG);
+			ps.setInt(1, reviewNum);
+			ps.setString(2, img);
+			ps.executeUpdate();
 			
 		} finally {
-			closeAll(pstmt, conn);
+			closeAll(ps, conn);
 		}	
 	}
+	
+	public void deleteImage(int reviewNum)throws SQLException {
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement(ReviewStringQuery.DELETE_REVIEW_IMG1);
+	         ps.setInt(1, reviewNum);
+	         ps.executeUpdate();
+	      } finally {
+	         closeAll(ps, conn);
+	      }   
+	   }
+	
 	public ArrayList<ReviewVO> getRelateReview(ArrayList<String> list) throws SQLException{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1214,7 +1228,7 @@ public class TourDao {
 			while(rs.next()) {
 				rlist.add(new ReviewVO(rs.getInt("review_num"), rs.getString("location"), rs.getString("city"),rs.getString("title"), rs.getString("id")));
 			}
-			for (int i = 0; i < list.size(); i++) {
+			for (int i = 0; i < rlist.size(); i++) {
 				ArrayList<String> tags = getTags(rlist.get(i).getReviewNum());
 				rlist.get(i).setTags(tags);
 				ArrayList<String> img = getImages(rlist.get(i).getReviewNum());
@@ -1238,10 +1252,193 @@ public class TourDao {
 		return ReviewStringQuery.RELATED_REVIEW_IN_CHECKREVIEW+sum+")))";
 	}
 	
+	public void insertCourse(CourseVO cvo) throws SQLException {
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      Iterator<Integer> iter = cvo.getMap().keySet().iterator();
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement(CourseStringQuery.INSERT_COURSE);
+	         while (iter.hasNext()) {
+	            int order = iter.next();
+	            ps.setInt(1, cvo.getCourseNum());
+	            ps.setString(2, cvo.getMap().get(order).getSpotName());
+	            ps.setInt(3, order);
+	            ps.executeUpdate();
+	         }
+	      } finally {
+	         closeAll(ps, conn);
+	      }
+	   }
+
+	   public CourseVO makeCourse(String id, String course_name) throws SQLException {
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      ResultSet rs = null;
+	      int courseNum = 0;
+	      CourseVO cvo = null;
+	      
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement(CourseStringQuery.MAKE_COURSE);
+	         ps.setString(1, id);
+	         ps.setString(2, course_name);
+	         ps.executeUpdate();
+	         ps.close();
+	         
+	         ps = conn.prepareStatement("select course_seq.currVal course_num from dual");
+	         rs = ps.executeQuery();
+	         if(rs.next()) courseNum = rs.getInt(1);
+	         System.out.println(courseNum + " course exist...");
+	         cvo = new CourseVO(courseNum, course_name);
+	         
+	      } finally {
+	         closeAll(ps, conn);
+	      }
+	      
+	      return cvo;
+	   }
+	
+	public int max(Set<Integer> set) {
+		Iterator<Integer> iter = set.iterator();
+		int max=0;
+		while(iter.hasNext()) {
+			int val = iter.next();
+			if(max<val)
+				max=val;
+		}
+		return max;
+	}
+	
+	public ArrayList<CourseVO> getCourses(String id,int num) throws SQLException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		ArrayList<CourseVO> cList = new ArrayList<CourseVO>();
+//		ArrayList<Integer> nList = new ArrayList<>();
+		try {
+			conn = getConnect();
+
+			ps = conn.prepareStatement(CourseStringQuery.GET_COURSE_BY_ID);
+			ps.setString(1, id);
+			ps.setInt(2, num);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				CourseVO cvo = null; 
+//				nList.add(rs.getInt(1));
+				HashMap<Integer,AttractionVO> cmap = new HashMap<Integer, AttractionVO>();
+				ps2 = conn.prepareStatement(CourseStringQuery.GET_COURSE_BY_COURSE_NUM);
+				ps2.setInt(1, rs.getInt("course_num"));		//nList.get(i) ::: courseNum
+				rs2 = ps2.executeQuery();
+				while(rs2.next()) {
+					cmap.put(rs2.getInt("course_order"), 
+							new AttractionVO(rs2.getString("spot_name"),
+									rs2.getString("spot_image"),
+									rs2.getString("lon"),
+									rs2.getString("lat")));
+				}
+				ps2.close();
+				cvo = new CourseVO(rs.getString("course_name"));
+				cvo.setCourseNum(rs.getInt("course_num"));
+				cvo.setMap(cmap);
+				cList.add(cvo);
+			}
+		}finally {
+			closeAll(rs, ps, conn);
+		}
+		return cList;
+	}
+	
+	public ArrayList<CourseVO> getCourses(String id) throws SQLException{
+		Connection conn = null;
+		PreparedStatement ps = null;
+		PreparedStatement ps2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		ArrayList<CourseVO> cList = new ArrayList<CourseVO>();
+//		ArrayList<Integer> nList = new ArrayList<>();
+		try {
+			conn = getConnect();
+			ps = conn.prepareStatement(CourseStringQuery.GET_COURSE_BY_ID);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				CourseVO cvo = null; 
+//				nList.add(rs.getInt(1));
+				HashMap<Integer,AttractionVO> cmap = new HashMap<Integer, AttractionVO>();
+				ps2 = conn.prepareStatement(CourseStringQuery.GET_COURSE);
+				ps2.setInt(1, rs.getInt("course_num"));		//nList.get(i) ::: courseNum
+				rs2 = ps2.executeQuery();
+				while(rs2.next()) {
+					cmap.put(rs2.getInt("course_order"), new AttractionVO(rs2.getString("spot_name"),rs2.getString("address"),rs2.getString("spot_image")));
+				}
+				cvo = new CourseVO(rs.getString("course_name"));
+				cvo.setCourseNum(rs.getInt("course_num"));
+				cvo.setMap(cmap);
+				cList.add(cvo);
+			}
+		}finally {
+			ps2.close();
+			closeAll(rs, ps, conn);
+		}
+		return cList;
+	}
+	
+	public CourseVO getCoursesByNum(int courseNum,String courseName) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        PreparedStatement ps2 = null;
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        HashMap<Integer, AttractionVO> cmap = new HashMap<Integer, AttractionVO>();
+        CourseVO course = new CourseVO(courseNum,courseName,cmap);
+
+        // ArrayList<Integer> nList = new ArrayList<>();
+        try {
+           conn = getConnect();
+           ps = conn.prepareStatement(CourseStringQuery.GET_COURSE_BY_NUM);
+           ps.setInt(1, courseNum);
+           rs = ps.executeQuery();
+           while (rs.next()) {
+              ps2 = conn.prepareStatement(CourseStringQuery.GET_ATTRACTION_BY_SPOT_NAME);
+              ps2.setString(1, rs.getString("spot_name"));
+              ps2.setString(2, rs.getString("spot_name"));
+              rs2 = ps2.executeQuery();
+              if(rs2.next()) {
+                  cmap.put(rs.getInt("course_order"),new AttractionVO(rs2.getString("spot_name"),rs2.getString("spot_image"),rs2.getString("lon"),rs2.getString("lat")));
+              }
+              ps2.close();
+           }
+        } finally {
+           closeAll(rs, ps, conn);
+        }
+        return course; 
+     }
+	
+	public int getCourseNumber(String id) throws SQLException{
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      ResultSet rs = null;
+	      int num = -1;
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement("SELECT count(-1) FROM course WHERE id=?");
+	         ps.setString(1, id);
+	         rs = ps.executeQuery();
+	         if(rs.next()) num = rs.getInt(1);
+	      } finally {
+	         closeAll(rs, ps, conn);
+	      }
+	      return num;
+	   }
 
 	public static void main(String[] args) throws SQLException { // 단위테스트
 		
-		/*ReviewVO vo = TourDao.getInstance().checkReview(36);
+	/*	ReviewVO vo = TourDao.getInstance().checkReview(36);
 		System.out.println(vo.getImages());
 		TourDao.getInstance().deleteImage(vo.getImages().get(0));*/
 		/*

@@ -2,16 +2,32 @@ package model.vo;
 import java.util.ArrayList;
 
 public class AttractionVO {
-	String spotName;
-	String address; // ÃÑ ÁÖ¼Ò
-	String location; //½Ã µµ
-	String city; // ½Ã ±º ±¸
-	String info;
-	String mainImage;
-	ArrayList<String> images;
+	private String spotName;
+	private String address; // ÃÑ ÁÖ¼Ò
+	private String location; //½Ã µµ
+	private String city; // ½Ã ±º ±¸
+	private String info;
+	private String mainImage;
+	private String lon;
+	private String lat;
+	private ArrayList<String> images;
 	
 	
 	public AttractionVO() {}
+
+	public AttractionVO(String spotName, String address, String mainImage) {
+		this.spotName = spotName;
+		this.address = address;
+		this.mainImage = mainImage;
+	}
+	
+	public AttractionVO(String spotName, String mainImage, String lon, String lat) {
+		super();
+		this.spotName = spotName;
+		this.mainImage = mainImage;
+		this.lon = lon;
+		this.lat = lat;
+	}
 
 	public AttractionVO(String spotName, String address, String location, String city, String info) {
 		super();
@@ -31,7 +47,24 @@ public class AttractionVO {
 		this.info = info;
 		this.mainImage = mainImage;
 	}
+	
 
+	public AttractionVO(String spotName, String address, String location, String city, String info, String mainImage,
+			String lon, String lat) {
+		super();
+		this.spotName = spotName;
+		this.address = address;
+		this.location = location;
+		this.city = city;
+		this.info = info;
+		this.mainImage = mainImage;
+		this.lon = lon;
+		this.lat = lat;
+	}
+
+	public AttractionVO(String spotName) {
+		this.spotName = spotName;
+	}
 
 	public String getMainImage() {
 		return mainImage;

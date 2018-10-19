@@ -4,10 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-      
-<%-- <%
-     String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
-%>    --%>
+
 
 <!DOCTYPE html>
 <html>
@@ -157,28 +154,7 @@ var count = 0;
 function pasteHTML(filepath){
    var id = '${sessionScope.vo.id}';
    count++;
-//   $('#imageupload').empty();
-   
-   <%-- var ss = '<div id="myCarousel" class="carousel slide" data-ride="carousel"><ol class="carousel-indicators">';
-   var ss2 = '';
-   var ss3 = '</ol><div class="carousel-inner">';
-   var ss4 = '';
-   var ss5 = '</div><a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span>'
-         +'<span class="sr-only">Previous</span></a><a class="right carousel-control" href="#myCarousel" data-slide="next">'
-         +'<span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></div>';
-         
-         
-    if(count==1){
-       ss2 = '<li data-target="#myCarousel" data-slide-to="0" class="active"></li>';
-       ss4 = '<div class="item active"><img src="<%=request.getContextPath()%>/upload/'+id+'/'+filepath+'" width="265px" id="img'+count+'"></div>';
-       
-    }else{
-       ss2 = ss2+'<li data-target="#myCarousel" data-slide-to="(count-1)"></li>';
-       ss4 = ss4+'<div class="item"><img src="<%=request.getContextPath()%>/upload/'+id+'/'+filepath+'" width="265px" id="img'+count+'"></div>'
-    }
-    
-    
-   var result = ss+ss2+ss3+ss4+ss5; --%>
+
     var sHTML = '<img src="<%=request.getContextPath()%>/upload/'+id+'/'+filepath+'" width="265px" id="img'+count+'">'; 
    var imgDiv = "<div class='item'>"+sHTML+"</div>";
    $('#xxxx').append(imgDiv);   
@@ -196,6 +172,7 @@ function pasteHTML(filepath){
 
 
 </script>   
+	<%@include file="nav.jsp" %>
 <h1 align="center"> 글 작성 </h1>
 <form action="write.do" method="post" name="frm"> <!--  enctype="multipart/form-data" -->
 <!-- <input type="hidden" name="command" value="write"> -->
@@ -238,10 +215,10 @@ function pasteHTML(filepath){
    <tr>
       <th>카테고리</th>
       <td colspan="4">
-      <input type="checkbox" name="category" value="food">맛집&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="nature">관광&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="rooms">숙소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="shop">쇼핑
+
+      <input type="checkbox" name="category" value="맛집">맛집&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="자연">자연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="사진">사진
       </td>
    </tr>
    <tr>

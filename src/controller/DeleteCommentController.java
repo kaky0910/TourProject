@@ -21,3 +21,4 @@ public class DeleteCommentController implements Controller{
 		return new ModelAndView("index.jsp");
 	}
 }
+
