@@ -502,35 +502,40 @@ public class TourDao {
 	}// getFestivalInfo 泥좎쭊�벐
 
 	public ArrayList<AttractionVO> getAttraction(String city,String location) throws SQLException { // v2 tourspot list
-		ArrayList<AttractionVO> list = new ArrayList<>();
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+	      ArrayList<AttractionVO> list = new ArrayList<>();
+	      ArrayList<AttractionVO> aList = new ArrayList<>();
+	      Connection conn = null;
+	      PreparedStatement ps = null;
+	      ResultSet rs = null;
 
-		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
-			ps.setString(1, city);
-			ps.setString(2, location+"%");
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("info")));
-			}
-			for (AttractionVO vo : list) {
-				ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
-				ps.setString(1, vo.getSpotName());
-				rs = ps.executeQuery();
-				if (rs.next())
-					vo.setMainImage(rs.getString("spot_image"));
-			}
+	      try {
+	         conn = getConnect();
+	         ps = conn.prepareStatement(ReviewStringQuery.GET_ATTRACTION);
+	         ps.setString(1, city);
+	         ps.setString(2, city.substring(0,city.length()-1));
+	         ps.setString(3, location+"%");
+	         rs = ps.executeQuery();
+	         while (rs.next()) {
+	            list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
+	                  rs.getString("city"), rs.getString("info")));
+	         }
+	         ps.close();
+	         for (AttractionVO vo : list) {
+	            ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
+	            ps.setString(1, vo.getSpotName());
+	            rs = ps.executeQuery();
+	            if (rs.next()) {
+	               vo.setMainImage(rs.getString("spot_image"));
+	               aList.add(vo);
+	            }
+	         }
 
-		} finally {
-			closeAll(rs, ps, conn);
-		}
+	      } finally {
+	         closeAll(rs, ps, conn);
+	      }
 
-		return list;
-	}// getAttraction 泥좎쭊�벐 �씠誘몄�!!!!
+	      return aList;
+	   }// getAttraction 泥좎쭊�벐 �씠誘몄�!!!!
 
 	public void scrap(String id, int review_num) throws Exception { // scrap
 		Connection conn = null;

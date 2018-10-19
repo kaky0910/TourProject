@@ -7,16 +7,17 @@
 <head>
 <meta charset="utf-8">
 <title>CSS Website Layout</title>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
  <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
  <link rel="stylesheet" href="css/checkReviewStyle.css">
  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
  <link rel="stylesheet" href="css/rc.css">
- <link rel="stylesheet" href="css/style.css">
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="css/nav.css">
+ 
   
    <!-- Demo CSS -->
 	<link rel="stylesheet" href="css/checkreview.css" type="text/css" media="screen" />
@@ -25,7 +26,7 @@
 	<!-- Modernizr -->
   <script src="js/modernizr.js"></script>
 
-<!--<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.0.min.js"></script>-->
+
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
@@ -33,13 +34,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+@font-face{
+	font-family:HangeulNuriR;
+	src:url('./font/HangeulNuriR.ttf') format('truetype');
+
+}
 * {
     box-sizing: border-box;
 }
 
 body {
- background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
-   background: linear-gradient(to bottom, #FFB88C, #DE6262); 
+/*  background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
+   background: linear-gradient(to bottom, #FFB88C, #DE6262);  */
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    margin-left: 10%;
+    margin-right: 10%;
+	font-family: HangeulNuriR;
+
 }
 .title{
 text-align : center;
@@ -133,6 +145,9 @@ section:after {
     width: 100%;
     float: left;
     /* box-sizing: border-box; */
+    padding-top: 0px;
+    padding-right: 20px;
+    padding-left: 20px;
     padding: 20px;
 }
 .maincontent{
@@ -141,14 +156,15 @@ section:after {
     float: left;
     border-left: 1px solid #d9d9d9;
     border-right: 1px solid #d9d9d9;
-    margin-left:15%;
-    margin-right:15%;
+    margin-left:10%;
+    margin-right:10%;
     box-sizing: border-box;
 
 
 }
 .reviewinfo{
 text-align:right;
+height:50%;
 }
 
 /* /* commnet submit button */
@@ -180,12 +196,17 @@ text-align:right;
     padding: 10px;
     text-align: center;
 }
+
+
 #content{
     width: 85%;
     height: 100px;
     margin: 10px;
     margin-left: 30px;
+
+
 }
+
 
 </style>
 <script type="text/javascript">
@@ -198,7 +219,7 @@ text-align:right;
 		});//click
 	});//ready
 </script>
-<script type="text/javascript" src="js/nav.js"></script>
+
 </head>
 <body>
 <c:choose>
@@ -335,7 +356,7 @@ $(function() {
 	
 		
 		//중앙위치 구해오기
-		 LeftPosition=(screen.width)/2;
+	/* 	 LeftPosition=(screen.width)/2;
 		 TopPosition=(screen.height)/2;
 		 
 		 O="width=350"+",height=200"+",scrollbars=no"+",top="+TopPosition+",left="+LeftPosition; 
@@ -344,13 +365,14 @@ $(function() {
 		 Win.document.write("<body topmargin=0 leftmargin=0>");
 		 Win.document.write("<h1>===경고===</h1></body></html>");
 		 Win.document.write("<h2>로그인을 해주시기 바랍니다</h2></body></html>");
-		 Win.document.close();
+		 Win.document.close(); */
+		 alert("로그인을해주시기 바랍니다.");
 			});
 		$('.star').click(function() {
 		
 			
 			//중앙위치 구해오기
-			 LeftPosition=(screen.width)/2;
+		/* 	 LeftPosition=(screen.width)/2;
 			 TopPosition=(screen.height)/2;
 			 O="width=350"+",height=200"+",scrollbars=no"+",top="+TopPosition+",left="+LeftPosition;
 			 Win=window.open("","",O); 
@@ -358,7 +380,8 @@ $(function() {
 			 Win.document.write("<body topmargin=0 leftmargin=0>");
 			 Win.document.write("<h1>===경고===</h1></body></html>");
 			 Win.document.write("<h2>로그인을 해주시기 바랍니다</h2></body></html>");
-			 Win.document.close();
+			 Win.document.close(); */
+			alert("로그인을해주시기 바랍니다.");
 				});
 		
 		})
@@ -366,8 +389,10 @@ $(function() {
 </script>
 </c:otherwise>		
 </c:choose>
-	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
-      	<div id="header">
+   <header>
+      <div class="container">
+          	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
+      	<div id="header"> 
       		<div class="container">
          		<div class="navbar-header" style="margin-top: 15px">
             		<button type="button" class="navbar-toggle" id="menuSpan" data-toggle="collapse" data-target="#myNavbar">
@@ -375,9 +400,17 @@ $(function() {
 	               		<span class="icon-bar" style="margin-top: 2px"></span>
 	               		<span class="icon-bar"></span>
             		</button>
-            		<a href="index.jsp"><img src="img/main_logo2.png" width="150"></a>
+            		<a href="index.jsp"><img src="img/main_logo2.png" width="150" height="47" style="background-color: inherit;/* #0F6A8B  #F5EED2*/"></a>
          		</div> <!-- navbar-header -->
-         		
+  <!--    <div class="container-fluid">
+   -->
+    <ul class="nav navbar-nav" style="font-size:20px;  font-weight: bold;  font-family: HangeulNuriR;margin-left:15px;margin-top:5px; ">
+      <li class="active" style="top: 10px;"><a href="#">여행지</a></li>
+      <li style="top: 10px;"><a href="#">이벤트</a></li>
+      <li style="top: 10px;"><a href="#">매거진</a></li>
+      <li style="top: 10px;"><a href="#">랭킹</a></li>
+    </ul>
+ <!--  </div> -->
 	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
 	            	<form class="navbar-form navbar-left" action="getdata.do">
 	               		<div class="input-group">
@@ -417,34 +450,41 @@ $(function() {
 		                  	</c:choose>
 	               		</li>
 					</ul>
-				</div> <!-- myNavbar -->
-      		</div> <!-- container -->
-		</div> <!-- header -->
-    	<div id="line"></div>
-	</nav>
-	
-	<div style="height: 150px"></div>
-	
-	<div class="maincontent">
-		<div class="topnav2">
-			<h1>${rvo.title}</h1>
-			<h3 class="title">글번호 :: ${rvo.reviewNum}</h3>
+				</div>
+				<!-- myNavbar -->
+			</div>
+			<!-- container -->
 		</div>
-		<hr>
-		작성자::<a href="memberreview.do?id=${rvo.id}">${rvo.id}</a> &nbsp;&nbsp; 작성일시::${rvo.date} &nbsp;&nbsp; 좋아요::${rvo.like}
-		<hr>
-		<div class="row">
-			<div class="main">
-				${rvo.content} <br>
-				<!--   곱창전골은 전골류의 한국 요리로, 소나 돼지의 내장과 여러가지 채소를 육수와 함께 끓여낸 음식이다. <br>
-    곱창이란 소나 돼지의 작은 창자를 의미한다. 곱창전골은 곱창이 주재료이지만, 다른 부위의 내장도 많이 사용되어 내장<br>
-     특유의 쫄깃한 식감으로 곱창전골의 맛을 더욱 풍부하게 한다. -->
-      <section class="slider">
+		<!-- header -->
+		<div id="line"></div>
+	</nav>
+      </div>
+      <!-- container -->
+   </header>
+   <div style="height: 75px;"></div>
+
+<div class="reviewinfo">
+<br><br>
+<h3 class="title">${rvo.title} <br><br>No.${rvo.reviewNum}</h3><br><br>
+ 작성자::${rvo.id}&emsp;작성일시::${rvo.date}&emsp;<span id="like">좋아요::${rvo.like}</span>
+<hr>
+</div>
+  <div class="main">
+  <div class="row" style="background-color: inherit;">
+  
+  <br>
+  <div class="col-lg-4">
+ <p style="background-color: inherit;">${rvo.content}</p>
+ <br>
+  </div> 
+  <div class="col-lg-1"></div>
+  <div class="col-lg-7">
+     <section class="slider">
        <div id="slider" class="flexslider">
          <ul class="slides">	  	
           	<c:forEach items="${rvo.images}" var="vo">
 	  		<li data-thumb="${vo}">
-	  		<img src="${vo}" width="295px" height="295px" title="클릭하시면 원본크기로 보실 수 있습니다."
+	  		<img src="${vo}" title="클릭하시면 원본크기로 보실 수 있습니다."
      		style="cursor: pointer;" onclick="expImgPop('${vo}')"/>
      		</li>
 			</c:forEach>
@@ -454,7 +494,7 @@ $(function() {
 	  	<ul class="slides">
 	  		<c:forEach items="${rvo.images}" var="vo">
 	  		<li data-thumb="${vo}">
-	  		<img src="${vo}" width="200px" height="200px"/>
+	  		<img src="${vo}" width="300px" height="250px"/>
      		</li>
 			</c:forEach>
 		</ul>
@@ -515,7 +555,7 @@ $(function() {
 <div class="footer">
   <p>관련글(카테고리)</p>
  </div>
-</div>
+
  <!-- jQuery -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
@@ -529,8 +569,8 @@ $(function() {
             controlNav: false,
             animationLoop: false,
             slideshow: false,
-            itemWidth: 200,
-            itemMargin: 5,
+            itemWidth: 300,
+            itemMargin: 3,
             asNavFor: '#slider'
           });
 

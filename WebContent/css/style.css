@@ -77,7 +77,7 @@ h1 {
 }
 
 .background { /*占쏙옙 占쏙옙占쏙옙 */
-	fill: rgb(251, 251, 249); /* #EEF4F2 */;
+	fill: rgb(255, 255, 255); /* #EEF4F2 */;
 	pointer-events: all;
 }
 
@@ -135,9 +135,9 @@ button.ui-button-icon-only {
 
 
 section.success-stories p {
-	font-size: 1.1rem;
-	color: #666;
-	font-weight: 300
+    font-size: 13px;
+    color: #666;
+    font-weight: 300;
 }
 
 section.success-stories ul.values {
@@ -151,10 +151,10 @@ section.success-stories ul.values li {
 section.success-stories ul.values strong, section.success-stories ul.values span
 	{
 	display: block;
-	font-size: 1.2rem;
-	color: #333;
-	text-align: center;
-	font-weight: 400
+    font-size: 15px;
+    color: #333;
+    text-align: center;
+    font-weight: 400;
 }
 
 section.success-stories ul.values strong {
@@ -206,7 +206,7 @@ section.success-stories .owl-nav .owl-prev:focus, section.success-stories .owl-n
 }
 
 section.success-stories .owl-stage-outer {
-	padding-top: 170px
+	padding-top: 140px
 }
 
 section.success-stories .device-mockup {

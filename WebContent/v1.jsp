@@ -7,28 +7,32 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet"
-   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet"
-   href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="css/nav.css">
-<script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<!-- co button -->
+<link rel="stylesheet" href="css/cobutton.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script
-   src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript" src="js/nav.js"></script>
-<script
-   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style>
 #carousel_con {
    width: 600px;
    height: 350px;
 }
+@font-face{
+	font-family:HangeulNuriR;
+	src:url('./font/HangeulNuriR.ttf') format('truetype');
 
+}
 ::-webkit-scrollbar-track {
    background: #EAEAEA;
    border-radius: 5px;
@@ -48,10 +52,74 @@
 section {
    height: auto;
 }
+a {
+	color:  #b32e2e;
+	text-decoration: none;
+}
+/* ///////////sidebar///////// */
+.ui-widget {
+    font-family: HangeulNuriR;
+}
+
+.text-success {
+    color: #000000;
+}
+.ui-widget-header {
+    border: 1px solid #fffbfb;
+    background: #fcf8e3;
+    color: #ffffff;
+    font-weight: bold;
+}
+.ui-widget-content {
+    border: 1px solid #dddddd;
+    background: inherit;
+    color: #333333;
+}
+.ui-widget-header a {
+     color: inherit; 
+}
+.ui-widget-content a {
+     color: rgba(223,190,106,0.7); 
+}
+.ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited, a.ui-button, a:link.ui-button, a:visited.ui-button, .ui-button {
+    color: inherit;
+    text-decoration: none;
+}
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: inherit;
+    background: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    border: 1px solid #fffbfb;
+    background: #ead09f;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 0;
+    /* margin: 1px .2em 0 0; */
+    border-bottom-width: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+.ui-widget.ui-widget-content {
+    border: none; 
+}
+
+/* //////////////////// */
+
 
 #backgroundC {
-   background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
-   background: linear-gradient(to bottom, #FFB88C, #DE6262);
+ /*   background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);
+   background: linear-gradient(to bottom, #FFB88C, #DE6262); */
 }
 
 .carousel-inner>.item>img {
@@ -66,20 +134,17 @@ section {
 }
 
 body {
-   background-color: DFE8E4;
-   font-family: Arial, Helvetica, sans-serif;
+   
+  /*   background-color: DFE8E4;
    background-color: rgba(249, 248, 244, 0.5);
+  border-left: 1px solid #d9d9d9; */
+    border-left: 1px solid #d9d9d9;
+    border-right: 1px solid #d9d9d9;
+    margin-left: 10%;
+    margin-right: 10%;
+	font-family: HangeulNuriR;
 }
 
-/* Create two columns/boxes that floats next to each other */
-nav {
-   float: left;
-   left: 20px;
-   width: 23%;
-   height: 120%; /* only for demonstration, should be removed */
-   padding: 20px;
-   background-image: linear-gradient(gray, white);
-}
 
 /* Style the list inside the menu */
 nav ul {
@@ -183,6 +248,16 @@ tr td {
    width: 100%;
    height: auto;
 }
+.contents {
+   padding-top: 80px;
+}
+
+.caret {
+   margin-left: 10px
+}
+#tabs::-webkit-scrollbar {
+        width: 0 !important;
+    }
 </style>
 
 <script>
@@ -205,6 +280,7 @@ tr td {
             $('#tab-1').html(data);
             $('#tab-2').html("");
             $('#tab-3').html("");
+            $('#tab-4').html("");
          }//callback
       });//ajax 
    }
@@ -213,16 +289,12 @@ tr td {
 
       $("#tabs").tabs();
 
-/* 
-      if ($("#tabs").height() < $(window).height()) {
-      }
- */
       $.ajax({
          type : "get",
          url : "getBestReviewBytag.do",
          data : {
             "location" : "${location}",
-            "tag" : $('nav a').html()
+            "tag" : "맛집"
          },
 
          success : function(data) {
@@ -230,6 +302,7 @@ tr td {
             $('#tab-1').html(data);
             $('#tab-2').html("");
             $('#tab-3').html("");
+            $('#tab-4').html("");
          }//callback
       });//ajax
 
@@ -248,19 +321,28 @@ tr td {
             data : loca,
 
             success : function(data) {
-               if (str == '관광') {
-                  $('#tab-2').html(data);
-                  $('#tab-1').html("");
-                  $('#tab-3').html("");
-               } else if (str == '숙소') {
-                  $('#tab-3').html(data);
-                  $('#tab-1').html("");
-                  $('#tab-2').html("");
-               } else {
-                  //$('#tab-1').html(data);
-                  $('#tab-1').html(data);
-                  $('#tab-2').html("");
-                  $('#tab-3').html("");
+				if (str == '관광') {
+					$('#tab-2').html(data);
+					$('#tab-1').html("");
+					$('#tab-3').html("");
+					$('#tab-4').html("");
+				} else if (str == '숙소') {
+					$('#tab-3').html(data);
+					$('#tab-1').html("");
+					$('#tab-2').html("");
+					$('#tab-4').html("");
+				} else if (str == '맛집'){
+					//$('#tab-1').html(data);
+					$('#tab-1').html(data);
+					$('#tab-2').html("");
+					$('#tab-3').html("");
+					$('#tab-4').html("");
+				}else {
+					//$('#tab-1').html(data);
+					$('#tab-1').html("");
+					$('#tab-2').html("");
+					$('#tab-3').html("");
+					$('#tab-4').html(data);
                }
             }//callback
          });//ajax
@@ -273,24 +355,29 @@ tr td {
 
 </head>
 <body>
-   <header
-      style="background-color: #FFFAE5; border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-color: #f4ecc8; padding-bottom: 8px;">
-      <div class="container">
-         <div class="navbar-header" style="margin-top: 15px">
-            <button type="button" class="navbar-toggle" id="menuSpan"
-               data-toggle="collapse" data-target="#myNavbar">
-               <span class="icon-bar"></span> <span class="icon-bar"
-                  style="margin-top: 2px"></span> <span class="icon-bar"></span>
-            </button>
-            <a href="index.jsp"><img src="img/main_logo2.png" width="150"
-               height="47"></a>
-         </div>
-         <!-- navbar-header -->
-
-         <div class="collapse navbar-collapse navbar-right" id="myNavbar"
-            style="margin-top: 15px">
-            <form class="navbar-form navbar-left" action="getdata.do">
-
+     	<nav class="navbar navbar-defalt navbar-fixed-top" style="background-color: #fff">
+      	<div id="header"> 
+      		<div class="container">
+         		<div class="navbar-header" style="margin-top: 15px">
+            		<button type="button" class="navbar-toggle" id="menuSpan" data-toggle="collapse" data-target="#myNavbar">
+	                    <span class="icon-bar"></span>
+	               		<span class="icon-bar" style="margin-top: 2px"></span>
+	               		<span class="icon-bar"></span>
+            		</button>
+            		<a href="index.jsp"><img src="img/main_logo2.png" width="150" height="47" style="background-color: inherit;/* #0F6A8B  #F5EED2*/"></a>
+         		</div> <!-- navbar-header -->
+  <!--    <div class="container-fluid">
+   -->
+    <ul class="nav navbar-nav" style="font-size:20px;  font-weight: bold;  font-family: HangeulNuriR;margin-left:15px;margin-top:5px; ">
+      <li class="active" style="top: 10px;"><a href="#">여행지</a></li>
+      <li style="top: 10px;"><a href="#">이벤트</a></li>
+      <li style="top: 10px;"><a href="#">매거진</a></li>
+      <li style="top: 10px;"><a href="#">랭킹</a></li>
+      
+    </ul>
+ <!--  </div> -->
+	         	<div class="collapse navbar-collapse navbar-right" id="myNavbar" style="margin-top: 15px">
+	            	<form class="navbar-form navbar-left" action="getdata.do">
 	               		<div class="input-group">
 	                  		<input type="text" class="form-control" placeholder="Search" name="search" id="myInput">
 	                  		<div class="input-group-btn">
@@ -300,64 +387,67 @@ tr td {
 	                  		</div>
 	               		</div>
 	            	</form>
-            <ul class="nav navbar-nav navbar-right">
-               <li class="dropdown"><a class="dropdown-toggle"
-                  data-toggle="dropdown" href="#"> <span
-                     class="glyphicon glyphicon-user text-success"> <span
-                        class="caret" style="margin-left: 10px"></span>
-                  </span>
-               </a> <c:choose>
-                     <c:when test="${vo != null}">
-                        <ul class="dropdown-menu">
-                           <li><a href="logout.do"><span
-                                 class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;로그아웃</a></li>
-                           <li><a href="myreviews.do?id=${sessionScope.vo.id}"><span
-                                 class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
-                           <li><a href="scrap.do?id=${sessionScope.vo.id}"><span
-                                 class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
-                           <li><a href="write.jsp"><span
-                                 class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;글쓰기</a></li>
-                           <li><a href="registerupdate.do?id=${sessionScope.vo.id}"><span
-                                 class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;정보 수정</a></li>
-                        </ul>
-                     </c:when>
-
-                     <c:otherwise>
-                        <ul class="dropdown-menu">
-                           <li><a href="login.jsp"><span
-                                 class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;로그인</a></li>
-                           <li><a href="register.jsp"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;회원가입</a></li>
-                        </ul>
-                     </c:otherwise>
-                  </c:choose></li>
-            </ul>
-         </div>
-         <!-- myNavbar -->
-      </div>
-      <!-- container -->
-   </header>
-   <!-- header -->
-   <div id="line"></div>
+	            	
+	            	<ul class="nav navbar-nav navbar-right">
+	               		<li class="dropdown">
+		                  	<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="userMenu">
+		                     	<span class="glyphicon glyphicon-user white">
+		                     		<span class="caret" style="margin-left: 10px"></span>
+		                     	</span>
+		                  	</a>
+		                  	<c:choose>
+		                  	 	<c:when test="${vo != null}">
+			                  	 	<ul class="dropdown-menu">
+			                     	<li><a href="logout.do"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;로그아웃</a></li>
+			                     	<li><a href="myreviews.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-edit"></span>&nbsp;&nbsp;내가 쓴 글</a></li>
+			                     	<li><a href="scrap.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;&nbsp;스크랩</a></li>
+			                     	<li><a href="write.jsp"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;글쓰기</a></li>
+			                     	<li><a href="registerupdate.do?id=${sessionScope.vo.id}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;정보 수정</a></li>
+			                  		</ul>
+		                  		</c:when>
+		      
+		                  		<c:otherwise>
+		                  			<ul class="dropdown-menu">
+			                     	<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;로그인</a></li>
+			                     	<li><a href="register.jsp"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;회원가입</a></li>
+			                  		</ul>
+		                  		</c:otherwise>
+		                  	</c:choose>
+	               		</li>
+					</ul>
+				</div>
+				<!-- myNavbar -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- header -->
+		<div id="line"></div>
+	</nav>
    <div id="backgroundC">
-      <div style="height: 70px;"></div>
+      <div style="height: 100px;"></div>
 
       <section style="height: auto;">
-         <nav id="tabs" style="overflow-y: scroll; height: 800px; overflow-x: hidden;">
-            <h1 align="center">BEST REVIEWS</h1>
-            <ul>
-               <li><a href="javascript:void(0)">맛집</a></li>
-               <li><a href="javascript:void(0)">관광</a></li>
-               <li><a href="javascript:void(0)">숙소</a></li>
-            </ul>
-            <div id="tab-1"></div>
-            <div id="tab-2"></div>
-            <div id="tab-3"></div>
-         </nav>
+         <nav id="tabs" style="overflow-y: scroll; height: 800px; width: 30%; overflow-x: hidden; float: left;">
+      		<div>
+        	 <h2 align="center" style="font-color: gray;font-family: HangeulNuriR;">인기 게시물</h2>
+        	
+         	<a class="cobtn" href="javascript:void(0)">맛집</a>
+         	<a class="cobtn" href="javascript:void(0)">관광</a>
+         	<a class="cobtn" href="javascript:void(0)">숙소</a>
+        	<a class="cobtn" href="javascript:void(0)">쇼핑</a>
+        	</div>
+        	
+         	<div id="tab-1"></div>
+			<div id="tab-2"></div>
+			<div id="tab-3"></div>
+			<div id="tab-4"></div>
+			
+		 </nav>
+        
 
-         <article style="height: auto">
+         <article style="height: auto; padding-top: 0px;">
             <p>
-            <p align="center"
-               style="margin-bottom: 30px; color: #FFFFFF; font-weight: bold; font-size:45px;">${requestScope.location}</p>
+            <p align="center" style="margin-bottom: 30px; color: black; font-weight: bold; font-size:45px;">${requestScope.location}</p>
             <div class="container" id="carousel_con">
                <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
@@ -395,7 +485,7 @@ tr td {
                <div align="center" class="col-sm-2">
                   <hr>
                   <br> <a
-                     style="font-size: 25px; color: #FFFFFF/* rgb(116, 191, 237) */; text-decoration: none; font-weight: bold;"
+                     style="font-size: 25px; color: black/* rgb(116, 191, 237) */; text-decoration: none; font-weight: bold;"
                      href="getAttraction.do?city=${rList}&&location=${requestScope.location}">${rList}</a><br>
                   <br>
                </div>
