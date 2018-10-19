@@ -1435,7 +1435,14 @@ public class TourDao {
 	      }
 	      return num;
 	   }
-
+	
+	public String getChangeContent(String content) {
+		   String updateContent1 = content.replaceFirst("<p>", "b");
+		   String updateContent2 = content.replace("</p>","");
+		   String updateContent3 = content.replace("<p>","");
+		   return updateContent3;
+	   }
+	
 	public static void main(String[] args) throws SQLException { // 단위테스트
 		
 	/*	ReviewVO vo = TourDao.getInstance().checkReview(36);

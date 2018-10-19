@@ -393,19 +393,6 @@ $(function() {
 	<%@include file="nav.jsp" %>
 	
 	<div style="height: 150px"></div>
-	
-	<div class="maincontent">
-		<div class="topnav2">
-			<h1>${rvo.title}</h1>
-			<h3 class="title">글번호 :: ${rvo.reviewNum}</h3>
-		</div>
-		<!-- header -->
-		<div id="line"></div>
-	</nav>
-      </div>
-      <!-- container -->
-   </header>
-   <div style="height: 75px;"></div>
 
 <div class="reviewinfo">
 <br><br>

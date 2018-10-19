@@ -210,11 +210,13 @@ tr td {
 	transition: .5s ease;
 
 }
-
+.container:hover .overlay {
+	opacity: 1;
+}
 /* .container:hover .overlay {
 	width: 100%;
 	left: 0;
-} */
+} 
 .container:hover .overlay {
 	width: 100%;
 	left: 0;
@@ -241,6 +243,7 @@ tr td {
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	white-space: nowrap;
+	opacity: 0; /* 추가!  */
 }
 /* 
 .image {
@@ -300,6 +303,7 @@ body {
 }
 
 }
+
 #img :hover {
 	opacity: 0.3;
 }
@@ -326,6 +330,14 @@ body {
 
 
 </style>
+<script type="text/javascript">
+	$(function() {
+		$('div[name=tourSpot1]').hover(function() {
+			$(this).addClass('overlay');
+		});//hover
+	});//ready
+</script>
+
 <script>
 	var count = 1;
 	var page = 1;
