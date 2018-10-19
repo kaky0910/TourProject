@@ -72,7 +72,7 @@ body {
 }
 
 /* Create two columns/boxes that floats next to each other */
-nav {
+#tabs {
    float: left;
    left: 20px;
    width: 23%;
@@ -82,7 +82,7 @@ nav {
 }
 
 /* Style the list inside the menu */
-nav ul {
+#tabs ul {
    list-style-type: none;
    padding: 0;
 }
@@ -222,7 +222,7 @@ tr td {
          url : "getBestReviewBytag.do",
          data : {
             "location" : "${location}",
-            "tag" : $('nav a').html()
+            "tag" : $('#tabs a').html()
          },
 
          success : function(data) {
@@ -235,7 +235,7 @@ tr td {
 
       $('#thatdiv div:eq(0)').addClass('active');
 
-      $('nav a').click(function() {
+      $('#tabs a').click(function() {
          var str = $(this).html();
          var loca = {
             "location" : "${location}",
@@ -273,7 +273,9 @@ tr td {
 
 </head>
 <body>
-   	<%@include file="nav.jsp" %>
+   <%@include file="nav.jsp" %>
+   
+   <!-- header -->
    <div id="line"></div>
    <div id="backgroundC">
       <div style="height: 70px;"></div>
@@ -330,14 +332,14 @@ tr td {
             <c:forEach items="${clist}" var="rList">
 
                <div align="center" class="col-sm-2">
-                <hr>
+                  <hr>
                   <br> <a
                      style="font-size: 25px; color: #FFFFFF/* rgb(116, 191, 237) */; text-decoration: none; font-weight: bold;"
                      href="getAttraction.do?city=${rList}&&location=${requestScope.location}">${rList}</a><br>
                   <br>
                </div>
             </c:forEach>
-           <!--  <hr> -->
+            <hr>
             <br> <br>
          </article>
       </section>

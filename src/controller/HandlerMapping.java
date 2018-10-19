@@ -71,6 +71,10 @@ public class HandlerMapping {
 			return new DeleteCommentController();
 		case "saveCourse.do":
 	         return new SaveCourseController();
+		case "myCourse.do":
+			return new MyCourseController();
+		case "detailCourse.do":
+			return new DetailCourseController();
 	}
 		
 		return null;

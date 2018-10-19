@@ -39,6 +39,13 @@ public class CourseVO {
 		this.courseNum = courseNum;
 		this.courseName = courseName;
 	}
+	
+	public CourseVO(int courseNum, String courseName, HashMap<Integer, AttractionVO> map) {
+		super();
+		this.courseNum = courseNum;
+		this.courseName = courseName;
+		this.map = map;
+	}
 	public String getAllCourse() {
 		if(map!=null) {
 			System.out.println("map size!!!!!!!!!!!!!!!!!!111"+map.size());

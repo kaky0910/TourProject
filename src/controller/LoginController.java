@@ -20,7 +20,7 @@ public class LoginController implements Controller {
 		String path = "loginresult.jsp";
 		
 		MemberVO vo=TourDao.getInstance().login(id, password);
-		vo.setCourses(ReviewService.getInstance().getCourses(vo.getId(),null).getList());
+	//	vo.setCourses(ReviewService.getInstance().getCourses(vo.getId(),null).getList());
 		System.out.println(vo);
 		if(vo !=null){ // 쨌횓짹횞�횓 쩌쨘째첩
 			HttpSession session = request.getSession();

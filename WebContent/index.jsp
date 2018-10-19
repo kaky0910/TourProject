@@ -95,7 +95,6 @@
 		font-family: BMDOHYEON_ttf;
 		border: 1px gray double;
 		border-radius:50px;
-		width:30%;
 		
 	}
 	.sidebar {
@@ -127,14 +126,11 @@
 		</div>
 			<div class="col-lg-5 col-md-12 col-sm-12" style="margin-top:161px;">
 				<h2 align="center">reviews</h2>
-				<div class="haha" width="100%">
+				<div class="haha">
 					
 				</div>
 			</div>
 		</div>
-	<div class="footer" style="display: none;">
-		
-	</div>
 	<form action="locationpage.do">
 		<input type="hidden" name="location" value="">
 	</form>

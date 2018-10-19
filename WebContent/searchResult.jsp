@@ -68,6 +68,8 @@
 		$('#regBtn').click(function(){
 			if(${vo!=null})
 				window.document.location.href="course.jsp";
+			else
+				alert("로그인이 필요합니다");
 		});
 	});
 	

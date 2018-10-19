@@ -20,6 +20,15 @@ public class AttractionVO {
 		this.address = address;
 		this.mainImage = mainImage;
 	}
+	
+	public AttractionVO(String spotName, String mainImage, String lon, String lat) {
+		super();
+		this.spotName = spotName;
+		this.mainImage = mainImage;
+		this.lon = lon;
+		this.lat = lat;
+	}
+
 	public AttractionVO(String spotName, String address, String location, String city, String info) {
 		super();
 		this.spotName = spotName;
@@ -51,6 +60,10 @@ public class AttractionVO {
 		this.mainImage = mainImage;
 		this.lon = lon;
 		this.lat = lat;
+	}
+
+	public AttractionVO(String spotName) {
+		this.spotName = spotName;
 	}
 
 	public String getMainImage() {
