@@ -7,10 +7,12 @@
 <meta charset="utf-8">
 <title>Insert title here</title>
 <style>
-	a, a:hover{text-decoration: none}
+	a, a:hover{
+		color:  #b32e2e;
+		text-decoration: none;
+	}
 	td{
 		text-align: center;
-		
 	}
 /* 	tr{
 		border: 1px #CCCC99 double;
@@ -41,6 +43,18 @@ $(function(){
 		});//ajax	
 	});
 	
+	
+	$('.haha').on('mousewheel',function(e){
+		if(e.originalEvent.wheelDelta>=120){
+			this.scrollTop-=50;
+		}else if(e.originalEvent.wheelDelta<=-120){
+			this.scrollTop +=50;
+		}
+		return false;
+	});
+	
+	
+	
 	$('table tr').hover(function(){
 		var id = $(this).attr('id');
 		$('.path-'+id).css('fill','#FFFAE5');
@@ -52,7 +66,7 @@ $(function(){
 </script>
 </head>
 <body>
-	<div>
+	<div style="height: 800px;">
 		<table align="center" width="600">
 			<c:forEach var="vo" items="${rlist.list}" step="1">
 				<tr style="" height="100" id="${vo.location}">

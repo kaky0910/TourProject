@@ -175,9 +175,7 @@ public class TourDao {
 			ps = conn.prepareStatement(ReviewStringQuery.LIKE_ADD);
 			ps.setInt(1, reviewNum);
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				System.out.println("reviewNum�쓽 like媛� 1 利앷�! :: " + rs.getInt("likes"));
-			}
+		
 		} finally {
 			closeAll(rs, ps, conn);
 		}
@@ -195,9 +193,7 @@ public class TourDao {
 			ps = conn.prepareStatement(ReviewStringQuery.LIKE_REMOVE);
 			ps.setInt(1, reviewNum);
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				System.out.println("reviewNum�쓽 like媛� 1 利앷�! :: " + rs.getInt("likes"));
-			}
+		
 		} finally {
 			closeAll(rs, ps, conn);
 		}
@@ -500,6 +496,7 @@ public class TourDao {
 	}// getFestivalInfo 泥좎쭊�벐
 
 	public ArrayList<AttractionVO> getAttraction(String city,String location) throws SQLException { // v2 tourspot list
+
 		ArrayList<AttractionVO> list = new ArrayList<>();
 		ArrayList<AttractionVO> aList = new ArrayList<>();
 		Connection conn = null;
@@ -528,9 +525,9 @@ public class TourDao {
 				}
 			}
 
-		} finally {
-			closeAll(rs, ps, conn);
-		}
+	      } finally {
+	         closeAll(rs, ps, conn);
+	      }
 
 		return aList;
 	}// getAttraction 泥좎쭊�벐 �씠誘몄�!!!!

@@ -10,7 +10,6 @@
   -webkit-border-image: -webkit-linear-gradient(left, DarkGreen, #64AB4C);
    border-image: linear-gradient(to right, #f4ecc8,#F5EED2);
    border-image-slice: 1;
-   margin-top: 8px;
    padding-bottom: 8px;
    font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans",
       "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica,
@@ -125,7 +124,7 @@
 
 /* Reset Styles
 ***********************/
-html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+/* html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed,figure, figcaption, footer, header, hgroup,menu, nav, output, ruby, section, summary,time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; } */
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
 body {line-height: 1;}
@@ -195,7 +194,7 @@ body {
 	height: auto;
 }
 a {
-	color: #fff;
+	color:  #b32e2e;
 	text-decoration: none;
 }
 
@@ -284,7 +283,7 @@ box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #fff;
 ***********************/
 .loading #container {opacity: 0;}
 .loading:before  { content: 'LOADING'; display: block; margin: 100px 0 0; text-align: center; color: #fff; font-weight: bold; font-size: 60px; opacity: 0.3; }
-body {width: 100%; float: left; opacity: 1; -webkit-transition: opacity 1s ease;}
+body { opacity: 1; -webkit-transition: opacity 1s ease;}
 
 /* Layout
 ***********************/
@@ -301,7 +300,7 @@ header h2 { margin: 0 0 30px; font: normal 20px Geogrotesque-regular, Helvetica,
 header .button { margin: 0 0 50px; padding: 10px 15px 10px 15px; position: relative; }
 h3.nav-header { width: 200px; margin: 0 0 10px; padding: 0 0 3px; font-size: 18px; text-shadow: 0 1px 1px #555; color: #fff; font-family: Geogrotesque-Regular, Helvetica, Arial, sans-serif; border-bottom: 1px solid #fff; border-bottom: 1px solid rgba(255,255,255,0.5); }
 nav { margin-bottom: 20px; }
-nav li {margin: 0 0 7px; font-size: 15px; }
+nav li {margin: 0 0 7px; }
 nav li a:hover,
 nav li.active a  {border-bottom: 1px dotted #fff; border-bottom: 1px dotted rgba(255,255,255,0.3); background: none;}
 nav li.active a  { cursor: default; }

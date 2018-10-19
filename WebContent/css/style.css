@@ -1,23 +1,20 @@
 /* @import url('normalize.css'); */
-
 @font-face {
-  font-style: normal;
-  font-weight: 700;
-  
-}
-@font-face {
-  font-style: normal;
-  font-weight: 400;
-  
-}
-@font-face {
-  font-style: normal;
-  font-weight: 800;
-
+	font-style: normal;
+	font-weight: 700;
 }
 
-html,
-body {
+@font-face {
+	font-style: normal;
+	font-weight: 400;
+}
+
+@font-face {
+	font-style: normal;
+	font-weight: 800;
+}
+
+html, body {
 	margin: 0;
 	padding: 0;
 }
@@ -28,7 +25,6 @@ body {
 	width: 700px;
 	min-height: 700px;
 } */
-
 .footer {
 	margin: 0 auto 50px;
 	width: 700px;
@@ -75,29 +71,26 @@ h1 {
 }
 
 #map {
-	margin-left:150px;
-	border-radius:50px;
+	margin-left: 5%;
+	border-radius: 50px;
 	/* border: 1px solid #ddd; */
-	
 }
 
-.background {				/*占쏙옙 占쏙옙占쏙옙 */
-  fill: #cae5f9 /* #EEF4F2 */;
-  pointer-events: all;
+.background { /*占쏙옙 占쏙옙占쏙옙 */
+	fill: rgb(255, 255, 255); /* #EEF4F2 */;
+	pointer-events: all;
 }
+
 #map:after {
-    position: absolute;
-    display: block;
-    content: "";
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-shadow: 
-      inset 0 0 50px #fff /* 占쏙옙占쏙옙 占쏙옙占� 占쏙옙 */,
-      inset 0 0 50px #fff,
-      inset 0 0 50px #fff,
-      inset 0 0 50px #fff;
+	position: absolute;
+	display: block;
+	content: "";
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	box-shadow: inset 0 0 50px #fff /* 占쏙옙占쏙옙 占쏙옙占� 占쏙옙 */, inset 0 0 50px
+		#fff, inset 0 0 50px #fff, inset 0 0 50px #fff;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -109,23 +102,24 @@ button.ui-button-icon-only {
 	width: 24px;
 }
 
-.ui-button-icon-only .ui-button-text,
-.ui-button-icons-only .ui-button-text {
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text
+	{
 	padding: 0;
 }
 
-#states path {			/*占쏙옙 占쏙옙占� 	 */
-  fill: #f0ebe0/* rgba(87, 133, 156, 0.5)  #F5EED2  #FFFAE5*/; /* #7e9cb2, #cedfed, #f7fcfd, #80A4BE rgba(128, 164, 190, 0.5), #57859C rgba(87, 133, 156, 0.5) */
-  stroke: black;
-  stroke-width: 0.2px;
+#states path { /*占쏙옙 占쏙옙占� 	 */
+	fill: #f0ebe0 /* rgba(87, 133, 156, 0.5)  #F5EED2  #FFFAE5*/;
+	/* #7e9cb2, #cedfed, #f7fcfd, #80A4BE rgba(128, 164, 190, 0.5), #57859C rgba(87, 133, 156, 0.5) */
+	stroke: black;
+	stroke-width: 0.2px;
 }
 
 #states path:hover {
-  fill: #FFFAE5/* #CCDACD */;
+	fill: #FFFAE5 /* #CCDACD */;
 }
 
 #states .active {
-  fill: orange;
+	fill: orange;
 }
 
 #states path {
@@ -135,4 +129,194 @@ button.ui-button-icon-only {
 #states text {
 	cursor: pointer;
 	font-size: 12px;
+}
+
+/* ////////////////////////////////////////// */
+
+
+section.success-stories p {
+    font-size: 13px;
+    color: #666;
+    font-weight: 300;
+}
+
+section.success-stories ul.values {
+	margin-top: 30px
+}
+
+section.success-stories ul.values li {
+	padding-right: 20px
+}
+
+section.success-stories ul.values strong, section.success-stories ul.values span
+	{
+	display: block;
+    font-size: 15px;
+    color: #333;
+    text-align: center;
+    font-weight: 400;
+}
+
+section.success-stories ul.values strong {
+	font-weight: 800;
+	font-size: 2.5rem;
+	color: #ff6b6b;
+	font-family: Arial, sans-serif
+}
+
+section.success-stories .owl-dots button.owl-dot {
+	margin-top: 50px
+}
+
+section.success-stories .owl-dots button.owl-dot:focus {
+	outline: none
+}
+
+section.success-stories .owl-dots button.owl-dot span {
+	width: 50px;
+	height: 4px;
+	border-radius: 0;
+	margin: 0;
+	background: #e7e7e7;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s
+}
+
+section.success-stories .owl-dots button.owl-dot span:hover {
+	background: #aaa
+}
+
+section.success-stories .owl-dots button.owl-dot span:focus {
+	outline: none
+}
+
+section.success-stories .owl-dots button.owl-dot.active span {
+	background: #ff6b6b;
+	outline: none
+}
+
+section.success-stories .owl-nav .owl-prev, section.success-stories .owl-nav .owl-next
+	{
+	font-size: 3rem
+}
+
+section.success-stories .owl-nav .owl-prev:focus, section.success-stories .owl-nav .owl-next:focus
+	{
+	outline: none
+}
+
+section.success-stories .owl-stage-outer {
+	padding-top: 140px
+}
+
+section.success-stories .device-mockup {
+	position: relative
+}
+
+section.success-stories .number {
+	display: block;
+	text-align: center;
+	width: 100%;
+	position: absolute;
+	top: -180px;
+	right: 0;
+	font-size: 14rem;
+	font-weight: 800;
+	color: #000;
+	opacity: 0.1;
+	font-family: Arial, sans-serif
+}
+
+@media ( max-width : 767.98px) {
+	section.success-stories .owl-nav {
+		display: none
+	}
+}
+
+@media ( max-width : 767.98px) {
+	section.success-stories .text {
+		text-align: center;
+		padding-top: 50px
+	}
+	section.success-stories .device-mockup .number {
+		top: -150px
+	}
+}
+
+
+.owl-carousel .owl-nav {
+	position: absolute;
+	top: 50%;
+	left: -75px;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	width: calc(100% + 150px);
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	z-index: -1
+}
+
+.owl-carousel .owl-nav button.owl-prev, .owl-carousel .owl-nav button.owl-next
+	{
+	background: none;
+	color: #ff6b6b;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+	font-family: "Raleway", sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.1em
+}
+
+.owl-carousel .owl-nav button.owl-prev.disabled, .owl-carousel .owl-nav button.owl-next.disabled
+	{
+	color: #ff6b6b !important
+}
+
+.owl-carousel .owl-nav button.owl-prev:hover, .owl-carousel .owl-nav button.-next:hover
+	{
+	color: #ff3838;
+	background: none
+}
+
+.btn-success {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745
+}
+
+.btn-success:hover {
+	color: #fff;
+	background-color: #218838;
+	border-color: #1e7e34
+}
+
+.btn-success:focus, .btn-success.focus {
+	-webkit-box-shadow: 0 0 0 .2rem rgba(40, 167, 69, 0.5);
+	box-shadow: 0 0 0 .2rem rgba(40, 167, 69, 0.5)
+}
+
+.btn-success.disabled, .btn-success:disabled {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745
+}
+
+.btn-success:not (:disabled ):not (.disabled ):active, .btn-success:not
+	(:disabled ):not (.disabled ).active, .show>.btn-success.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #1e7e34;
+	border-color: #1c7430
+}
+
+.btn-success:not (:disabled ):not (.disabled ):active:focus,
+	.btn-success:not (:disabled ):not (.disabled ).active:focus, .show>.btn-success.dropdown-toggle:focus
+	{
+	-webkit-box-shadow: 0 0 0 .2rem rgba(40, 167, 69, 0.5);
+	box-shadow: 0 0 0 .2rem rgba(40, 167, 69, 0.5)
 }

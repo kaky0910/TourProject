@@ -12,7 +12,7 @@ public class DeleteCommentController implements Controller{
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		int reviewNum = Integer.parseInt(request.getParameter("num"));
+		int reviewNum = Integer.parseInt(request.getParameter("reviewNum"));
 		MemberVO vo = (MemberVO)session.getAttribute("vo");
 		String content = request.getParameter("content");
 		if(session.getAttribute("vo")!=null) {
@@ -21,3 +21,4 @@ public class DeleteCommentController implements Controller{
 		return new ModelAndView("index.jsp");
 	}
 }
+

@@ -215,6 +215,7 @@ function pasteHTML(filepath){
    <tr>
       <th>카테고리</th>
       <td colspan="4">
+
       <input type="checkbox" name="category" value="맛집">맛집&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="checkbox" name="category" value="자연">자연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="checkbox" name="category" value="사진">사진
