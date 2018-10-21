@@ -11,7 +11,7 @@ public class DeleteScrapController implements Controller{
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		int reviewNum = Integer.parseInt(request.getParameter("reviewNum"));
-		TourDao.getInstance().deleteScrap(reviewNum);
+		TourDao.getInstance().delScrap(id, reviewNum);
 		
 		return new ModelAndView("scrap.do?id=" + id);
 	}

@@ -13,6 +13,8 @@
 <script type="text/javascript" src="js/nav.js"></script>
 <!-- Tmap API -->
    <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=4edda774-8444-4eb2-b06d-4f038e93168c"></script>
+   <link rel="stylesheet" href="css/fontAndScroll.css">
+   
 <title>Insert title here</title>
 <style type="text/css">
    body {   

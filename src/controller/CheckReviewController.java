@@ -32,10 +32,12 @@ public class CheckReviewController implements Controller{
 		request.setAttribute("scrapFlag", flag2);
 		ReviewVO rvo=TourDao.getInstance().checkReview(reviewNum);
 		ArrayList<ReviewVO> rlist = TourDao.getInstance().getRelateReview(rvo.getTags());
-		System.out.println("rlist 입니다 "+rlist);
 		
 		request.setAttribute("rlist", rlist);
 		
+		if(rvo.getContent().indexOf("#")!=-1)
+			rvo.setContent(rvo.getContent().substring(0, rvo.getContent().indexOf("#")));
+		rvo.setDate(rvo.getDate().substring(0,rvo.getDate().indexOf(".")));
 		request.setAttribute("rvo", rvo);
 		System.out.println(vo);
 		request.setAttribute("vo", vo);	

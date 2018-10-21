@@ -33,7 +33,7 @@ public class HandlerMapping {
 		case "write.do":	//command
 			return new WriteController();
 		case "idcheck.do":
-			System.out.println("�������");
+			System.out.println("占쏙옙占쏙옙占쏙옙占�");
 			return new IdcheckController();
 		case "registerupdate.do":
 			return new RegisterUpdateController();
@@ -75,6 +75,8 @@ public class HandlerMapping {
 			return new MyCourseController();
 		case "detailCourse.do":
 			return new DetailCourseController();
+		case "test.do":
+			return new Test();
 	}
 		
 		return null;

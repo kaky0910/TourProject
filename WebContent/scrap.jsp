@@ -12,6 +12,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="js/nav.js"></script>
+<link rel="stylesheet" href="css/fontAndScroll.css">
+
 </head>
 <body>
    	<%@include file="nav.jsp" %>
@@ -27,7 +29,8 @@
 				${rList.date}<br>
 				<a href="checkReview.do?num=${rList.reviewNum}"><img src="${rList.mainImage}" width="350" height="200"></a><br><br>
 				<a href="checkReview.do?num=${rList.reviewNum}">${rList.title}</a>&nbsp;&nbsp;
-				<a href="deleteScrap.do?reviewNum=${rList.reviewNum}&&id=${rList.id}"><input type="button" value="삭제"></a>
+				<button class="btn btn-danger" type="button" value="수정" onclick="javascript:document.location.href='deleteScrap.do?reviewNum=${rList.reviewNum}&&id=${rList.id}'">
+				삭제</button>
 				<hr><br><br>
 			</div>
 		
@@ -39,7 +42,7 @@
 		<c:set var="pb" value="${lvo.pb}"></c:set>
 		<c:if test="${pb.previousPageGroup}">
 			<ul class="pagination pagination-sm">
-	    		<li><a href="scrap.do?id=yun&&pageNo=${pb.startPageOfPageGroup-1}">&#60;</a></li>
+	    		<li><a href="scrap.do?id=${sessionScope.vo.id}&&pageNo=${pb.startPageOfPageGroup-1}">&#60;</a></li>
 	  		</ul>
 		</c:if>
 		
@@ -47,7 +50,7 @@
 			<c:choose>
 				<c:when test="${pb.nowPage!=i}">
 					<ul class="pagination">
-		    			<li><a href="scrap.do?id=yun&&pageNo=${i}">${i}</a></li>
+		    			<li><a href="scrap.do?id=${sessionScope.vo.id}&&pageNo=${i}">${i}</a></li>
 		    		</ul>
 				</c:when>
 				<c:otherwise>
@@ -61,7 +64,7 @@
 		
 		<c:if test="${pb.nextPageGroup}">
 			<ul class="pagination pagination-sm">
-	    		<li><a href="scrap.do?id=yun&&pageNo=${pb.endPageOfPageGroup+1}">&#62;</a></li>
+	    		<li><a href="scrap.do?id=${sessionScope.vo.id}&&pageNo=${pb.endPageOfPageGroup+1}">&#62;</a></li>
 	  		</ul>
 		</c:if>	
 	</div>			

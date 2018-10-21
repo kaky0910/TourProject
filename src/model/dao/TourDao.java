@@ -2,6 +2,7 @@ package model.dao;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,13 +29,21 @@ import query.user.UserStringQuery;
 public class TourDao {
 	private DataSource ds;
 	private static TourDao reviewDao = new TourDao();
+	static {
+		try {
+			Class.forName(OracleInfo.DRIVER_NAME);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	private TourDao() {
-		try {
+	/*	try {
 			ds=DataSourceManager.getInstance().getDataSource();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	public static TourDao getInstance() {
@@ -632,7 +641,7 @@ public class TourDao {
 		return count;
 	}
 
-	public int totalRelatedReviewNumber(String id) throws SQLException {
+	public int totalRelatedReviewNumber(String tag) throws SQLException {
 
 		int count = 0;
 		Connection conn = null;
@@ -642,7 +651,7 @@ public class TourDao {
 		try {
 			conn = getConnect();
 			ps = conn.prepareStatement(ReviewStringQuery.TOTAL_RELATED_REVIEW_COUNT);
-			ps.setString(1, id);
+			ps.setString(1, tag);
 			rs = ps.executeQuery();
 			if (rs.next())
 				count = rs.getInt(1);
@@ -762,24 +771,6 @@ public class TourDao {
 		}
 	}
 
-	public void deleteScrap(int reviewNum) throws SQLException { // delete scrap
-		Connection conn = null;
-		PreparedStatement ps = null;
-
-		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(ReviewStringQuery.DELETE_SCRAP);
-			ps.setInt(1, reviewNum);
-			ps.executeUpdate();
-
-			int row = ps.executeUpdate();
-			System.out.println(row + " row delete scrap ok..");
-
-		} finally {
-			closeAll(ps, conn);
-		}
-	}
-
 	// ArrayList<String> tags, ArrayList<String> images
 	public void updateReview(ReviewVO rvo) throws SQLException { // update
 
@@ -821,7 +812,7 @@ public class TourDao {
 
 			while (rs.next())
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("info"), rs.getString("img"),rs.getString("lon"),rs.getString("lat")));
+						rs.getString("city"), rs.getString("img"),rs.getString("lon"),rs.getString("lat"),rs.getString("description")));
 
 		} finally {
 			closeAll(rs, ps, conn);
@@ -928,17 +919,8 @@ public class TourDao {
 
 			while (rs.next()) {
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("info")));
+						rs.getString("city"), rs.getString("mainImage"),rs.getString("description")));
 			}
-			ps.close();
-			for (AttractionVO vo : list) {
-				ps = conn.prepareStatement("SELECT spot_image FROM spot_image WHERE spot_name=?");
-				ps.setString(1, vo.getSpotName());
-				rs = ps.executeQuery();
-				if (rs.next())
-					vo.setMainImage(rs.getString("spot_image"));
-			}
-
 		} finally {
 			closeAll(rs, ps, conn);
 		}
@@ -1065,7 +1047,7 @@ public class TourDao {
 	}
 
 	public Connection getConnect() throws SQLException {
-		return ds.getConnection();
+		return DriverManager.getConnection(OracleInfo.URL, OracleInfo.USER, OracleInfo.PASS);
 	}// getConnect
 
 	private void closeAll(PreparedStatement ps, Connection conn) throws SQLException {
@@ -1242,6 +1224,7 @@ public class TourDao {
 		}
 		return rlist;
 	}
+	
 	public String getRelateQuery(ArrayList<String> list) {
 		String sum="";
 		for(String str : list) {
@@ -1299,16 +1282,6 @@ public class TourDao {
 	      return cvo;
 	   }
 	
-	public int max(Set<Integer> set) {
-		Iterator<Integer> iter = set.iterator();
-		int max=0;
-		while(iter.hasNext()) {
-			int val = iter.next();
-			if(max<val)
-				max=val;
-		}
-		return max;
-	}
 	
 	public ArrayList<CourseVO> getCourses(String id,int num) throws SQLException{
 		Connection conn = null;
@@ -1352,7 +1325,7 @@ public class TourDao {
 		return cList;
 	}
 	
-	public ArrayList<CourseVO> getCourses(String id) throws SQLException{
+	/*public ArrayList<CourseVO> getCourses(String id) throws SQLException{
 		Connection conn = null;
 		PreparedStatement ps = null;
 		PreparedStatement ps2 = null;
@@ -1386,7 +1359,7 @@ public class TourDao {
 			closeAll(rs, ps, conn);
 		}
 		return cList;
-	}
+	}*/
 	
 	public CourseVO getCoursesByNum(int courseNum,String courseName) throws SQLException {
         Connection conn = null;

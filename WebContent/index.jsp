@@ -44,7 +44,7 @@
 	href='https://fonts.googleapis.com/css?family=Open+Sans|Oswald:300'
 	rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="css/footer.css">
-
+<link rel="stylesheet" href="css/fontAndScroll.css">
 
 <script>
 	$(function() {
@@ -141,16 +141,6 @@
 	}
 </script>
 <style>
-@font-face {
-	font-family: 'BMDOHYEON_ttf';
-	src: url(font/BMDOHYEON_ttf.ttf) format('truetype');
-}
-
-@font-face {
-	font-family: HangeulNuriR;
-	src: url('./font/HangeulNuriR.ttf') format('truetype');
-}
-
 a {
 	color: #b32e2e;
 	text-decoration: none;
@@ -162,24 +152,6 @@ body {
 	border-right: 1px solid #d9d9d9;
 	margin-left: 10%;
 	margin-right: 10%;
-}
-
-::-webkit-scrollbar {
-	width: 10px;
-}
-
-::-webkit-scrollbar-track {
-	background: #EAEAEA;
-	border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #D3D3D3;
-	border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: #ADADAD;
 }
 
 #states path, text {
@@ -199,6 +171,7 @@ section, #tabs {
 }
 
 .haha {
+	
 	max-height: 700px;
 	display: inline-block;
 	overflow: hidden;
@@ -223,8 +196,7 @@ section, #tabs {
 			<div id="container" style="display: inline-block; margin-top: 161px;"></div>
 		</div>
 		<div class="col-lg-5 haha col-md-12 col-sm-12"
-			style="overflow: hidden;"></div>
-	</div>
+			style="overflow: hidden; margin-top:181px;"></div>
 	</div>
 	<div class="box">
 		<!-- 캐러셀 섹션 -->

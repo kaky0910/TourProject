@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>방방곡곡</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/nav.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,11 +15,12 @@
 		<c:set value="${item.address}" var="address"></c:set>
 		<c:set value="${item.location}" var="location"></c:set>
 		<c:set value="${item.city}" var="city"></c:set>
-		<c:set value="${item.info}" var="info"></c:set>
 		<c:set value="${item.mainImage}" var="mainImage"></c:set>
+		<c:set value="${item.description}" var="description"></c:set>
 	</c:forEach>
 <script type="text/javascript">
 	$(function(){
+		$('.sidebar').css('height',$(window).height());
 		$('#btn').click(function(){
 			$.ajax({
 		         type : "get",
@@ -64,10 +65,17 @@
 		        	 alert("삭제 실패");
 		         }
 		      });//ajax
-		});
+			});
 		$('#regBtn').click(function(){
-			if(${vo!=null})
-				window.document.location.href="course.jsp";
+			<%
+				HashMap<String,String> map = new HashMap<>();
+				session.setAttribute("cvo",)%>
+			if(${vo!=null}){
+				if(${cvo.map.size>1})
+					window.document.location.href="course.jsp";
+				else
+					alert("관광지를 추가해주세요");
+			}
 			else
 				alert("로그인이 필요합니다");
 		});
@@ -75,7 +83,23 @@
 	
 </script>
 <style>
-   	
+   	::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #EAEAEA;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #D3D3D3;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #ADADAD;
+}
    	#mainImage {
    		margin-right: 30px;
    		padding : 10px;
@@ -91,7 +115,7 @@
    		height: 200px
    	}
    	.sidebar {
-   	margin-top:190px;
+   	margin-top:180px;
     position: absolute;
     right: -200px;
     transition: 0.3s;
@@ -100,7 +124,6 @@
     font-size: 20px;
     color: white;
     border-radius: 0 5px 5px 0;
-    height:1200px;
     background-color: white;
     z-index: 100;
     top: -100px;
@@ -115,7 +138,7 @@
 <script type="text/javascript" src="js/nav.js"></script>
 
 </head>
-<body>
+<body style="overflow-x:hidden ">
    	<%@include file="nav.jsp" %>
     <div style="height: 120px"></div>
     
@@ -137,8 +160,8 @@
                   <img alt="${spotName}" src="${mainImage}" id="mainImage"> 
                </div>
                <div align="left" class="col-sm-6" id="info"> 
-                  ${address}<br><br>
-                  ${info}
+                  ${description}
+                  <br><br>${address}
                </div>
             </div>
             <div align="center" class="col-sm-12" style="margin-top: 35px"><hr></div>
@@ -148,18 +171,16 @@
 		
 		<div align="center" class="col-sm-12" style="margin-top: 15px"> 
 			<h3 align="center" style="margin-top: 10">관련 리뷰</h3><br><br>
-			<h1>그만 그만 그만 그만!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1</h1>
 			
 			<c:forEach items="${lvo.list}" var="rList">
-				<a href="#">
 					<div align="center" class="col-sm-4">
 						<hr>
 						${rList.date}<br>
+						<a href="checkReview.do?num=${rList.reviewNum}">
 						<img src="${rList.mainImage}" width="350" height="200"><br>
-						${rList.title}
+						${rList.title}</a>
 						<hr><br><br>
 					</div>
-				</a>
 			</c:forEach>
 			
 			<br><br>
@@ -173,18 +194,20 @@
 				</c:if>
 				
 				<c:forEach var="i" begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}">
-					<c:choose>
-						<c:when test="${pb.nowPage!=i}">
-							<ul class="pagination">
-				    			<li><a href="getdata.do?search=${spotName}&&pageNo=${i}">${i}</a></li>
-				    		</ul>
-						</c:when>
-						<c:otherwise>
-							<ul class="pagination">
-				    			<li><a href="#">${i}</a></li>
-				    		</ul>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${i!=0}">
+						<c:choose>
+							<c:when test="${pb.nowPage!=i}">
+								<ul class="pagination">
+					    			<li><a href="getdata.do?search=${spotName}&&pageNo=${i}">${i}</a></li>
+					    		</ul>
+							</c:when>
+							<c:otherwise>
+								<ul class="pagination">
+					    			<li><a href="#">${i}</a></li>
+					    		</ul>
+							</c:otherwise>
+						</c:choose>
+					</c:if>
 					&nbsp;
 				</c:forEach>
 				
@@ -196,7 +219,7 @@
 			</div>			
 		</div>
     </div>
-   				<div id="mySidebar" class="sidebar">
+   				<div id="mySidebar" class="sidebar" style="border-left:3px solid #FFB88C; padding-top: 30px">
    					<c:choose>
    						<c:when test="${sessionScope.cvo!=null}">
    							${sessionScope.cvo.allCourse}
@@ -205,8 +228,9 @@
    							<h3 align="center" style="color: black">코스만들기</h3>
    						</c:otherwise>
    					</c:choose>
+   					<button id="regBtn" style="font-size: 10px;color: black; margin-left: 30px">만들기~</button>
    				</div>
-   				<button id="regBtn">만들기~</button>
+   				
    	
 </body>
 

@@ -22,6 +22,8 @@
 <script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/smarteditor/photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
 <%-- <script type="text/javascript" src="<%=ctx %>/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script> --%>
+<link rel="stylesheet" href="css/fontAndScroll.css">
+
 </head>
 
 <body>   
@@ -132,14 +134,14 @@ $(function(){
    
       //저장버튼 클릭시 form 전송
 
-      $("#savebutton").click(function(){
+      $("#savebutton").one('click',function(){
           oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
 /*           var b = $("#imageupload").find('img').attr('src');*/
          for(i=1; i<=count;i++){
             var b = $('#img'+i+'').attr('src');
-            $('form').append("<input type='hidden' name='img"+i+"' value='"+b+"'>")
+            $('form').append("<input type='hidden' name='img"+i+"' value='"+b+"'>");
              }
-        $('form').append("<input type='hidden' name='count' value='"+count+"'>")
+        $('form').append("<input type='hidden' name='count' value='"+count+"'>");
         
       if(count>0)
             $('form').submit();
@@ -217,8 +219,9 @@ function pasteHTML(filepath){
       <td colspan="4">
 
       <input type="checkbox" name="category" value="맛집">맛집&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="자연">자연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="사진">사진
+      <input type="checkbox" name="category" value="쇼핑">쇼핑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="관광">관광&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="숙소">숙소
       </td>
    </tr>
    <tr>

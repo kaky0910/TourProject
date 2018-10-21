@@ -20,6 +20,8 @@
 <script type="text/javascript" src="js/nav.js"></script>
 <!-- Tmap API -->
    <script src="https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=4edda774-8444-4eb2-b06d-4f038e93168c"></script>
+   <link rel="stylesheet" href="css/fontAndScroll.css">
+   
 <style type="text/css">
    .courseDiv div {
       border: 1px dotted #e8b4b4;
@@ -83,20 +85,21 @@
       </div>
       
       <div id="map_div">
-          <c:forEach items="${list.map}" var="entry" varStatus="status">
-            <c:set value="${entry.value}" var="array"></c:set>
-            <!--${entry.key}  -->
-            <script>
-               var array = ar();
-               array.push({
-                  "viaPointId" : "test01",//경유지 id입니다.
-                  "viaPointName" : "${array.spotName}",//경유지 명칭입니다.
-                  "viaX" : "${array.lon}",//경유지 경도입니다.
-                  "viaY" : "${array.lat}" //경유지 위도입니다.
-               });
-            </script>
-         </c:forEach>
-         <script>
+          <script>
+        	var count=0;
+   			var array=[];
+
+         	<c:forEach items="${cvo.map}" var="entry" varStatus="status">
+         		array.push({
+         			"viaPointId" : "test${status.count}",//경유지 id입니다.
+                    "viaPointName" : "${entry.value.spotName}",//경유지 명칭입니다.
+                    "viaX" : "${entry.value.lon}",//경유지 경도입니다.
+                    "viaY" : "${entry.value.lat}"
+         		});
+         		count="${status.count}";
+         		
+         	</c:forEach>
+         	
             // map 생성
             map = new Tmap.Map({
                div : 'map_div', // map을 표시해줄 div
@@ -124,7 +127,7 @@
                   "<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_s.png' />",
                   size, offset);
             var marker_s = new Tmap.Marker(new Tmap.LonLat(
-                  "126.98605733268329", "37.568085523663385").transform(
+                  array[0].viaX, array[0].viaY).transform(
                   "EPSG:4326", "EPSG:3857"), icon);
             markerStartLayer.addMarker(marker_s);
             // 도착
@@ -136,63 +139,34 @@
             var icon = new Tmap.IconHtml(
                   "<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_r_m_e.png' />",
                   size, offset);
+            var max = count-1;
             var marker_e = new Tmap.Marker(new Tmap.LonLat(
-                  "127.00973587385866", "37.56445848334345").transform(
+                  array[max].viaX , array[max].viaY).transform(
                   "EPSG:4326", "EPSG:3857"), icon);
             markerEndLayer.addMarker(marker_e);
    
             var prtcl;
             var headers = {};
    
-            headers["appKey"] = "4edda774-8444-4eb2-b06d-4f038e93168c";//실행을 위한 키 입니다. 발급받으신 AppKey를 입력하세요.
-            $
-                  .ajax({
+            headers["appKey"] = "e82b6398-ef81-4f12-8024-ccdd00356448";//실행을 위한 키 입니다. 발급받으신 AppKey를 입력하세요.
+            
+            $.ajax({
                      type : "POST",
                      headers : headers,
-                     url : "https://api2.sktelecom.com/tmap/routes/routeOptimization30?version=1&format=xml",//경유지 최적화 api요청 url입니다. 
+                     url : "https://api2.sktelecom.com/tmap/routes/routeOptimization10?version=1&format=xml",//경유지 최적화 api요청 url입니다. 
                      async : false,
                      contentType : "application/json",
                      data : JSON.stringify({
                         "reqCoordType" : "WGS84GEO",//요청 좌표 타입입니다.
                         "resCoordType" : "EPSG3857",
                         "startName" : "st",//출발지 명칭입니다.
-                        "startX" : "126.98605733268329",//출발지 경도입니다.
-                        "startY" : "37.568085523663385",//출발지 위도입니다.
+                        "startX" : array[0].viaX,//출발지 경도입니다.
+                        "startY" : array[0].viaY,//출발지 위도입니다.
                         "startTime" : "201711121314",//출발 시작 시간입니다.
                         "endName" : "end",//도착치 명칭입니다.
-                        "endX" : "127.00973587385866",//도착지 경도입니다.
-                        "endY" : "37.56445848334345",//도착지 위도입니다.
-                        "viaPoints" : [ {
-                           "viaPointId" : "test01",//경유지 id입니다.
-                           "viaPointName" : array[0].viaPointName,//경유지 명칭입니다.
-                           "viaX" : array[0].viaX,//경유지 경도입니다.
-                           "viaY" : array[0].viaY
-                        //경유지 위도입니다.
-                        }, {
-                           "viaPointId" : "test02",
-                           "viaPointName" : array[1].viaPointName,
-                           "viaX" : array[1].viaX,
-                           "viaY" : array[1].viaY,
-                           "viaTime" : 600
-                        }, {
-                           "viaPointId" : "test03",
-                           "viaPointName" : array[2].viaPointName,
-                           "viaX" : array[2].viaX,
-                           "viaY" : array[2].viaY,
-                           "viaTime" : 600
-                        }, {
-                           "viaPointId" : "test04",
-                           "viaPointName" : array[3].viaPointName,
-                           "viaX" : array[3].viaX,
-                           "viaY" : array[3].viaY,
-                           "viaTime" : 600
-                        }, {
-                           "viaPointId" : "test05",
-                           "viaPointName" : array[4].viaPointName,
-                           "viaX" : array[4].viaX,
-                           "viaY" : array[4].viaY,
-                           "viaTime" : 600
-                        } ]
+                        "endX" : array[count-1].viaX,//도착지 경도입니다.
+                        "endY" : array[count-1].viaY,//도착지 위도입니다.
+                        "viaPoints" : array
                      }), //JSON.stringify
    
                      //데이터 로드가 성공적으로 완료되었을 때 발생하는 함수입니다.
@@ -260,8 +234,17 @@
    
                         var size = new Tmap.Size(24, 38);
                         var offset = new Tmap.Pixel(-(size.w / 2), -size.h);
-   
-                        var icon = new Tmap.IconHtml(
+   						
+                        for(i=0;i<count;i++){
+                        	var icon = new Tmap.IconHtml(
+                                    "<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_"+(i+1)+".png' />",
+                                    size, offset);
+                              var marker = new Tmap.Marker(new Tmap.LonLat(
+                                    array[i].viaX, array[i].viaY).transform(
+                                    "EPSG:4326", "EPSG:3857"), icon);
+                              markerWaypointLayer.addMarker(marker);
+                        }
+                        /* var icon = new Tmap.IconHtml(
                               "<img src='http://tmapapis.sktelecom.com/upload/tmap/marker/pin_b_m_1.png' />",
                               size, offset);
                         var marker = new Tmap.Marker(new Tmap.LonLat(
@@ -300,7 +283,7 @@
                               array[0].viaX, array[0].viaY).transform(
                               "EPSG:4326", "EPSG:3857"), icon);
                         markerWaypointLayer.addMarker(marker);
-   
+    */
                         map.zoomToExtent(routeLayer.getDataExtent());//map의 zoom을 routeLayer의 영역에 맞게 변경합니다.   
                      }, // success
                      //요청 실패시 콘솔창에서 에러 내용을 확인할 수 있습니다.

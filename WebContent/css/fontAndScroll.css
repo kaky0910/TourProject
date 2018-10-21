@@ -1,0 +1,30 @@
+@charset "UTF-8";
+@font-face {
+	font-family: 'BMDOHYEON_ttf';
+	src: url(../font/BMDOHYEON_ttf.ttf) format('truetype');
+}
+
+@font-face {
+	font-family: HangeulNuriR;
+	src: url('../font/HangeulNuriR.ttf') format('truetype');
+}
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #EAEAEA;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #D3D3D3;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #ADADAD;
+}
+body{
+	font-family: BMDOHYEON_ttf;
+}
