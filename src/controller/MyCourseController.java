@@ -14,14 +14,14 @@ public class MyCourseController implements Controller {
 		String pageNo = request.getParameter("pageNo");
 
 		CListVO mcourse = ReviewService.getInstance().getCourses(id, pageNo);
-
+		
 		boolean flag = false;
 
 		if (mcourse != null) {
 			request.setAttribute("mcourse", mcourse);
 			flag = true;
 		}
-
+		request.getSession().setAttribute("cvo", null);
 		request.setAttribute("flag", flag);
 
 		return new ModelAndView("myCourse.jsp?");
