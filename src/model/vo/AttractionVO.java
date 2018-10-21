@@ -10,6 +10,7 @@ public class AttractionVO {
 	private String mainImage;
 	private String lon;
 	private String lat;
+	private String description;
 	private ArrayList<String> images;
 	
 	
@@ -38,25 +39,25 @@ public class AttractionVO {
 		this.info = info;
 	}
 
-	public AttractionVO(String spotName, String address, String location, String city, String info, String mainImage) {
+	public AttractionVO(String spotName, String address, String location, String city, String mainImage,String description) {
 		super();
 		this.spotName = spotName;
 		this.address = address;
 		this.location = location;
 		this.city = city;
-		this.info = info;
+		this.description = description;
 		this.mainImage = mainImage;
 	}
 	
 
-	public AttractionVO(String spotName, String address, String location, String city, String info, String mainImage,
-			String lon, String lat) {
+	public AttractionVO(String spotName, String address, String location, String city, String mainImage,
+			String lon, String lat, String description) {
 		super();
 		this.spotName = spotName;
 		this.address = address;
 		this.location = location;
 		this.city = city;
-		this.info = info;
+		this.description = description;
 		this.mainImage = mainImage;
 		this.lon = lon;
 		this.lat = lat;
@@ -113,6 +114,30 @@ public class AttractionVO {
 
 	public void setImages(ArrayList<String> images) {
 		this.images = images;
+	}
+	
+	public String getLon() {
+		return lon;
+	}
+
+	public void setLon(String lon) {
+		this.lon = lon;
+	}
+
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

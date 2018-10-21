@@ -17,7 +17,7 @@ public class MyCourseController implements Controller {
 		
 		boolean flag = false;
 
-		if (mcourse != null) {
+		if (mcourse.getList().size() != 0) {
 			request.setAttribute("mcourse", mcourse);
 			flag = true;
 		}

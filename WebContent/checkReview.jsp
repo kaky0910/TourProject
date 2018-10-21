@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>CSS Website Layout</title>
+<title>방방곡곡</title>
  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
  <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
@@ -33,12 +33,10 @@
 <script src="js/rc.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-@font-face{
-	font-family:HangeulNuriR;
-	src:url('./font/HangeulNuriR.ttf') format('truetype');
+<link rel="stylesheet" href="css/fontAndScroll.css">
 
-}
+<style>
+
 * {
     box-sizing: border-box;
 }
@@ -406,6 +404,11 @@ $(function() {
   <br>
   <div class="col-lg-4">
  <p style="background-color: inherit;">${rvo.content}</p>
+ <div style="margin-bottom: 0;">
+ 	<c:forEach items="${rvo.tags}" var="var">
+ 		<span><a href="getdata.do?search=${var}">#${var}</a>&nbsp;</span>
+ 	</c:forEach>
+ </div>
  <br>
   </div> 
   <div class="col-lg-1"></div>
@@ -483,8 +486,14 @@ $(function() {
 	</c:forEach>
  
 </div>
+<div>
+	<p align="center">관련글</p>
+  	<c:forEach items="${rlist}" var="rvo">
+  		<span style="text-align: center; display: inline-block;inline;"><img src="${rvo.mainImage}" width="200" height="200"><br> ${rvo.title}</span>
+  	</c:forEach>
+  </div>
 <div class="footer">
-  <p>관련글(카테고리)</p>
+  
  </div>
 
  <!-- jQuery -->

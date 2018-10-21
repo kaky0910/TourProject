@@ -75,9 +75,11 @@ $(function(){
 					<td style="font-size: 20px;"><b><a href="checkReview.do?num=${vo.reviewNum}">${vo.title}</a></b></td>
 				</tr>
 			</c:forEach>
-			<tr style="border:none;">
-				<td colspan="2" align="center"><h2 style="cursor: pointer;" id="show">더보기</h2></td>
-			</tr>
+			<c:if test="${!flag}">
+				<tr style="border:none;">
+					<td colspan="2" align="center"><h2 style="cursor: pointer;" id="show">더보기</h2></td>
+				</tr>
+			</c:if>
 		</table>
 	</div>
 </body>

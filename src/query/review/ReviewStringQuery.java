@@ -89,7 +89,7 @@ public interface ReviewStringQuery {
 	String GET_RECENT_REVIEWS = "SELECT * FROM" 				//index.jsp
 			+ "(SELECT review_num, title, location, city,id, ceil(rownum/10) page"
 			+ " FROM (SELECT * FROM review ORDER BY review_num desc)" + 
-			") WHERE page<=?";
+			") WHERE page<=? ORDER BY review_num desc";
 	String GET_REVIEW_BY_SEARCH = "select * from review where review_num in" + " (select review_num from"
       + " (select review_num, ceil(rownum/" + CommonConstants.CONTENT_NUMBER_PER_PAGE + ") page from"
 			+ " (select review_num from tag where word="
