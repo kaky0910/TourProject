@@ -25,7 +25,7 @@ public interface ReviewStringQuery {
 	String BEST_REVIEW_LOCATION_TAG = "select review_num, title, likes,city from (select * from review order by likes desc) where rownum<4"
 			+ " AND review_num IN ((SELECT review_num FROM tag WHERE word=?)) AND location=?"; // v1에서 왼쪽 리뷰 리스트
 	String SCRAP = "insert into scrap values(?,?)";									// 스크랩
-	String GET_ATTRACTION = "select spot_name,address,location,city,info from tourspot where (city=? or city=?) and location like ?"; // city별 관광지 정보 return
+	String GET_ATTRACTION = "select spot_name,address,location,city,description from tourspot where (city=? or city=?) and location like ?"; // city별 관광지 정보 return
 	String GET_ATTRACTION_IMG= "select spot_image from spot_image where spot_name=?";					  // 관광지 이미지 리턴
 	String GET_FESTIVAL_INFO = "select festival_Name,festival_Location,location,city,start_Date,end_Date,agency,img from festival where location like ?" + 
 			" AND ((start_Date BETWEEN SYSDATE AND SYSDATE+7) OR (SYSDATE BETWEEN start_Date AND end_Date))";// location별 축제정보 return 안되면 start,end Date에 ''추가
@@ -84,7 +84,7 @@ public interface ReviewStringQuery {
 
 	String GET_DATA = "select * from tourspot where spot_name =" + "(select distinct word from tag where word=?)";
 
-	String CHECK_SPOT = "select * from tourspot where spot_name like ?";
+	String CHECK_SPOT = "select tourspot.spot_name spot_name,address,city,location,description,spot_image,lon,lat from tourspot,spot_image where (tourspot.spot_name like ?) AND tourspot.spot_name=spot_image.spot_name";
 
 	String GET_RECENT_REVIEWS = "SELECT * FROM" 				//index.jsp
 			+ "(SELECT review_num, title, location, city,id, ceil(rownum/10) page"

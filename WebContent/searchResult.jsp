@@ -17,6 +17,8 @@
 		<c:set value="${item.city}" var="city"></c:set>
 		<c:set value="${item.mainImage}" var="mainImage"></c:set>
 		<c:set value="${item.description}" var="description"></c:set>
+		<c:set value="${item.lon}" var="lon"/>
+		<c:set value="${item.lat}" var="lat"/>
 	</c:forEach>
 <script type="text/javascript">
 	$(function(){
@@ -30,7 +32,9 @@
 		        	"spotName" : "${spotName}",
 		            "img" : "${mainImage}",
 		            "flag" : "add",
-		            "address" : "${address}" 
+		            "address" : "${address}" ,
+		            "lon" : "${lon}",
+		            "lat" : "${lat}"
 		         },
 
 		         success : function(data) {
@@ -67,14 +71,13 @@
 		      });//ajax
 			});
 		$('#regBtn').click(function(){
-			<%
-				HashMap<String,String> map = new HashMap<>();
-				session.setAttribute("cvo",)%>
 			if(${vo!=null}){
-				if(${cvo.map.size>1})
+				if(${sessionScope.cvo.map.size()>1}){
 					window.document.location.href="course.jsp";
-				else
+				}
+				else{
 					alert("관광지를 추가해주세요");
+				}
 			}
 			else
 				alert("로그인이 필요합니다");
@@ -159,7 +162,7 @@
                <div align="right" class="col-sm-6">  
                   <img alt="${spotName}" src="${mainImage}" id="mainImage"> 
                </div>
-               <div align="left" class="col-sm-6" id="info"> 
+               <div align="left" class="col-sm-6" id="info" style="overflow-y: scroll;overflow-x:hidden "> 
                   ${description}
                   <br><br>${address}
                </div>

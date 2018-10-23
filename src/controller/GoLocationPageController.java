@@ -23,7 +23,7 @@ public class GoLocationPageController implements Controller {
 		ArrayList<FestivalVO> flist = TourDao.getInstance().getFestivalInfo(location);
 		ArrayList<String> clist = TourDao.getInstance().getCities(location+"%");
 		ListVO relist = ReviewService.getInstance().getBestReviewByTag(location, "맛집",pageNo);
-		
+		System.out.println(location+"@@@@@@@@@@2");
 		request.setAttribute("clist", clist);
 		request.setAttribute("flist", flist);
 		request.setAttribute("location", location);

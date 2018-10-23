@@ -21,10 +21,26 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <title>Insert title here</title>
-<link rel="stylesheet" href="css/fontAndScroll.css">
 
 <style>
-
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+	
+	::-webkit-scrollbar-track {
+		background: #EAEAEA;
+		border-radius: 5px;
+	}
+	
+	::-webkit-scrollbar-thumb {
+		background: #D3D3D3;
+		border-radius: 5px;
+	}
+	
+	::-webkit-scrollbar-thumb:hover {
+		background: #ADADAD;
+	}
+	
 	.hideme {
 		opacity: 0;
 	}
@@ -310,8 +326,8 @@ $(function(){
       <th style="text-align:center;">카테고리</th>
       <td colspan="4">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="food">먹거리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="checkbox" name="category" value="nature">자연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="맛집">먹거리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="checkbox" name="category" value="쇼핑">쇼핑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <input type="checkbox" name="category" value="picture">사진
       </td>
    </tr>

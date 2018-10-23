@@ -39,13 +39,17 @@ public class JsonServlet extends HttpServlet {
 		CourseVO cvo = (CourseVO)request.getSession().getAttribute("cvo");
 		JSONObject json = new JSONObject();
 		PrintWriter out=response.getWriter();
-
+		String lon = request.getParameter("lon");
+		String lat = request.getParameter("lat");
+		
 		if(request.getSession().getAttribute("cvo")==null) cvo = new CourseVO();
 		try {
 			if(request.getParameter("flag").equals("add")) {
 				//장바구니에 담는 로직
-				CourseBiz.getInstance().addCourse(new AttractionVO(spotName, address, img), cvo);
-				
+				AttractionVO vo = new AttractionVO(spotName,img,lon,lat);
+				vo.setAddress(address);
+				CourseBiz.getInstance().addCourse(vo, cvo);
+				System.out.println(cvo.getMap());
 				json.put("spotName", spotName);
 				json.put("img", img);
 			} else if(request.getParameter("flag").equals("cons")&&cvo.getMap()!=null) {

@@ -394,7 +394,7 @@ $(function() {
 
 <div class="reviewinfo">
 <br><br>
-<h3 class="title">${rvo.title} <br><br>No.${rvo.reviewNum}</h3><br><br>
+<h3 class="title">${rvo.title} <br><br>
  작성자::${rvo.id}&emsp;작성일시::${rvo.date}&emsp;<span id="like">좋아요::${rvo.like}</span>
 <hr>
 </div>
@@ -488,9 +488,9 @@ $(function() {
 </div>
 <div>
 	<p align="center">관련글</p>
-  	<c:forEach items="${rlist}" var="rvo">
+  	<%-- <c:forEach items="${rlist}" var="rvo">
   		<span style="text-align: center; display: inline-block;inline;"><img src="${rvo.mainImage}" width="200" height="200"><br> ${rvo.title}</span>
-  	</c:forEach>
+  	</c:forEach> --%>
   </div>
 <div class="footer">
   

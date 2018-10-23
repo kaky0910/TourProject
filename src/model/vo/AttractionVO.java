@@ -30,13 +30,13 @@ public class AttractionVO {
 		this.lat = lat;
 	}
 
-	public AttractionVO(String spotName, String address, String location, String city, String info) {
+	public AttractionVO(String spotName, String address, String location, String city, String description) {
 		super();
 		this.spotName = spotName;
 		this.address = address;
 		this.location = location;
 		this.city = city;
-		this.info = info;
+		this.description = description;
 	}
 
 	public AttractionVO(String spotName, String address, String location, String city, String mainImage,String description) {
@@ -143,7 +143,10 @@ public class AttractionVO {
 	@Override
 	public String toString() {
 		return "AttractionVO [spotName=" + spotName + ", address=" + address + ", location=" + location + ", city="
-				+ city + ", info=" + info + ", mainImage=" + mainImage + ", images=" + images + "]";
+				+ city + ", mainImage=" + mainImage + ", lon=" + lon + ", lat=" + lat + ", description=" + description
+				+ "]";
 	}
+
+	
 	
 }

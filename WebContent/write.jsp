@@ -14,8 +14,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/nav.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/nav.js"></script>
 
 <title>Insert title here</title>
 
@@ -28,19 +31,7 @@
 
 <body>   
 <script type="text/javascript">
-/* jQuery('#selectBox').change(function() {
-   var state = jQuery('#selectBox option:selected').val();
-   if(state == '1') {
-      jQuery('#layer').show();
-   } else {
-      jQuery('#layer').hide();
-   }
-});    */
-/* $('frm').submit(function(){
-    var msg = document.getElementById('smarteditor').value; 
-   alert(msg);
-   $('frm').submit();}
-);  */
+
 
 function categoryChange(e) {
      var location_a = ["강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "서동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구"];
@@ -89,12 +80,6 @@ function categoryChange(e) {
        target.appendChild(opt);
      } 
      
-    /* function settleFormCheck(){
-       var f   rm = document.settleForm;
-        
-        frm.action = “write.do”;
-        return true;
-   } */
 }
    
 var oEditors = [];
@@ -122,16 +107,6 @@ $(function(){
           fCreator: "createSEditor2"
       });
      
-     /*  $("#savebutton").click(function(){
-          //id가 smarteditor인 textarea에 에디터에서 대입
-          editor_object.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-           
-          // 이부분에 에디터 validation 검증
-           
-          //폼 submit
-          $("#frm").submit();
-      }); */
-   
       //저장버튼 클릭시 form 전송
 
       $("#savebutton").one('click',function(){
@@ -154,7 +129,7 @@ $(function(){
 
 var count = 0;
 function pasteHTML(filepath){
-   var id = '${sessionScope.vo.id}';
+   var id = "id";
    count++;
 
     var sHTML = '<img src="<%=request.getContextPath()%>/upload/'+id+'/'+filepath+'" width="265px" id="img'+count+'">'; 
@@ -174,14 +149,14 @@ function pasteHTML(filepath){
 
 
 </script>   
-	<%@include file="nav.jsp" %>
-<h1 align="center"> 글 작성 </h1>
+
+<h1 align="center" style="margin-top: 150px"> 글 작성 </h1>
 <form action="write.do" method="post" name="frm"> <!--  enctype="multipart/form-data" -->
 <!-- <input type="hidden" name="command" value="write"> -->
 <table border="1" align="center" width="80%" style="table-layout:fixed;">
    <tr>
       <th align="center">작성자</th>
-      <td><input type="text" name="id" value="${sessionScope.vo.id}" readonly="readonly" style="width:99%;"></td>
+      <td><input type="text" name="id" value="작성자" readonly="readonly" style="width:99%;"></td>
       <th>지역</th>
       <td>   
          <select id="selectBox" name="loaction" style="width:180px;" onchange="categoryChange(this)" required="required">

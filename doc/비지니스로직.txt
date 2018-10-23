@@ -1,0 +1,211 @@
+int writeReview(ReviewVO rvo)
+리뷰 작성 로직
+ 
+
+ArrayList<String> getTagsByContent(String content)
+글작성에서 태그 추출하는 로직
+
+
+ArrayList<String> getCities(String location)
+시/군/구 추출하는 로직
+
+
+int getTotalReview()
+전체 리뷰 추출하는 로직
+
+
+ArrayList<ReviewVO> getRecentReviews(int pn)
+최근 리뷰 추출 (페이징 처리)하는 로직
+
+
+void addLike(int reviewNum)
+'좋아요' 수 증가 (좋아요 클릭 시)시키는 로직
+
+
+void downLike(int reviewNum)
+'좋아요' 수 감소 (좋아요 취소 시)시키는 로직
+
+
+void insertLike(String id,int reviewNum)
+addLike의 부수적인 로직
+
+
+void deleteLike(String id,int reviewNum)
+downLike의 부수적인 로직
+
+
+boolean checkLike(String id,int reviewNum)
+사용자가 해당 글에 좋아요를 이미 했는지 안했는지 확인하는 로직
+
+
+void addScrap(String id, int review_num)
+리뷰 스크랩하는 로직
+
+
+void delScrap(String id, int review_num)
+스크랩한 리뷰를 삭제하는 로직
+
+
+boolean checkScrap(String id,int reviewNum)
+사용자가 해당 리뷰를 이미 스크랩 했는지 안했는지 확인하는 로직
+
+
+ArrayList<ReviewVO> getScrapList(String id, int pageNo)
+해당 사용자가 스크랩한 리뷰들의 정보를 추출하는 로직(페이징 처리)
+
+
+void addComment(int reviewNum, String id, String content)
+해당 리뷰에 댓글 작성하는 로직
+
+
+void delComment(int reviewNum, String id, String content)
+해당 리뷰에 작성한 댓글 삭제하는 로직
+
+
+ArrayList<CommentVO> getComments(int review_num, Connection conn)
+해당 리뷰에 작성된 댓글 추출하는 로직
+
+
+ArrayList<ReviewVO> getBestReviewByTag(String location, String tag, int pageNO)
+해당 시/도와 태그에서 제일 좋아요 수가 많은 리뷰 추출하는 로직(페이징 처리)
+
+
+ArrayList<ReviewVO> getBestReviewByTagCity(String location, String city, String tag, int pageNO)
+해당 시/군/구와 태그에서 제일 좋아요 수가 많은 리뷰 추출하는 로직(페이징 처리)
+
+
+ArrayList<FestivalVO> getFestivalInfo(String location)
+해당 시/도에서 개최하는 축제의 정보 추출하는 로직
+
+
+ArrayList<AttractionVO> getAttraction(String city,String location)
+해당 시/도의 시/군/구에 해당하는 관광지정보 추출
+
+
+ReviewVO checkReview(int reviewNum)
+리뷰번호에 해당하는 리뷰 정보 추출하는 로직
+
+
+int totalScrapNumber(String id)
+사용자가 스크랩한 리뷰의 총 개수를 추출하는 로직
+
+
+int totalReviewNumber()
+등록된 리뷰의 총 개수를 추출하는 로직
+
+
+int totalMyReviewNumber(String id)
+사용자가 작성한 리뷰의 총 개수를 추출하는 로직
+
+
+int totalRelatedReviewNumber(String tag)
+해당 태그와 관련된 리뷰의 총 개수를 추출하는 로직
+
+
+ArrayList<ReviewVO> getMyReview(String id, int pageNo)
+사용자가 작성한 리뷰를 추출하는 로직(페이징 처리)
+
+
+void deleteReview(int reviewNum)
+사용자가 작성한 리뷰를 삭제하는 로직(My Review 페이지에 들어가야만 삭제할 수 있다)
+
+
+void updateReview(ReviewVO rvo)
+사용자가 작성한 리뷰를 수정하는 로직(My Review 페이지에 들어가야만 수정할 수 있다)
+
+
+ArrayList<AttractionVO> getData(String tag)
+검색한 태그가 관광지 정보이면 해당 관광지의 정보를 추출하는 로직
+
+
+ArrayList<ReviewVO> getReviewBySearch(String tag, int pageNo)
+검색한 태그와 관련된 리뷰를 추출하는 로직(페이징 처리) - 태그가 관광지일때
+
+
+ArrayList<ReviewVO> relatedReviews(String tag, int pageNo)
+검색한 태그와 관련된 리뷰를 추출하는 로직(페이징 처리) - 태그가 관광지가 아닐 때
+
+
+String checkTag(String tag)
+검색한 태그가 관광지 정보가 아닐때, 시/도 또는 시/군/구 에 해당하는 태그인지 확인하는 로직
+
+
+boolean tagExist(String tag)
+검색한 태그가 DB에 존재하는지 아닌지 확인하는 로직
+
+
+ArrayList<AttractionVO> checkSpot(String tag)
+검색한 태그가 관광지인지 아닌지를 확인하는 로직
+
+
+ArrayList<String> checkLocationByCity(String city)
+시/군/구로 시/도를 추출하는 로직
+
+
+ArrayList<String> getImages(int reviewNum)
+해당 리뷰 안에 업로드된 이미지들을 추출하는 로직
+
+
+ArrayList<String> getTags(int reviewNum)
+해당 리뷰 안에 작성된 태그들을 추출하는 로직
+
+
+void writeReviewImage(int reviewNum, ArrayList<String> imgList) 
+리뷰 작성시 이미지를 추가하는 로직
+
+
+void deleteImage(int reviewNum, String img), 
+void deleteImage(int reviewNum)
+리뷰 수정시 등록한 이미지를 삭제하는 로직
+
+
+void writeTag(int reviewNum, ArrayList<String> tagList)
+리뷰 작성시 태그를 추가하는 로직
+
+
+void register(MemberVO vo)
+회원가입 로직
+
+
+boolean idCheck(String id)
+회원가입시 입력한 아이디의 중복을 확인하는 로직
+
+
+void updateInfo(MemberVO vo)
+회원가입시 등록했던 사용자의 정보를 수정하는 로직
+
+
+MemberVO login(String id, String password)
+로그인 로직
+
+
+MemberVO findIdPass(String userName, int ssn, String tel)
+아이디 및 비밀번호 분실시 찾는 로직
+
+
+ArrayList<ReviewVO> getRelateReview(ArrayList<String> list)
+해당 리뷰에 등록되어 있는 태그들과 관련된 리뷰를 추출하는 로직
+
+
+String getRelateQuery(ArrayList<String> list)
+getRelateReview 의 부수적인 로직
+
+
+void insertCourse(CourseVO cvo)
+코스에 관광지정보 추가하는 로직
+
+
+CourseVO makeCourse(String id, String course_name)
+코스 등록하는 로직
+
+
+ArrayList<CourseVO> getCourses(String id,int num)
+사용자가 저장한 모든 코스를 추출하는 로직(페이징 처리)
+
+
+CourseVO getCoursesByNum(int courseNum,String courseName)
+사용자가 저장한 해당 코스의 자세한 정보를 추출하는 로직
+
+
+int getCourseNumber(String id)
+사용자가 저장한 코스의 총 개수를 추출하는 로직

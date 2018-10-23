@@ -30,7 +30,7 @@
 			}); //css
 			$('#userMenu').css({
 				'color' : 'black',
-				'background' : '#FFFAE5'/* 'rgb(245, 238, 210)' *//* 'rgb(15, 106, 139)' */
+				'background' : 'transparent'/* 'rgb(245, 238, 210)' *//* 'rgb(15, 106, 139)' */
 			}); //css
 		}); //hover
 

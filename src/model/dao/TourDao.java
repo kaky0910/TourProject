@@ -39,11 +39,11 @@ public class TourDao {
 	}
 
 	private TourDao() {
-	/*	try {
+		try {
 			ds=DataSourceManager.getInstance().getDataSource();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	public static TourDao getInstance() {
@@ -521,7 +521,7 @@ public class TourDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("info")));
+						rs.getString("city"), rs.getString("description")));
 			}
 			ps.close();
 			for (AttractionVO vo : list) {
@@ -810,9 +810,11 @@ public class TourDao {
 			ps.setString(1, tag);
 			rs = ps.executeQuery();
 
-			while (rs.next())
+			while (rs.next()) {
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
 						rs.getString("city"), rs.getString("img"),rs.getString("lon"),rs.getString("lat"),rs.getString("description")));
+				System.out.println(rs.getString("lon")+" ::::::::::::: "+rs.getString("lat"));
+			}
 
 		} finally {
 			closeAll(rs, ps, conn);
@@ -919,7 +921,7 @@ public class TourDao {
 
 			while (rs.next()) {
 				list.add(new AttractionVO(rs.getString("spot_name"), rs.getString("address"), rs.getString("location"),
-						rs.getString("city"), rs.getString("mainImage"),rs.getString("description")));
+						rs.getString("city"), rs.getString("spot_image"),rs.getString("lon"),rs.getString("lat"),rs.getString("description")));
 			}
 		} finally {
 			closeAll(rs, ps, conn);
@@ -1047,7 +1049,7 @@ public class TourDao {
 	}
 
 	public Connection getConnect() throws SQLException {
-		return DriverManager.getConnection(OracleInfo.URL, OracleInfo.USER, OracleInfo.PASS);
+		return ds.getConnection();
 	}// getConnect
 
 	private void closeAll(PreparedStatement ps, Connection conn) throws SQLException {

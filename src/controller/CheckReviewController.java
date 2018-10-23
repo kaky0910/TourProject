@@ -37,7 +37,8 @@ public class CheckReviewController implements Controller{
 		
 		if(rvo.getContent().indexOf("#")!=-1)
 			rvo.setContent(rvo.getContent().substring(0, rvo.getContent().indexOf("#")));
-		rvo.setDate(rvo.getDate().substring(0,rvo.getDate().indexOf(".")));
+		if(rvo.getDate().indexOf(".")!=-1)
+			rvo.setDate(rvo.getDate().substring(0,rvo.getDate().indexOf(".")));
 		request.setAttribute("rvo", rvo);
 		System.out.println(vo);
 		request.setAttribute("vo", vo);	

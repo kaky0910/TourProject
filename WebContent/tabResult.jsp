@@ -21,7 +21,7 @@
 
 			</tr>
 			<tr>
-				<td style="font-size: 20px;"><a href="getAttraction.do?city=${vo.city}">${vo.city}</a></td>
+				<td style="font-size: 20px;"><%-- <a href="getAttraction.do?city=${vo.city}"> --%>${vo.city}<!-- </a> --></td>
 			</tr>
 			<tr>
 				<td style="font-size: 20px;"><b><a href="checkReview.do?num=${vo.reviewNum}">${vo.title}</a></b></td>
