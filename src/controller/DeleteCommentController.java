@@ -18,6 +18,7 @@ public class DeleteCommentController implements Controller{
 		if(session.getAttribute("vo")!=null) {
 			TourDao.getInstance().delComment(reviewNum, vo.getId(), content);
 		}
+		
 		return new ModelAndView("index.jsp");
 	}
 }

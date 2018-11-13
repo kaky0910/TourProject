@@ -129,10 +129,10 @@ $(function(){
 
 var count = 0;
 function pasteHTML(filepath){
-   var id = "id";
+   var id = "${sessionScope.vo.id}";
    count++;
-
-    var sHTML = '<img src="<%=request.getContextPath()%>/upload/'+id+'/'+filepath+'" width="265px" id="img'+count+'">'; 
+	''
+    var sHTML = '<img src=${pageContext.request.contextPath}/upload/'+id+'/'+filepath+' width="265px" id="img'+count+'">'; 
    var imgDiv = "<div class='item'>"+sHTML+"</div>";
    $('#xxxx').append(imgDiv);   
    $('#xxxx div:eq(0)').addClass('active');
@@ -156,7 +156,7 @@ function pasteHTML(filepath){
 <table border="1" align="center" width="80%" style="table-layout:fixed;">
    <tr>
       <th align="center">작성자</th>
-      <td><input type="text" name="id" value="작성자" readonly="readonly" style="width:99%;"></td>
+      <td><input type="text" name="id" value="${sessionScope.vo.id}" readonly="readonly" style="width:99%;"></td>
       <th>지역</th>
       <td>   
          <select id="selectBox" name="loaction" style="width:180px;" onchange="categoryChange(this)" required="required">

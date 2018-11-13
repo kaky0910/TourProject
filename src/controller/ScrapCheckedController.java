@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import model.dao.TourDao;
 import model.vo.MemberVO;
 
-public class scrapCheckedController implements Controller{
+public class ScrapCheckedController implements Controller{
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

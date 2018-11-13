@@ -39,8 +39,8 @@ public class HandlerMapping {
 			return new RegisterUpdateController();
 		case "logout.do":
 			return new LogoutController();
-		case "findidpass.do":
-			return new FindIdPassController();
+		/*case "findidpass.do":
+			return new FindIdPassController();*/
 		case "getdata.do":
 			return new GetDataController();
 		case "relatedreview.do":
@@ -62,7 +62,7 @@ public class HandlerMapping {
 		case "like.do":
 			return new likeCheckedController();
 		case "scrapCheck.do":
-			return new scrapCheckedController();
+			return new ScrapCheckedController();
 		case "getBestReviewCityBytag.do":
 			return new GetBestReviewCityBytagController();
 		case "addComment.do":

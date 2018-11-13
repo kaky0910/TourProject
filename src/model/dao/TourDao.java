@@ -2,15 +2,12 @@ package model.dao;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -83,7 +80,7 @@ public class TourDao {
 		return num;
 	}
 
-	
+		//글 작성시 tag추출하여 tag list return
 	public ArrayList<String> getTagsByContent(String content){
 	      ArrayList<String> tlist = new ArrayList<String>();
 	      String content1 = content.replace("<p>", " ");
@@ -98,6 +95,7 @@ public class TourDao {
 	      return tlist;
 	}
 	
+	//시,도에 있는 시,군,구를 받아옴
 	public ArrayList<String> getCities(String location) throws SQLException{
 
 		Connection conn = null;
@@ -118,25 +116,8 @@ public class TourDao {
 		return cities;
 	}
 
-	public int getTotalReview() throws SQLException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		int num = 0;
-
-		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(ReviewStringQuery.GET_TOTAL_REVIEW);
-			rs = ps.executeQuery();
-			if (rs.next())
-				num = rs.getInt(1);
-		} finally {
-			closeAll(rs, ps, conn);
-		}
-		return num;
-	}
-	
-	public ArrayList<ReviewVO> getRecentReviews(int pn) throws SQLException{		//index review list
+		//index review list (최근 리뷰 리턴   ::  10개/1page)
+	public ArrayList<ReviewVO> getRecentReviews(int pn) throws SQLException{		//
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -156,22 +137,7 @@ public class TourDao {
 		return rlist;
 	}
 
-	/*
-	 * public ArrayList<ReviewVO> getBestReviews(String tag) throws SQLException {
-	 * //index�뿉 移댄뀒怨좊━(tag)蹂� review Connection conn = null; PreparedStatement ps =
-	 * null; ResultSet rs = null; ArrayList<ReviewVO> rlist = new
-	 * ArrayList<ReviewVO>(); try { conn = getConnect(); ps =
-	 * conn.prepareStatement(ReviewStringQuery.GET_RECENT_REVIEWS_BY_TAG);
-	 * ps.setString(1, tag); rs = ps.executeQuery();
-	 * 
-	 * ReviewVO rvo = null; while (rs.next()) { rvo = new ReviewVO();
-	 * rvo.setLocation(rs.getString("location"));
-	 * rvo.setTitle(rs.getString("title"));
-	 * rvo.setReviewNum(rs.getInt("review_num")); rvo.setLike(rs.getInt("likes"));
-	 * rvo.setCity(rs.getString("city")); rlist.add(rvo); } } finally { closeAll(rs,
-	 * ps, conn); } return rlist; }
-	 */
-
+		// review에 like를 증가시킴
 	public void addLike(int reviewNum) throws SQLException {
 		
 		Connection conn = null;
@@ -188,8 +154,9 @@ public class TourDao {
 		} finally {
 			closeAll(rs, ps, conn);
 		}
-	}// addLike �����
-	
+	}
+		
+		// review에 like를 감소시킴
 	public void downLike(int reviewNum) throws SQLException {
 	
 		Connection conn = null;
@@ -209,7 +176,7 @@ public class TourDao {
 	}//
 
 	
-	
+		//user가 like를 누를 때 db에 등록
 	public void insertLike(String id,int reviewNum) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -229,7 +196,7 @@ public class TourDao {
 		
 		
 	}
-	
+		//user가 like를 해제할 때 db에서 삭제
 	public void deleteLike(String id,int reviewNum) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -249,6 +216,7 @@ public class TourDao {
 		
 	}
 	
+		//user가 현재 review에 like를 눌렀는지 안눌렀는지 확인 (like button)
 	public boolean checkLike(String id,int reviewNum) throws SQLException{
 		boolean flag = false;
 		Connection conn=null;
@@ -269,6 +237,7 @@ public class TourDao {
 		return flag;
 	}
 
+		//user가 스크랩했을때 db에 추가
 	public void addScrap(String id, int review_num) throws Exception {					//scrap
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -283,8 +252,9 @@ public class TourDao {
 		} finally {
 			closeAll(ps, conn);
 		}
-	} // scrap 泥좎쭊�벐
-	
+	} 
+		
+		//user가 스크랩 해제했을때 db에서 삭제
 	public void delScrap(String id, int review_num) throws Exception {					//scrap
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -299,8 +269,9 @@ public class TourDao {
 		} finally {
 			closeAll(ps, conn);
 		}
-	} // scrap 泥좎쭊�벐
-	
+	} 
+		
+		//user가 현재 review를 스크랩했는지 확인 (scrap button)
 	public boolean checkScrap(String id,int reviewNum) throws SQLException{
 		boolean flag = false;
 		Connection conn=null;
@@ -321,6 +292,7 @@ public class TourDao {
 		return flag;
 	}
 	
+		//댓글다는 로직
 	public void addComment(int reviewNum, String id, String content) throws SQLException{
 		Connection conn= null;
 		PreparedStatement ps =null;
@@ -335,10 +307,9 @@ public class TourDao {
 		}finally {
 			closeAll(ps, conn);
 		}
-		
-		
-		
 	}
+	
+		//댓글 삭제
 	public void delComment(int reviewNum, String id, String content) throws SQLException{
 		Connection conn= null;
 		PreparedStatement ps =null;
@@ -353,11 +324,9 @@ public class TourDao {
 		}finally {
 			closeAll(ps, conn);
 		}
-		
-		
-		
 	}
 	
+		//review를 불러올 때 댓글 불러오는 로직
 	public ArrayList<CommentVO> getComments(int review_num, Connection conn) throws SQLException { // get review
 		// comments
 		ArrayList<CommentVO> clist = new ArrayList<CommentVO>();
@@ -373,39 +342,10 @@ public class TourDao {
 		ps.close();
 		return clist;
 	}
-	
-/*	public ArrayList<ReviewVO> getBestReviewByLocation(String location) throws SQLException {
-		Connection conn = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		ArrayList<ReviewVO> list = new ArrayList<ReviewVO>();
 
-		ReviewVO vo = null;
-		String sql = "select review_num, title, likes from review where location=?";
-		try {
-			conn = getConnect();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, location);
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				vo = new ReviewVO();
-				vo.setReviewNum(rs.getInt("review_num"));
-				vo.setTitle(rs.getString("title"));
-				vo.setLike(rs.getInt("likes"));
-				list.add(vo);
-			}
-		} finally {
-			closeAll(rs, ps, conn);
-		}
-
-		return list;
-	}*/
-
-							
-	public ArrayList<ReviewVO> getBestReviewByTag(String location, String tag, int pageNO) throws SQLException { // v1
-																													// review
-																													// list
+		//v1 페이지에서 태그, 지역별로 best review를 가져옴
+	public ArrayList<ReviewVO> getBestReviewByTag(String location, String tag, int pageNO) throws SQLException { 
+																													
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -442,6 +382,7 @@ public class TourDao {
 		return list;
 	}// getBestReview
 
+		//
 	public ArrayList<ReviewVO> getBestReviewByTagCity(String location, String city, String tag, int pageNO) throws SQLException { // v1
 		// review
 		// list
@@ -481,8 +422,8 @@ public class TourDao {
 		return list;
 	}// getBestReview
 
+		//v1 로딩될때 조건 만족하는 festival list return
 	public ArrayList<FestivalVO> getFestivalInfo(String location) throws SQLException { /// v1 festival list
-
 		ArrayList<FestivalVO> list = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -502,8 +443,9 @@ public class TourDao {
 			closeAll(rs, ps, conn);
 		}
 		return list;
-	}// getFestivalInfo 泥좎쭊�벐
+	}// getFestivalInfo 
 
+		//v2(attraction.jsp)에서 해당 지역의 관광지 정보 return
 	public ArrayList<AttractionVO> getAttraction(String city,String location) throws SQLException { // v2 tourspot list
 
 		ArrayList<AttractionVO> list = new ArrayList<>();
@@ -539,15 +481,16 @@ public class TourDao {
 	      }
 
 		return aList;
-	}// getAttraction 泥좎쭊�벐 �씠誘몄�!!!!
+	}
 
+/*		
 	public void scrap(String id, int review_num) throws Exception { // scrap
 		Connection conn = null;
 		PreparedStatement ps = null;
 
 		try {
 			conn = getConnect();
-			ps = conn.prepareStatement(ReviewStringQuery.SCRAP);
+			ps = conn.prepareStatement(ReviewStringQuery.SCRAP);					addScrap
 			ps.setString(1, id);
 			ps.setInt(2, review_num);
 			ps.executeUpdate();
@@ -556,7 +499,9 @@ public class TourDao {
 			closeAll(ps, conn);
 		}
 	} // scrap 泥좎쭊�벐
-
+*/
+	
+		//review 상세정보 return
 	public ReviewVO checkReview(int reviewNum) throws SQLException { // review detail info
 
 		Connection conn = null;
@@ -581,8 +526,9 @@ public class TourDao {
 			closeAll(rs, ps, conn);
 		}
 		return rvo;
-	} // checkReview �쑄二쇱벐
+	} // checkReview
 
+		//user가 scrap한 게시물 수 return (paging) 
 	public int totalScrapNumber(String id) throws SQLException {
 
 		int count = 0;
@@ -603,6 +549,7 @@ public class TourDao {
 		return count;
 	}
 
+		//
 	public int totalReviewNumber() throws SQLException {
 
 		int count = 0;
@@ -621,7 +568,8 @@ public class TourDao {
 		}
 		return count;
 	}
-
+		
+		//내가 쓴 review 갯수 return
 	public int totalMyReviewNumber(String id) throws SQLException {
 		int count = 0;
 		Connection conn = null;
@@ -641,6 +589,7 @@ public class TourDao {
 		return count;
 	}
 
+		//related review count
 	public int totalRelatedReviewNumber(String tag) throws SQLException {
 
 		int count = 0;
@@ -678,7 +627,7 @@ public class TourDao {
 	 * 
 	 * }
 	 */
-
+		//user scrap list return
 	public ArrayList<ReviewVO> getScrapList(String id, int pageNo) throws SQLException { // scrap list
 
 		Connection conn = null;
@@ -716,6 +665,7 @@ public class TourDao {
 		return list;
 	}
 
+		//내가 쓴 review list return
 	public ArrayList<ReviewVO> getMyReview(String id, int pageNo) throws SQLException { // my review list
 
 		Connection conn = null;
@@ -752,6 +702,7 @@ public class TourDao {
 		return list;
 	}
 
+		//delete review 
 	public void deleteReview(int reviewNum) throws SQLException { // delete review
 
 		Connection conn = null;
@@ -771,7 +722,7 @@ public class TourDao {
 		}
 	}
 
-	// ArrayList<String> tags, ArrayList<String> images
+		// review update 
 	public void updateReview(ReviewVO rvo) throws SQLException { // update
 
 		Connection conn = null;
@@ -798,6 +749,7 @@ public class TourDao {
 		}
 	}
 
+		//getDAta:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	public ArrayList<AttractionVO> getData(String tag) throws SQLException {
 		ArrayList<AttractionVO> list = new ArrayList<AttractionVO>();
 		Connection conn = null;
@@ -821,7 +773,8 @@ public class TourDao {
 		}
 		return list;
 	}
-
+	
+		//related review list return 
 	public ArrayList<ReviewVO> relatedReviews(String tag, int pageNo) throws SQLException {
 		ArrayList<ReviewVO> list = new ArrayList<ReviewVO>();
 		Connection conn = null;
@@ -857,6 +810,7 @@ public class TourDao {
 		return list;
 	}
 
+		//tag 가 location, city 인지 확인
 	public String checkTag(String tag) throws SQLException {
 		String flag = " ";
 		Connection conn = null;
@@ -886,6 +840,7 @@ public class TourDao {
 		return flag;
 	}
 
+		//tag가 tag table에 있는지 확인
 	public boolean tagExist(String tag) throws SQLException {
 		boolean flag = false;
 		Connection conn = null;
@@ -907,6 +862,7 @@ public class TourDao {
 		return flag;
 	}
 
+		//tag가 관광지인지 확인
 	public ArrayList<AttractionVO> checkSpot(String tag) throws SQLException {
 		ArrayList<AttractionVO> list = new ArrayList<AttractionVO>();
 		Connection conn = null;
@@ -929,6 +885,7 @@ public class TourDao {
 		return list;
 	}
 	
+		//city로 location검색 :::::::::::::::: ex) 중구 (인천,대구......)
 	public ArrayList<String> checkLocationByCity(String city) throws SQLException{
 		ArrayList<String> list = new ArrayList<String>();
 		Connection conn = null;
@@ -949,6 +906,7 @@ public class TourDao {
 		return list;
 	}
 	
+		//tag를 가지고있는 review list return
 	public ArrayList<ReviewVO> getReviewBySearch(String tag, int pageNo) throws SQLException {
 		ArrayList<ReviewVO> list = new ArrayList<ReviewVO>();
 		Connection conn = null;
@@ -984,7 +942,8 @@ public class TourDao {
 		return list;
 	}
 	
-	public ArrayList<String> getImages(int reviewNum) throws SQLException{			//get review images
+		//get review images
+	public ArrayList<String> getImages(int reviewNum) throws SQLException{			
 		Connection conn = getConnect();
 		ArrayList<String> ilist = new ArrayList<String>();
 		PreparedStatement ps = conn.prepareStatement(ReviewStringQuery.GET_REVIEW_IMAGES);
@@ -997,7 +956,8 @@ public class TourDao {
 		return ilist;
 	}
 	
-	public ArrayList<String> getTags(int reviewNum) throws SQLException{			//get review images
+		//get review images
+	public ArrayList<String> getTags(int reviewNum) throws SQLException{			
 		Connection conn = getConnect();
 
 		ArrayList<String> ilist = new ArrayList<String>();
@@ -1011,9 +971,8 @@ public class TourDao {
 
 		return ilist;
 	}
-
-
-
+	
+		//review 작성시 image insert
 	public void writeReviewImage(int reviewNum, ArrayList<String> imgList) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1031,6 +990,7 @@ public class TourDao {
 		}
 	}
 
+		//review 작성 시 tag insert
 	public void writeTag(int reviewNum, ArrayList<String> tagList) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1065,6 +1025,7 @@ public class TourDao {
 		closeAll(ps, conn);
 	}// closeAll
 
+		//회원가입
 	public void register(MemberVO vo) throws SQLException { // member regist
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1083,6 +1044,7 @@ public class TourDao {
 		}
 	}
 
+		//회원정보 수정
 	public void updateInfo(MemberVO vo) throws SQLException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1100,6 +1062,7 @@ public class TourDao {
 		}
 	}
 
+		//id 중복체크
 	public boolean idCheck(String id) throws SQLException {
 		boolean result = false;
 		Connection conn = null;
@@ -1120,6 +1083,7 @@ public class TourDao {
 		return result;
 	}
 
+		//login
 	public MemberVO login(String id, String password) throws SQLException {
 		MemberVO vo = null;
 		Connection conn = null;
@@ -1143,6 +1107,7 @@ public class TourDao {
 		return vo;
 	}
 	
+		/*// findIdPass :::::::::::::::::::::
 	public MemberVO findIdPass(String userName, int ssn, String tel) throws SQLException{
 		MemberVO vo = null;
 		Connection conn = null;
@@ -1163,7 +1128,7 @@ public class TourDao {
 			closeAll(ps,conn);
 		}
 		return vo;
-	}
+	}*/
 	
 	public void deleteImage(int reviewNum, String img) throws SQLException {
 		System.out.println("img url : " + img);
@@ -1187,6 +1152,7 @@ public class TourDao {
 		}	
 	}
 	
+		//delete image
 	public void deleteImage(int reviewNum)throws SQLException {
 	      Connection conn = null;
 	      PreparedStatement ps = null;
@@ -1200,6 +1166,7 @@ public class TourDao {
 	      }   
 	   }
 	
+		//관련 review return
 	public ArrayList<ReviewVO> getRelateReview(ArrayList<String> list) throws SQLException{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1227,6 +1194,7 @@ public class TourDao {
 		return rlist;
 	}
 	
+		//getRelateReview에서 사용할 query 만들기
 	public String getRelateQuery(ArrayList<String> list) {
 		String sum="";
 		for(String str : list) {
@@ -1237,6 +1205,7 @@ public class TourDao {
 		return ReviewStringQuery.RELATED_REVIEW_IN_CHECKREVIEW+sum+")))";
 	}
 	
+		//course에 attraction 추가
 	public void insertCourse(CourseVO cvo) throws SQLException {
 	      Connection conn = null;
 	      PreparedStatement ps = null;
@@ -1256,35 +1225,37 @@ public class TourDao {
 	      }
 	   }
 
-	   public CourseVO makeCourse(String id, String course_name) throws SQLException {
-	      Connection conn = null;
-	      PreparedStatement ps = null;
-	      ResultSet rs = null;
-	      int courseNum = 0;
-	      CourseVO cvo = null;
-	      
-	      try {
-	         conn = getConnect();
-	         ps = conn.prepareStatement(CourseStringQuery.MAKE_COURSE);
-	         ps.setString(1, id);
-	         ps.setString(2, course_name);
-	         ps.executeUpdate();
-	         ps.close();
-	         
-	         ps = conn.prepareStatement("select course_seq.currVal course_num from dual");
-	         rs = ps.executeQuery();
-	         if(rs.next()) courseNum = rs.getInt(1);
-	         System.out.println(courseNum + " course exist...");
-	         cvo = new CourseVO(courseNum, course_name);
-	         
-	      } finally {
-	         closeAll(ps, conn);
-	      }
-	      
-	      return cvo;
-	   }
+		//course 생성
+	public CourseVO makeCourse(String id, String course_name) throws SQLException {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int courseNum = 0;
+		CourseVO cvo = null;
+
+		try {
+			conn = getConnect();
+			ps = conn.prepareStatement(CourseStringQuery.MAKE_COURSE);
+			ps.setString(1, id);
+			ps.setString(2, course_name);
+			ps.executeUpdate();
+			ps.close();
+
+			ps = conn.prepareStatement("select course_seq.currVal course_num from dual");
+			rs = ps.executeQuery();
+			if (rs.next())
+				courseNum = rs.getInt(1);
+			System.out.println(courseNum + " course exist...");
+			cvo = new CourseVO(courseNum, course_name);
+
+		} finally {
+			closeAll(ps, conn);
+		}
+
+		return cvo;
+	}
 	
-	
+		//user course list return
 	public ArrayList<CourseVO> getCourses(String id,int num) throws SQLException{
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -1363,6 +1334,7 @@ public class TourDao {
 		return cList;
 	}*/
 	
+		//courseNum 로 course 정보 return
 	public CourseVO getCoursesByNum(int courseNum,String courseName) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -1394,6 +1366,7 @@ public class TourDao {
         return course; 
      }
 	
+		//user course 갯수 return
 	public int getCourseNumber(String id) throws SQLException{
 	      Connection conn = null;
 	      PreparedStatement ps = null;
@@ -1410,7 +1383,7 @@ public class TourDao {
 	      }
 	      return num;
 	   }
-	
+		//
 	public String getChangeContent(String content) {
 		   String updateContent1 = content.replaceFirst("<p>", "b");
 		   String updateContent2 = content.replace("</p>","");
@@ -1419,16 +1392,5 @@ public class TourDao {
 	   }
 	
 	public static void main(String[] args) throws SQLException { // 단위테스트
-		
-	/*	ReviewVO vo = TourDao.getInstance().checkReview(36);
-		System.out.println(vo.getImages());
-		TourDao.getInstance().deleteImage(vo.getImages().get(0));*/
-		/*
-		 * ArrayList<ReviewVO> vo = new ArrayList<ReviewVO>(); vo =
-		 * TourDao.getInstance().getScrapList("yun"); for(ReviewVO r : vo) {
-		 * System.out.println(r.toString()); }
-		 */
-		// TourDao.getInstance().getBestReviewByTag("경기도", "맛집");
-
 	}
 }

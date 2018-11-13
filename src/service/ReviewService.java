@@ -63,7 +63,7 @@ public class ReviewService {
 	      
 	      ArrayList<ReviewVO> list = dao.getRecentReviews(pn);
 	      System.out.println(list.size());
-	      int total = dao.getTotalReview();
+	      int total = dao.totalReviewNumber();
 	      
 	      PagingBean pb = new PagingBean(total, pn);
 	      return new ListVO(list, pb);

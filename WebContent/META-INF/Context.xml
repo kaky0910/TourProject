@@ -3,11 +3,11 @@
 	<Resource name="jdbc/oracleDB"
 			  auth="container"
 			  type="javax.sql.DataSource"
-			  username="tour"
-			  password="oracle"
+			  username="kaky0910"
+			  password="oracle12"
 			  driverClassName="oracle.jdbc.driver.OracleDriver"
 			  factory="org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory"
-			  url="jdbc:oracle:thin:@59.29.224.12:1521:xe"
+			  url="jdbc:oracle:thin:@oracledb.cve3prshwbnz.ap-northeast-2.rds.amazonaws.com:1521:ORCL" 
 			  maxActive="500"
 			  maxIdle="100" />
 </Context>
