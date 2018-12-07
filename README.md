@@ -7,14 +7,14 @@
 
 stack - java, javascript(jquery, bootstrap), oracle, apache-tomcat
 <h3 aling="center">Main Page</h3>
-<img src="./doc/결과물캡처/index.png"><br><br>
+<img src="./doc/결과물캡처/index.png" style="width=80%"><br><br>
 <h3 aling="center">Location</h3>
-<img src="./doc/결과물캡처/index.png"><br><br>
+<img src="./doc/결과물캡처/location.png" style="width=80%"><br><br>
 <h3 aling="center">Board</h3>
-<img src="./doc/결과물캡처/checkreview.png"><br><br>
+<img src="./doc/결과물캡처/checkreview.png" style="width=80%"><br><br>
 <h3 aling="center">Course</h3>
-<img src="./doc/결과물캡처/course.png"><br><br>
-<img src="./doc/결과물캡처/map.png"><br><br>
+<img src="./doc/결과물캡처/course.png" style="width=80%"><br><br>
+<img src="./doc/결과물캡처/map.png" style="width=80%"><br><br>
 
 
 
