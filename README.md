@@ -7,4 +7,4 @@
 
 stack - java, javascript(jquery, bootstrap), oracle, apache-tomcat
 
-<img src="./doc/결과물캡쳐/index.png">
+<img src="./doc/결과물캡처/index.png">
