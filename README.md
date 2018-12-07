@@ -6,5 +6,15 @@
 일반적인 여행 정보 사이트는 주로 중계가 주를 이루기 때문에 사용자들이 가장 많이 찾는 정보인 '리뷰' 중심의 사이트를 만듬.
 
 stack - java, javascript(jquery, bootstrap), oracle, apache-tomcat
+<h3 aling="center">Main Page</h3>
+<img src="./doc/결과물캡처/index.png"><br><br>
+<h3 aling="center">Location</h3>
+<img src="./doc/결과물캡처/index.png"><br><br>
+<h3 aling="center">Board</h3>
+<img src="./doc/결과물캡처/checkreview.png"><br><br>
+<h3 aling="center">Course</h3>
+<img src="./doc/결과물캡처/course.png"><br><br>
+<img src="./doc/결과물캡처/map.png"><br><br>
 
-<img src="./doc/결과물캡처/index.png">
+
+
